@@ -1,0 +1,85 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: #f5f8ff;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  background: #0056d6;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #007bff, #0056d6);
+  color: white;
+  border-radius: 0 0 30px 30px;
+}
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+.hero p {
+  font-size: 1.1rem;
+}
+
+/* Carrusel */
+.carousel {
+  padding: 40px 20px;
+  text-align: center;
+}
+.carousel h3 {
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  color: #0056d6;
+}
+.carousel-container {
+  display: flex;
+  overflow: hidden;
+  gap: 20px;
+  justify-content: center;
+}
+.slide img {
+  width: 300px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out;
+}
+.slide img:hover {
+  transform: scale(1.05);
+}
+
+/* Botón fijo */
+.subscribe-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  font-size: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+.subscribe-btn:hover {
+  background: #0056d6;
+}
