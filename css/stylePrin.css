@@ -1,0 +1,102 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: url("../src/fondoPrin.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #192433;
+  line-height: 1.6;
+}
+
+
+/* Navbar */
+.navbar {
+   background: rgba(0, 86, 214, 0.9);
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(0, 123, 255, 0.8);
+  color: white;
+  border-radius: 0 0 30px 30px;
+  margin-bottom: 40px;
+}
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+.hero p {
+  font-size: 1.1rem;
+}
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* espacio entre los elementos */
+  text-align: center;
+}
+
+.hero img {
+  width: 120px;   /* ajusta el tamaño */
+  height: auto;   /* mantiene proporción */
+}
+
+
+/* Footer */
+.footer {
+  background: rgba(28, 28, 29, 0.9);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+  border-radius: 30px 30px 0 0;
+}
+.footer .socials {
+  margin: 10px 0;
+}
+.footer .socials a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer .socials a:hover {
+  color: #ffdd57;
+}
+
+
+
+
+.map-box {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  width: fit-content;
+}
+/* boton para el login*/
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* separa el título a la izquierda y el botón a la derecha */
+  align-items: center;
+  background-color: #171f3e; /* fondo oscuro */
+  padding: 15px 30px;
+  color: white;
+}

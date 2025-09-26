@@ -259,3 +259,76 @@ width: 250px;
   overflow: hidden;
   width: fit-content;
 }
+/* PAGINA DE LOGGIN*/
+
+.loggin-section {
+  background: rgba(255,255,255,0.9);
+  margin: 50px auto;
+  padding: 40px;
+  max-width: 400px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+.loggin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loggin-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.loggin-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.loggin-btn {
+  background: #139725;
+  color: rgb(8, 8, 8);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.loggin-btn:hover {
+  background: #0056d6;
+}
+.loggin-section img {
+  width: 120px;   /* ajusta el tamaño */
+  height: auto;   /* mantiene proporción */
+}
+/* boton para el login*/
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* separa el título a la izquierda y el botón a la derecha */
+  align-items: center;
+  background-color: #222; /* fondo oscuro */
+  padding: 15px 30px;
+  color: white;
+}
+
+/* Botón Login */
+.login-btn {
+  background-color: #ff5722; /* naranja brillante */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #e64a19; /* tono más oscuro en hover */
+  transform: scale(1.05); /* efecto de agrandado */
+}
