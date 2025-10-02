@@ -2,15 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("cardsContainer");
 
   // Cargar el JSON de cursos
-  fetch("../data/products.json")
+  fetch("/data/productos.json") // <- ajustamos la ruta
     .then(res => res.json())
     .then(data => {
       data.forEach(curso => {
         const card = document.createElement("div");
         card.classList.add("card");
 
+        // Asegúrate que las imágenes estén en "src" dentro del repo
         card.innerHTML = `
-          <img src="${curso.imagen}" alt="${curso.nombre}">
+          <img src="/src/${curso.imagen.split('/').pop()}" alt="${curso.nombre}">
           <h2>${curso.nombre}</h2>
           <p>${curso.descripcion}</p>
           <p><strong>Categoría:</strong> ${curso.categoria}</p>
