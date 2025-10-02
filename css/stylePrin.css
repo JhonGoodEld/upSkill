@@ -14,16 +14,6 @@ body {
 }
 
 
-/* Navbar */
-.navbar {
-   background: rgba(0, 86, 214, 0.9);
-  color: white;
-  padding: 15px 20px;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
 
 /* Hero */
 .hero {
@@ -90,13 +80,127 @@ body {
   overflow: hidden;
   width: fit-content;
 }
-/* boton para el login*/
-/* NAVBAR */
+
+
+/* ===== NAVBAR PRINCIPAL ===== */
 .navbar {
   display: flex;
-  justify-content: space-between; /* separa el título a la izquierda y el botón a la derecha */
+  justify-content: space-between; /* título a la izq, links a la der */
   align-items: center;
-  background-color: #171f3e; /* fondo oscuro */
-  padding: 15px 30px;
+  background: #0f172a; /* azul oscuro */
+  padding: 15px 20px;
   color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.login-btn {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor de enlaces en la navbar */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Botones simples */
+.menu-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 6px 10px;
+}
+
+.menu-link:hover {
+  text-decoration: underline;
+}
+
+/* Menús desplegables */
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu-btn .icon {
+  font-size: 1rem;
+}
+
+/* Contenido del menú */
+.menu-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: white;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.menu-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.menu-content a:hover {
+  background: #e2e8f0;
+}
+
+.menu-container.open .menu-content {
+  display: block;
+}
+
+/* Tema oscuro/claro */
+.dark-mode {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.dark-mode .navbar {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.dark-mode .menu-link,
+.dark-mode .menu-btn,
+.dark-mode .login-btn {
+  color: #0f172a;
+}
+
+.login-section img {
+  width: 800px;        /* ajusta el tamaño */
+  height: auto;        /* mantiene proporción */
+  border-radius: 12px; /* bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* sombra ligera */
+  display: block;      /* evita que queden en línea con otros elementos */
+  margin: 0 auto 15px; /* centra la imagen y separa del contenido */
 }

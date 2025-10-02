@@ -51,3 +51,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+// Abrir/cerrar menú hamburguesa tipo acordeón
+document.querySelectorAll(".menu-btn").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const container = btn.parentElement;
+    // cerrar otros menús
+    document.querySelectorAll(".menu-container").forEach(c => {
+      if (c !== container) c.classList.remove("open");
+    });
+    container.classList.toggle("open");
+    e.stopPropagation();
+  });
+});
+
+// Cerrar menú al hacer clic fuera
+window.addEventListener("click", () => {
+  document.querySelectorAll(".menu-container").forEach(c => c.classList.remove("open"));
+});
+
+// === Configuración: Tema ===
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
+}
+
+// === Configuración: Idioma ===
+function toggleLanguage() {
+  const elements = {
+    "Upskill Academy": "Upskill Academy",
+    "Inicio": "Home",
+    "Catálogo": "Catalog",
+    "Cursos": "Courses",
+    "Planes de carrera": "Career Paths",
+    "Certificate": "Certificate",
+    "Carrito": "Cart",
+    "Usuarios": "Users",
+    "Alumnos": "Students",
+    "Docentes": "Teachers",
+    "Configuración": "Settings",
+    "Tema": "Theme",
+    "Idioma": "Language",
+    "Documentos": "Documents",
+    "Tecnología propuesta": "Proposed Technology",
+    "Login": "Login"
+  };
+
+  document.querySelectorAll("a, button, h1").forEach(el => {
+    if (elements[el.innerText]) el.innerText = elements[el.innerText];
+  });
+}

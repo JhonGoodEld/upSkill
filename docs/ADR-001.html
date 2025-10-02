@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ADR-001: ¿Por qué (y cómo) abierto?</title>
+    <link rel="stylesheet" href="../css/stylePrin.css">
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#111827;
+      --card:#1f2937;
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --primary:#22d3ee;
+      --ok:#10b981;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --radius:16px;
+      --gap:16px;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+      background: radial-gradient(1200px 800px at 10% 10%, #172554 0%, var(--bg) 50%);
+      color:var(--text); line-height:1.5;
+    }
+    header{
+      padding:24px; border-bottom:1px solid #1f2937; background:rgba(17,24,39,.6); backdrop-filter:saturate(140%) blur(6px);
+      position:sticky; top:0; z-index:10;
+    }
+    header h1{margin:0; font-size:1.25rem}
+    main{max-width:1100px; margin:24px auto; padding:0 16px 64px}
+    .section{
+      background: linear-gradient(180deg, rgba(34,211,238,.06), rgba(34,211,238,0) 50%), var(--panel);
+      border:1px solid #1f2937; border-radius:var(--radius); padding:24px; box-shadow:var(--shadow); margin-bottom:24px;
+    }
+    .section h2{margin:0 0 12px; font-size:1.25rem}
+    .muted{color:var(--muted); font-size:.95rem}
+    .grid{display:grid; gap:var(--gap)}
+    @media (min-width: 780px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
+    .card{
+      background: var(--card); border:1px solid #334155; border-radius:var(--radius);
+      padding:16px; box-shadow: var(--shadow); margin-bottom:16px;
+    }
+    .list{margin:.25rem 0 0 .75rem; padding:0}
+    .list li{margin:.15rem 0}
+    .ok{color:var(--ok)} .warn{color:var(--warn)} .danger{color:var(--danger)}
+  </style>
+</head>
+<body>
+
+
+
+
+<!--barra de la navegacion pa-->
+<header class="navbar">
+  <h1>ADR-001: ¿Por qué (y cómo) abierto?</h1>
+
+  <!-- MENÚ SUPERIOR -->
+  <nav class="nav-links">
+    <!-- Inicio -->
+    <a href="../views/pagPrin.html" class="menu-link">Inicio</a>
+
+    
+    <!-- Configuración -->
+    <div class="menu-container">
+      <button class="menu-btn">Configuración <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="#" onclick="toggleTheme()">Tema</a>
+        <a href="#" onclick="toggleLanguage()">Idioma</a>
+      </div>
+    </div>
+
+    <!-- Documentos -->
+    <div class="menu-container">
+      <button class="menu-btn">Documentos <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="../docs/tecProp.html">Tecnología propuesta</a>
+        <a href="../docs/matriz.html">Matriz de decicion</a>
+        <a href="../docs/swimline.html">Matriz de flujo</a>
+        <a href="../docs/er.html">E-R</a>
+      </div>
+    </div>
+
+
+  </nav>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+  <main>
+    <section class="section" aria-labelledby="adr001">
+      <h2 id="adr001">Decisión de Arquitectura</h2>
+
+      <article class="card">
+        <h3>Contexto</h3>
+        <p>
+          En nuestro proyecto se busca implementar un servicio en el que el cliente pueda no solo tener sus propias funciones accesibles mediante perfiles y permisos, sino también crear clases/cursos y compartir materiales didácticos. 
+          Para lograrlo, se decidió integrar <strong>WordPress, WooCommerce y Moodle</strong>, que son plataformas abiertas y gratuitas.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Decisión</h3>
+        <p>
+          Se adopta una <strong>plataforma híbrida abierta</strong> combinando WordPress, WooCommerce y Moodle, unidas mediante un plugin como <em>Edwiser Bridge</em>, lo que permite flexibilidad y escalabilidad en la gestión de cursos y usuarios.
+        </p>
+      </article>
+
+      <div class="grid cols-2">
+        <article class="card">
+          <h3>Beneficios</h3>
+          <ul class="list">
+            <li>✔ Automatización en la venta de cursos.</li>
+            <li>✔ Gestión de usuarios sin intervención manual.</li>
+            <li>✔ Fluidez en la experiencia del usuario en un solo flujo.</li>
+            <li>✔ Certificados automáticos personalizados.</li>
+            <li>✔ Flexibilidad para agregar contenido educativo, productos digitales y físicos.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Riesgos</h3>
+          <ul class="list">
+            <li>⚠ Dependencia del plugin <em>Edwiser Bridge</em>.</li>
+            <li>⚠ Complejidad técnica al mantener tres sistemas.</li>
+            <li>⚠ Posibles problemas de rendimiento si el hosting no soporta la carga.</li>
+          </ul>
+        </article>
+      </div>
+
+      <article class="card">
+        <h3>Mitigaciones</h3>
+        <ul class="list">
+          <li>✔ Hosting de calidad optimizado para WordPress y Moodle.</li>
+          <li>✔ Monitoreo constante y respaldos frecuentes.</li>
+          <li>✔ Plugins actualizados y probados.</li>
+          <li>✔ Membresía premium de Edwiser Bridge para mayor estabilidad.</li>
+          <li>✔ Plan de contingencia: acceso manual temporal a cursos en caso de fallos.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+  
+  <script src="../js/script.js"></script>
+</body>
+</html>
