@@ -1,35 +1,44 @@
-// Cargar el JSON y generar tarjetas
-fetch('../data/productos.json')
-  .then(res => res.json())
-  .then(data => {
-    console.log("JSON cargado:", data); // <-- prueba
-    const container = document.getElementById('cardsContainer');
-    data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'card';
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("cardsContainer");
 
-            // Al generar las tarjetas en cursos.js
-            card.innerHTML = `
-              <img src="${product.imagen}" alt="${product.nombre}">
-              <div class="card-content">
-                <h2>${product.nombre}</h2>
-                <p>${product.descripcion}</p>
-                <p><strong>Categoría:</strong> ${product.categoria} | <strong>Nivel:</strong> ${product.nivel}</p>
-                <p><strong>Duración:</strong> ${product.duracion} | <strong>Valoración:</strong> ${product.valoracion} ⭐</p>
-                <p class="price"><strong>Precio:</strong> $${product.precio} MXN</p>
-                <button onclick='agregarAlCarrito(${JSON.stringify(product)})'>Agregar al carrito</button>
-              </div>
-            `;
+  // Cargar el JSON de cursos
+  fetch("../src/data/products.json")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(curso => {
+        const card = document.createElement("div");
+        card.classList.add("card");
 
+        card.innerHTML = `
+          <img src="${curso.imagen}" alt="${curso.nombre}">
+          <h2>${curso.nombre}</h2>
+          <p>${curso.descripcion}</p>
+          <p><strong>Categoría:</strong> ${curso.categoria}</p>
+          <p><strong>Precio:</strong> $${curso.precio} MXN</p>
+          <button class="btn-agregar">Agregar al carrito</button>
+        `;
 
-      container.appendChild(card);
+        // Botón "Agregar al carrito"
+        card.querySelector(".btn-agregar").addEventListener("click", () => {
+          agregarAlCarrito(curso);
+        });
+
+        container.appendChild(card);
+      });
+    })
+    .catch(err => console.error("Error al cargar productos:", err));
+
+  // Función para guardar en localStorage
+  function agregarAlCarrito(curso) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    carrito.push({
+      nombre: curso.nombre,
+      categoria: curso.categoria,
+      precio: curso.precio
     });
-  })
-  .catch(err => console.error('Error al cargar JSON:', err));
-function agregarAlCarrito(producto) {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  carrito.push(producto);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  alert(`${producto.nombre} agregado al carrito`);
-}
 
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    alert(`"${curso.nombre}" agregado al carrito ✅`);
+  }
+});
