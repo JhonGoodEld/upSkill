@@ -8,20 +8,28 @@ fetch('../data/productos.json')
       const card = document.createElement('div');
       card.className = 'card';
 
-      card.innerHTML = `
-        <img src="${product.imagen}" alt="${product.nombre}">
-        <div class="card-content">
-          <h2>${product.nombre}</h2>
-          <p>${product.descripcion}</p>
-          <p><strong>Categoría:</strong> ${product.categoria} | <strong>Nivel:</strong> ${product.nivel}</p>
-          <p><strong>Duración:</strong> ${product.duracion} | <strong>Valoración:</strong> ${product.valoracion} ⭐</p>
-          <p><strong>Precio:</strong> $${product.precio} MXN</p>
-          <button>Agregar al carrito</button>
-        </div>
-      `;
+            // Al generar las tarjetas en cursos.js
+            card.innerHTML = `
+              <img src="${product.imagen}" alt="${product.nombre}">
+              <div class="card-content">
+                <h2>${product.nombre}</h2>
+                <p>${product.descripcion}</p>
+                <p><strong>Categoría:</strong> ${product.categoria} | <strong>Nivel:</strong> ${product.nivel}</p>
+                <p><strong>Duración:</strong> ${product.duracion} | <strong>Valoración:</strong> ${product.valoracion} ⭐</p>
+                <p class="price"><strong>Precio:</strong> $${product.precio} MXN</p>
+                <button onclick='agregarAlCarrito(${JSON.stringify(product)})'>Agregar al carrito</button>
+              </div>
+            `;
+
 
       container.appendChild(card);
     });
   })
   .catch(err => console.error('Error al cargar JSON:', err));
+function agregarAlCarrito(producto) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito.push(producto);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert(`${producto.nombre} agregado al carrito`);
+}
 
