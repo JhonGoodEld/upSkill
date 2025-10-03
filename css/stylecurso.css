@@ -60,16 +60,19 @@ h1 {
   color: #007bff;
 }
 
-.card-content button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
+.card-content .btn {
+  display: inline-block;      /* para que se vea como botón */
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff !important;     /* fuerza el color */
+  border-radius: 6px;
+  text-decoration: none !important; /* quita subrayado */
+  text-align: center;
+  margin-top: auto;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.2s;
 }
 
-.card-content button:hover {
-  background: #0056d6;
+.cards-content .btn:hover {
+  background-color: #0056b3;
 }

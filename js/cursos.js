@@ -16,7 +16,7 @@ fetch('../data/productos.json')
           <p><strong>Categoría:</strong> ${product.categoria} | <strong>Nivel:</strong> ${product.nivel}</p>
           <p><strong>Duración:</strong> ${product.duracion} | <strong>Valoración:</strong> ${product.valoracion} ⭐</p>
           <p><strong>Precio:</strong> $${product.precio} MXN</p>
-          <button>Agregar al carrito</button>
+          <a href="../views/carrito.html" class="btn">Agregar al carrito</a>
         </div>
       `;
 
