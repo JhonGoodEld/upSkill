@@ -1,45 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("cardsContainer");
+// Cargar el JSON y generar tarjetas
+fetch('../data/productos.json')
+  .then(res => res.json())
+  .then(data => {
+    console.log("JSON cargado:", data); // <-- prueba
+    const container = document.getElementById('cardsContainer');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'card';
 
-  // Cargar el JSON de cursos
-  fetch("../data/productos.json") // <- ajustamos la ruta
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(curso => {
-        const card = document.createElement("div");
-        card.classList.add("card");
+      card.innerHTML = `
+        <img src="${product.imagen}" alt="${product.nombre}">
+        <div class="card-content">
+          <h2>${product.nombre}</h2>
+          <p>${product.descripcion}</p>
+          <p><strong>Categoría:</strong> ${product.categoria} | <strong>Nivel:</strong> ${product.nivel}</p>
+          <p><strong>Duración:</strong> ${product.duracion} | <strong>Valoración:</strong> ${product.valoracion} ⭐</p>
+          <p><strong>Precio:</strong> $${product.precio} MXN</p>
+          <button>Agregar al carrito</button>
+        </div>
+      `;
 
-        // Asegúrate que las imágenes estén en "src" dentro del repo
-        card.innerHTML = `
-          <img src="/src/${curso.imagen.split('/').pop()}" alt="${curso.nombre}">
-          <h2>${curso.nombre}</h2>
-          <p>${curso.descripcion}</p>
-          <p><strong>Categoría:</strong> ${curso.categoria}</p>
-          <p><strong>Precio:</strong> $${curso.precio} MXN</p>
-          <button class="btn-agregar">Agregar al carrito</button>
-        `;
-
-        // Botón "Agregar al carrito"
-        card.querySelector(".btn-agregar").addEventListener("click", () => {
-          agregarAlCarrito(curso);
-        });
-
-        container.appendChild(card);
-      });
-    })
-    .catch(err => console.error("Error al cargar productos:", err));
-
-  // Función para guardar en localStorage
-  function agregarAlCarrito(curso) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-    carrito.push({
-      nombre: curso.nombre,
-      categoria: curso.categoria,
-      precio: curso.precio
+      container.appendChild(card);
     });
+  })
+  .catch(err => console.error('Error al cargar JSON:', err));
 
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert(`"${curso.nombre}" agregado al carrito ✅`);
-  }
-});
