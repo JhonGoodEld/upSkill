@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("cardsContainer");
 
   // Cargar el JSON de cursos
-  fetch("/data/productos.json") // <- ajustamos la ruta
+  fetch("../data/productos.json") // <- ajustamos la ruta
     .then(res => res.json())
     .then(data => {
       data.forEach(curso => {
