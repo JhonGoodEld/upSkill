@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Integración Tecnológica (Simulada) — Proyecto NE I</title>
+  <link rel="stylesheet" href="../css/stylePrin.css">
+
   <style>
     :root{
       --bg:#0f172a;          /* gris-azul oscuro */
@@ -69,9 +71,42 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Integración Tecnológica (Simulada) — Proyecto Negocios Electrónicos I</h1>
-  </header>
+  
+<!--barra de la navegacion pa-->
+<header class="navbar">
+  <h1>Integración Tecnológica (Simulada) — Proyecto Negocios Electrónicos I</h1>
+
+  <!-- MENÚ SUPERIOR -->
+  <nav class="nav-links">
+    <!-- Inicio -->
+    <a href="../views/pagPrin.html" class="menu-link">Inicio</a>
+
+    
+    <!-- Configuración -->
+    <div class="menu-container">
+      <button class="menu-btn">Configuración <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="#" onclick="toggleTheme()">Tema</a>
+        <a href="#" onclick="toggleLanguage()">Idioma</a>
+      </div>
+    </div>
+
+    <!-- Documentos -->
+    <div class="menu-container">
+      <button class="menu-btn">Documentos <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="../docs/ADR-001.html">Tenologia Propuesta </a>
+        <a href="../docs/tecProp.html">Infraestructura</a>
+        <a href="../docs/matriz.html">Matriz de decicion (pendiente de anexar en infraestructura)</a>
+        <a href="../docs/swimline.html">Matriz de flujo (pendiente de anexar en infraestructura)</a>
+        <a href="../docs/er.html">E-R (pendiente de anexar en infraestructura)</a>
+      </div>
+    </div>
+
+
+  </nav>
+</header>
+
 
   <main>
     
@@ -194,5 +229,6 @@
       
     </section>
   </main>
+  <script src="../js/script.js"></script>
 </body>
 </html>
