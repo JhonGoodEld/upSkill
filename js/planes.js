@@ -1,11 +1,6 @@
 // ===============================
-// 📘 Generador dinámico de Planes de Carrera
+// 📘 Generador dinámico de Planes de Carrera (versión moderna)
 // ===============================
-
-// ⚠️ Importante: Asegúrate de que este archivo se cargue DESPUÉS del archivo donde está tu JSON de cursos
-// Ejemplo en tu HTML:
-// <script src="cursos.js"></script>
-// <script src="planes.js"></script>
 
 const planes = [
   {
@@ -52,39 +47,53 @@ const planes = [
   }
 ];
 
-function generarPlanes() {
+// ===============================
+// 🧩 Cargar JSON y generar planes
+// ===============================
+async function generarPlanes() {
   const contenedor = document.getElementById("planesContainer");
-  if (!contenedor) {
-    console.warn("⚠️ No se encontró el contenedor con id 'planesContainer'");
-    return;
+  if (!contenedor) return console.warn("⚠️ No se encontró el contenedor con id 'planesContainer'");
+
+  try {
+    // 📥 Carga del archivo JSON (ajusta la ruta si es necesario)
+    const response = await fetch("../data/productos.json");
+    if (!response.ok) throw new Error("No se pudo cargar el archivo de cursos");
+    const cursos = await response.json();
+
+    contenedor.innerHTML = "";
+
+    planes.forEach(plan => {
+      // Buscar los cursos que coincidan por tag o nombre
+      const cursosPlan = cursos.filter(curso =>
+        plan.cursos.some(tag =>
+          curso.tags.some(t => t.toLowerCase().includes(tag.toLowerCase())) ||
+          curso.nombre.toLowerCase().includes(tag.toLowerCase())
+        )
+      );
+
+      const listaCursos = cursosPlan.length > 0
+        ? cursosPlan.map(c => `<li>${c.nombre}</li>`).join("")
+        : "<li>No se encontraron cursos asociados</li>";
+
+      const card = `
+        <div class="plan-card">
+          <img src="${plan.imagen}" alt="${plan.nombre}">
+          <h2>${plan.nombre}</h2>
+          <p>${plan.descripcion}</p>
+          <h4>Cursos incluidos:</h4>
+          <ul>${listaCursos}</ul>
+          <button class="btn-plan">Explorar plan</button>
+        </div>
+      `;
+
+      contenedor.innerHTML += card;
+    });
+  } catch (error) {
+    console.error("❌ Error al generar los planes:", error);
+    contenedor.innerHTML = "<p>Error al cargar los planes de carrera.</p>";
   }
-
-  contenedor.innerHTML = "";
-
-  planes.forEach(plan => {
-    // Filtramos los cursos del JSON global (variable 'cursos' definida en cursos.js)
-    const cursosPlan = cursos.filter(curso =>
-      plan.cursos.some(tag => curso.tags.some(t => t.toLowerCase().includes(tag.toLowerCase())))
-    );
-
-    const listaCursos = cursosPlan.length > 0
-      ? cursosPlan.map(c => `<li>${c.nombre}</li>`).join("")
-      : "<li>No se encontraron cursos asociados</li>";
-
-    const card = `
-      <div class="plan-card">
-        <img src="${plan.imagen}" alt="${plan.nombre}">
-        <h2>${plan.nombre}</h2>
-        <p>${plan.descripcion}</p>
-        <h4>Cursos incluidos:</h4>
-        <ul>${listaCursos}</ul>
-        <button class="btn-plan">Explorar plan</button>
-      </div>
-    `;
-
-    contenedor.innerHTML += card;
-  });
 }
 
 // Ejecutar automáticamente al cargar la página
 document.addEventListener("DOMContentLoaded", generarPlanes);
+

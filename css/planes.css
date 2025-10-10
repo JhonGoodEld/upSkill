@@ -1,0 +1,131 @@
+/* ===============================
+   🌟 Estilos de Planes de Carrera
+   =============================== */
+
+:root {
+  --color-bg: #0f172a;
+  --color-card: #1e293b;
+  --color-accent: #38bdf8;
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-btn-hover: #0284c7;
+  --radius: 1rem;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  --transition: all 0.3s ease;
+  --max-width: 1200px;
+  --font: "Segoe UI", Arial, sans-serif;
+}
+
+/* === Fondo general === */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* === Contenedor principal === */
+#planesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: var(--max-width);
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+/* === Tarjetas de planes === */
+.plan-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(56, 189, 248, 0.25);
+}
+
+/* === Imagen del plan === */
+.plan-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* === Título y descripción === */
+.plan-card h2 {
+  font-size: 1.4rem;
+  color: var(--color-accent);
+  margin: 1rem;
+}
+
+.plan-card p {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  margin: 0 1rem 1rem;
+}
+
+/* === Lista de cursos === */
+.plan-card h4 {
+  margin: 0 1rem;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.plan-card ul {
+  list-style: none;
+  padding: 0 1rem 1rem;
+  margin: 0;
+}
+
+.plan-card ul li {
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--color-accent);
+  margin-bottom: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.plan-card ul li:hover {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+/* === Botón === */
+.btn-plan {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-plan:hover {
+  background-color: var(--color-btn-hover);
+  transform: scale(1.03);
+}
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+  #planesContainer {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem;
+  }
+
+  .plan-card img {
+    height: 160px;
+  }
+}
