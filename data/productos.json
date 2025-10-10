@@ -131,7 +131,7 @@
     "tags": ["Ciberseguridad", "Redes", "Protección de Datos"],
     "descuento": 10,
     "fechaPublicacion": "2025-07-12",
-    "imagen": "../src/ciber.jpg",
+    "imagen": "../src/ciber",
     "descripcion": "Aprende los fundamentos de la ciberseguridad y cómo proteger tus sistemas personales o empresariales."
   },
   {
@@ -236,7 +236,7 @@
     "tags": ["Deep Learning", "TensorFlow", "Python"],
     "descuento": 25,
     "fechaPublicacion": "2025-09-25",
-    "imagen": "../src/deeplearning.jpg",
+    "imagen": "../src/deep.jpg",
     "descripcion": "Entrena redes neuronales profundas aplicadas a visión e inteligencia artificial."
   },
   {
