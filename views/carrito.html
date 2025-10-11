@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrito de compra</title>
   <link rel="stylesheet" href="../css/stylePrin.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/stylecurso.css">
+  <link rel="stylesheet" href="../css/carrito.css"> 
 </head>
 <body>
 <!--barra de la navegacion pa-->
@@ -38,9 +37,6 @@
       <div class="menu-content">
         <a href="../docs/ADR-001.html">Tenologia Propuesta </a>
         <a href="../docs/tecProp.html">Infraestructura</a>
-        <a href="../docs/matriz.html">Matriz de decicion (pendiente de anexar en infraestructura)</a>
-        <a href="../docs/swimline.html">Matriz de flujo (pendiente de anexar en infraestructura)</a>
-        <a href="../docs/er.html">E-R (pendiente de anexar en infraestructura)</a>
     </div>
 
         <!-- Usuarios -->
@@ -54,8 +50,44 @@
   </nav>
 </header>
 
-  <h2 style="text-align:center;">Carrito </h2>
-  <div class="productos" id="carrito"></div>
+<main class="carrito-page">
+    <!-- 🛒 Cursos seleccionados -->
+    <section id="carrito" class="carrito-lista"></section>
+
+    <!-- 💳 Resumen de pago -->
+    <aside class="resumen">
+      <h2>Resumen de compra</h2>
+      <p><strong>Subtotal:</strong> <span id="subtotal">$0.00 MXN</span></p>
+      <p><strong>IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
+      <p><strong>Total:</strong> <span id="total">$0.00 MXN</span></p>
+
+      <h3>Método de pago</h3>
+      <div class="metodos">
+        <label><input type="radio" name="metodo" value="Débito" checked> Débito</label>
+        <label><input type="radio" name="metodo" value="Crédito"> Crédito</label>
+        <label><input type="radio" name="metodo" value="PayPal"> PayPal</label>
+      </div>
+
+      <button id="btnPagar" class="btn-pagar">Realizar pago</button>
+    </aside>
+  </main>
+
+    <!-- 🪟 Modal de confirmación -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2>Confirmar pago</h2>
+      <p>Introduce tu correo para enviar los datos de facturación:</p>
+      <input type="email" id="correo" placeholder="tuemail@ejemplo.com">
+      <div class="modal-actions">
+        <button id="btnConfirmar" class="btn-confirmar">Confirmar</button>
+        <button id="btnCancelar" class="btn-cancelar">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
 
   <!-- FOOTER -->
   <footer class="footer">

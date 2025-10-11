@@ -1,0 +1,205 @@
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent: #38bdf8;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --radius: 1rem;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  --transition: all 0.3s ease;
+  --font: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  margin: 0;
+  padding: 2rem;
+}
+
+/* === Estructura principal === */
+.carrito-page {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* === Sección izquierda (tarjetas) === */
+.carrito-lista {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* === Tarjetas === */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.card-content h2 {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.card-content p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.3rem 0;
+}
+
+.card-content button {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.card-content button:hover {
+  background: #0284c7;
+}
+
+/* === Panel lateral (resumen) === */
+.resumen {
+  flex: 1;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+}
+
+.resumen h2, .resumen h3 {
+  color: var(--accent);
+}
+
+.resumen p {
+  margin: 0.6rem 0;
+  font-size: 0.95rem;
+}
+
+.metodos label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.btn-pagar {
+  background: var(--accent);
+  color: var(--bg);
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-pagar:hover {
+  background: #0284c7;
+}
+
+/* === Modal === */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  text-align: center;
+  width: 320px;
+  box-shadow: var(--shadow);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  margin-top: 1rem;
+  background: #334155;
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.btn-confirmar, .btn-cancelar {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-confirmar {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-confirmar:hover {
+  background: #0284c7;
+}
+
+.btn-cancelar {
+  background: #475569;
+  color: var(--text);
+}
+
+.btn-cancelar:hover {
+  background: #64748b;
+}
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+  .carrito-page {
+    flex-direction: column;
+  }
+
+  .resumen {
+    position: static;
+    margin-top: 1rem;
+  }
+}
