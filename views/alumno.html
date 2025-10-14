@@ -3,25 +3,25 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planes de carrrera</title>
+    <title>Panel del Alumno — Upskill Academy</title>
     <link rel="stylesheet" href="../css/stylePrin.css">
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/planes.css">
-    
+    <link rel="stylesheet" href="../css/alumno.css" />
+
     </head>
     <body>
     <!--barra de la navegacion pa-->
     <header class="navbar">
-    <h1>Planes de carrera</h1>
+    <h1>Upskill Academy</h1>
 
     <!-- MENÚ SUPERIOR -->
     <nav class="nav-links">
-        <!-- Inicio -->
-        <a href="../views/pagPrin.html" class="menu-link">Inicio</a>
-
         <!-- Enlaces directos -->
         <a href="../views/cursos.html" class="menu-link">Cursos</a>
+        <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
         <a href="#" class="menu-link">Certificate</a>
+
+        <!-- Carrito -->
         <a href="../views/carrito.html" class="menu-link">Carrito</a>
 
         <!-- Configuración -->
@@ -33,30 +33,25 @@
         </div>
         </div>
 
-    <!-- Documentos -->
-        <div class="menu-container">
-        <button class="menu-btn">Documentos <span class="icon">▼</span></button>
-        <div class="menu-content">
-            <a href="../docs/ADR-001.html">Tenologia Propuesta </a>
-            <a href="../docs/tecProp.html">Infraestructura</a>
-        </div>
-        </div>
-
-            <!-- Usuarios -->
-        <div class="menu-container">
-        <button class="menu-btn">Loggin <span class="icon">▼</span></button>
-        <div class="menu-content">
-            <a href="../views/loggin.html">Alumnos</a>
-            <a href="../views/loggin.html">Docentes</a>
-            <a href="../views/loggin.html">Administrador</a>
-        </div>
-        </div>
+        <a href="../views/pagPrin.html" class="menu-link">Loggout</a>
     </nav>
     </header>
 
+            <main class="alumno-container">
+        <section class="mis-cursos">
+        <h2>🎓 Mis Cursos</h2>
+        <div id="cursosContainer" class="cursos-grid"></div>
+        </section>
 
-    <main class="planes-container" id="planesContainer">
-    <!-- Las tarjetas se generan dinámicamente -->
+        <section class="tareas">
+        <h2>📋 Tareas Pendientes</h2>
+        <ul id="listaTareas" class="lista-tareas"></ul>
+        </section>
+
+        <section class="mensajes">
+        <h2>💬 Centro de Mensajes</h2>
+        <div id="mensajesContainer" class="mensajes-box"></div>
+        </section>
     </main>
 
 
@@ -86,8 +81,8 @@
 
         <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
     </footer>
-    <script src="../js/planes.js"></script>
-    <script src="../js/script.js"></script>
 
+    <script src="../js/script.js"></script>
+    <script src="../js/alumno.js"></script>
     </body>
     </html>
