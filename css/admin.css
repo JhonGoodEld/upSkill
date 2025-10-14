@@ -1,0 +1,207 @@
+    /* ===========================
+    ADMIN PANEL — Upskill
+    =========================== */
+    body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    margin: 0;
+    padding: 0;
+    }
+
+    .admin-header {
+    background: #1d4ed8;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .admin-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    }
+
+    /* Acordeón */
+    .accordion {
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    padding: 14px 20px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: 0.3s;
+    margin-bottom: 10px;
+    }
+
+    .accordion:hover {
+    background: #1e40af;
+    }
+
+    .panel {
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 20px;
+    display: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Tablas */
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    }
+
+    th, td {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px;
+    text-align: left;
+    }
+
+    th {
+    background-color: #eff6ff;
+    color: #1e3a8a;
+    }
+
+    /* Formularios */
+    form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+
+    input, textarea {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    }
+
+    button[type="submit"] {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    }
+
+    button[type="submit"]:hover {
+    background: #1e3a8a;
+    }
+
+        /* ===== Botones de acción ===== */
+    .btn-toggle {
+    padding: 6px 12px;
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    }
+
+    .btn-toggle:hover {
+    background: #2563eb;
+    }
+
+    /* ===== Modal ===== */
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+    }
+
+    .modal-content h3 {
+    color: #16a34a;
+    }
+
+    .modal-content button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    }
+
+    .modal-content button:hover {
+    background: #1e3a8a;
+    }
+
+
+
+            /* --- Crear plan de carrera --- */
+    #formPlan {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    }
+
+    #formPlan input,
+    #formPlan textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    }
+
+    #formPlan button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    }
+
+    #formPlan button:hover {
+    background-color: #1e40af;
+    }
+
+    /* --- Toast --- */
+    .toast {
+    visibility: hidden;
+    min-width: 280px;
+    background-color: #16a34a;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px;
+    position: fixed;
+    z-index: 100;
+    right: 20px;
+    bottom: 20px;
+    font-size: 15px;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+    }
+
+    .toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 30px;
+    }

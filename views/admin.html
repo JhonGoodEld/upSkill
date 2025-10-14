@@ -1,0 +1,157 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración — Upskill Academy</title>
+    <link rel="stylesheet" href="../css/stylePrin.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/admin.css" />
+    </head>
+    <body>
+    <!--barra de la navegacion pa-->
+    <header class="navbar">
+    <h1>Dashboard</h1>
+    <p>Gestión interna de Upskill Academy</p>
+
+    <!-- MENÚ SUPERIOR -->
+    <nav class="nav-links">
+        <!-- Inicio -->
+        <a href="../views/pagPrin.html" class="menu-link">Loggout</a>
+    </nav>
+    </header>
+
+
+
+
+
+
+
+    <body>
+    <main class="admin-container">
+
+            <!-- Inventario de cursos -->
+        <section class="admin-section">
+        <button class="accordion">📦 Inventario de cursos</button>
+        <div class="panel">
+            <table id="tablaCursos">
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            </table>
+        </div>
+        </section>
+
+            <!-- Alta y lista de docentes -->
+    <section class="admin-section">
+    <button class="accordion">👨‍🏫 Alta y registro de docentes</button>
+    <div class="panel">
+        <form id="formDocente">
+        <input type="text" placeholder="Nombre completo" required />
+        <input type="text" placeholder="Especialidad" required />
+        <input type="email" placeholder="Correo institucional" required />
+        <button type="submit">Registrar docente</button>
+        </form>
+
+        <h3>Docentes registrados</h3>
+        <ul id="listaDocentes"></ul>
+    </div>
+    </section>
+            
+            <!-- Estudiantes y pagos -->
+        <section class="admin-section">
+        <button class="accordion">🎓 Estudiantes y pagos</button>
+        <div class="panel">
+            <table id="tablaEstudiantes">
+            <thead>
+                <tr>
+                <th>Nombre</th>
+                <th>Curso inscrito</th>
+                <th>Pago</th>
+                <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            </table>
+        </div>
+        </section>
+
+
+
+            <section class="admin-section">
+    <button class="accordion">🎯 Crear plan de carrera</button>
+    <div class="panel">
+        <form id="formPlan">
+        <input type="text" placeholder="Nombre del plan" />
+        <textarea placeholder="Descripción"></textarea>
+        <input type="text" placeholder="Cursos requeridos" />
+        <button type="submit">Crear plan</button>
+        </form>
+
+        <dialog id="modalPlan">
+        <p>✅ Plan de carrera creado con éxito.</p>
+        <button id="cerrarModal">Cerrar</button>
+        </dialog>
+    </div>
+    </section>
+    
+<!-- Toast -->
+<div id="toast" class="toast">✅ Plan de carrera creado con éxito</div>
+
+
+        <!-- Modificar cursos -->
+        <section class="admin-section">
+        <button class="accordion">🛠️ Modificar cursos</button>
+        <div class="panel">
+            <div id="modificarCursos"></div>
+        </div>
+        </section>
+    </main>
+
+        <!-- Modal de confirmación -->
+    <div id="modalPlan" class="modal">
+        <div class="modal-content">
+        <h3>✅ Plan creado con éxito</h3>
+        <p>El nuevo plan de carrera ha sido registrado correctamente.</p>
+        <button id="cerrarModal">Cerrar</button>
+        </div>
+    </div>
+
+    </main>
+
+    </body>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="socials">
+        </div>
+
+        <!-- Mini mapa -->
+        <div class="map-box">
+        </div>
+
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/admin.js"></script>
+    </body>
+    </html>
+
