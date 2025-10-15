@@ -90,10 +90,11 @@
         `;
         document.body.appendChild(modal);
 
-        // Cerrar modal
-        document.getElementById("cerrarModal").addEventListener("click", () => {
+            const btnCerrar = modal.querySelector("#cerrarModal");
+    btnCerrar.addEventListener("click", () => {
         modal.remove();
-        });
+    });
+
 
         // Limpiar formulario
         formDocente.reset();
@@ -148,7 +149,7 @@
     cursos.forEach(c => {
     const div = document.createElement("div");
     div.innerHTML = `
-        <strong>${c.nombre}</strong> — $${c.precio}
+        <strong>${c.nombre}</strong> — $${c.precio}</strong> — $${c.categoria}</strong> — $${c.estado}
         <button>Editar</button>
     `;
     modificarContainer.appendChild(div);
