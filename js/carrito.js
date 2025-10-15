@@ -67,14 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
   });
 
-  btnConfirmar.addEventListener("click", () => {
-    const correo = document.getElementById("correo").value.trim();
-    if (!correo) {
-      alert("Por favor, ingresa un correo válido.");
-      return;
-    }
+    btnConfirmar.addEventListener("click", () => {
+    const correo = document.getElementById("correo").value.trim() || "No especificado";
 
+    alert(`Datos de facturación enviados a: ${correo}`);
     modal.style.display = "none";
-    alert(`✅ Gracias por tu compra. Los datos de facturación se enviarán a ${correo}.`);
   });
+
 });
+

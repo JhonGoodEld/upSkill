@@ -1,0 +1,79 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Docente — Upskill Academy</title>
+    <link rel="stylesheet" href="../css/stylePrin.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/docente.css">
+    <!--barra de la navegacion pa-->
+    <header class="navbar">
+    <h1>Upskill Academy</h1>
+
+    <!-- MENÚ SUPERIOR -->
+    <nav class="nav-links">
+        
+        <a href="../views/pagPrin.html" class="menu-link">Loggout</a>
+    </nav>
+    </header>
+
+    <main class="docente-container">
+
+        <!-- === CURSOS ADMINISTRADOS === -->
+        <section class="section">
+            <h2>📚 Cursos Administrados</h2>
+            <div id="cursosDocente" class="cards-container"></div>
+        </section>
+
+        <!-- === TAREAS POR REVISAR === -->
+        <section class="section">
+            <h2>🧾 Tareas por Revisar</h2>
+            <ul id="tareasPorRevisar" class="tareas-list"></ul>
+        </section>
+
+        <!-- === TAREAS Y EXÁMENES POR ASIGNAR === -->
+        <section class="section">
+            <h2>📝 Tareas y Exámenes por Asignar</h2>
+            <div id="asignaciones" class="asignaciones-container"></div>
+        </section>
+
+        <!-- === CENTRO DE MENSAJES === -->
+        <section class="section">
+            <h2>💬 Centro de Mensajes</h2>
+            <div id="mensajesDocente" class="mensajes-container"></div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Contáctanos: info@upskillacademy.com</p>
+        <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">X</a>
+        </div>
+
+        <!-- Mini mapa -->
+        <div class="map-box">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7405.016463787836!2d-102.26194134999997!3d21.876496550000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee06c2b22ec7%3A0x9b6c521bf9a86b1a!2sInstituto%20Tecnol%C3%B3gico%20de%20Aguascalientes%2C%20Aguascalientes%2C%20Ags.!5e0!3m2!1ses-419!2smx!4v1758165144069!5m2!1ses-419!2smx" 
+            width="300" 
+            height="200" 
+            style="border:0; border-radius:12px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        </div>
+
+        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/docente.js"></script>
+
+    </body>
+    </html>
