@@ -1,0 +1,122 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de compra</title>
+    <link rel="stylesheet" href="../css/stylePrin.css">
+    <link rel="stylesheet" href="../css/carrito.css"> 
+    </head>
+    <body>
+    <!--barra de la navegacion pa-->
+    <header class="navbar">
+    <h1>Carrito</h1>
+
+    <!-- MENÚ SUPERIOR -->
+    <nav class="nav-links">
+        <!-- Inicio -->
+        <a href="../views/pagPrin.html" class="menu-link">Inicio</a>
+
+        <!-- Enlaces directos -->
+        <a href="../views/cursos.html" class="menu-link">Cursos</a>
+        <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
+        <a href="#" class="menu-link">Certificate</a>
+
+        <!-- Configuración -->
+        <div class="menu-container">
+        <button class="menu-btn">Configuración <span class="icon">▼</span></button>
+        <div class="menu-content">
+            <a href="#" onclick="toggleTheme()">Tema</a>
+            <a href="#" onclick="toggleLanguage()">Idioma</a>
+        </div>
+        </div>
+
+        <!-- Documentos -->
+        <div class="menu-container">
+        <button class="menu-btn">Documentos <span class="icon">▼</span></button>
+        <div class="menu-content">
+            <a href="../docs/ADR-001.html">Tenologia Propuesta </a>
+            <a href="../docs/tecProp.html">Infraestructura</a>
+        </div>
+
+            <!-- Usuarios -->
+        <div class="menu-container">
+        <button class="menu-btn">Loggin <span class="icon">▼</span></button>
+        <div class="menu-content">
+            <a href="../views/loggin.html">Alumnos</a>
+            <a href="../views/loggin.html">Docentes</a>
+        </div>
+        </div>
+    </nav>
+    </header>
+
+    <main class="carrito-page">
+        <!-- 🛒 Cursos seleccionados -->
+        <section id="carrito" class="carrito-lista"></section>
+
+        <!-- 💳 Resumen de pago -->
+        <aside class="resumen">
+        <h2>Resumen de compra</h2>
+        <p><strong>Subtotal:</strong> <span id="subtotal">$0.00 MXN</span></p>
+        <p><strong>IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
+        <p><strong>Total:</strong> <span id="total">$0.00 MXN</span></p>
+
+        <h3>Método de pago</h3>
+        <div class="metodos">
+            <label><input type="radio" name="metodo" value="Débito" checked> Débito</label>
+            <label><input type="radio" name="metodo" value="Crédito"> Crédito</label>
+            <label><input type="radio" name="metodo" value="PayPal"> PayPal</label>
+        </div>
+
+        <button id="btnPagar" class="btn-pagar">Realizar pago</button>
+        
+        </aside>
+    </main>
+
+        <!-- 🪟 Modal de confirmación -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+        <h2>Confirmar pago</h2>
+        <p>Introduce tu correo para enviar los datos de facturación:</p>
+        <input type="email" id="correo" placeholder="tuemail@ejemplo.com">
+        <div class="modal-actions">
+            <button id="btnConfirmar" class="btn-confirmar">Confirmar</button>
+            <button id="btnCancelar" class="btn-cancelar">Cancelar</button>
+        </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Contáctanos: info@upskillacademy.com</p>
+        <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">X</a>
+        </div>
+
+        <!-- Mini mapa -->
+        <div class="map-box">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7405.016463787836!2d-102.26194134999997!3d21.876496550000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee06c2b22ec7%3A0x9b6c521bf9a86b1a!2sInstituto%20Tecnol%C3%B3gico%20de%20Aguascalientes%2C%20Aguascalientes%2C%20Ags.!5e0!3m2!1ses-419!2smx!4v1758165144069!5m2!1ses-419!2smx" 
+            width="300" 
+            height="200" 
+            style="border:0; border-radius:12px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        </div>
+
+        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/carritoini.js"></script>
+    </body>
+    </html>
