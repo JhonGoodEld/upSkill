@@ -42,20 +42,64 @@
     }
     });
 
+        document.addEventListener("DOMContentLoaded", () => {
     // ======== Mock: Docentes registrados =========
     const docentes = [
-    { nombre: "Laura Hernández", especialidad: "Desarrollo Web" },
-    { nombre: "Miguel Torres", especialidad: "Ciencia de Datos" },
-    { nombre: "Carla López", especialidad: "Ciberseguridad" },
-    { nombre: "Roberto Díaz", especialidad: "Inteligencia Artificial" }
+        { nombre: "Laura Hernández", especialidad: "Desarrollo Web" },
+        { nombre: "Miguel Torres", especialidad: "Ciencia de Datos" },
+        { nombre: "Carla López", especialidad: "Ciberseguridad" },
+        { nombre: "Roberto Díaz", especialidad: "Inteligencia Artificial" }
     ];
 
-    const listaDocentes = document.querySelector("#listaDocentes");
-    docentes.forEach(d => {
-    const li = document.createElement("li");
-    li.textContent = `${d.nombre} — ${d.especialidad}`;
-    listaDocentes.appendChild(li);
+    const listaDocentes = document.getElementById("listaDocentes");
+    const formDocente = document.getElementById("formDocente");
+
+    // Mostrar docentes iniciales
+    function mostrarDocentes() {
+        listaDocentes.innerHTML = "";
+        docentes.forEach(d => {
+        const li = document.createElement("li");
+        li.textContent = `${d.nombre} — ${d.especialidad}`;
+        listaDocentes.appendChild(li);
+        });
+    }
+
+    mostrarDocentes();
+
+    // Registrar docente (sin validaciones)
+    formDocente.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const nombre = formDocente.querySelector('input[placeholder="Nombre completo"]').value || "Docente genérico";
+        const especialidad = formDocente.querySelector('input[placeholder="Especialidad"]').value || "Sin especialidad";
+        const correo = formDocente.querySelector('input[placeholder="Correo institucional"]').value || "correo@institucion.mx";
+
+        // Agregar al mock local
+        docentes.push({ nombre, especialidad, correo });
+        mostrarDocentes();
+
+        // Crear modal de éxito
+        const modal = document.createElement("div");
+        modal.className = "modal-mensaje";
+        modal.innerHTML = `
+        <div class="modal-contenido">
+            <h3>✅ Registro exitoso</h3>
+            <p>El docente ha sido registrado correctamente.</p>
+            <button id="cerrarModal">Aceptar</button>
+        </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Cerrar modal
+        document.getElementById("cerrarModal").addEventListener("click", () => {
+        modal.remove();
+        });
+
+        // Limpiar formulario
+        formDocente.reset();
     });
+    });
+
 
     // ======== Mock: Estudiantes =========
     const estudiantes = [

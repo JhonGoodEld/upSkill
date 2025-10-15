@@ -19,7 +19,7 @@
         return seleccionados;
     }
 
-    fetch('../data/productos.json')
+    fetch("../data/productos.json")
         .then(res => res.json())
         .then(data => {
         const seleccionados = obtenerProductosAleatorios(data);
@@ -30,8 +30,8 @@
         seleccionados.forEach(product => {
             subtotal += product.precio;
 
-            const card = document.createElement('div');
-            card.className = 'card';
+            const card = document.createElement("div");
+            card.className = "card";
 
             card.innerHTML = `
             <img src="${product.imagen}" alt="${product.nombre}">
@@ -41,7 +41,7 @@
                 <p><strong>Categoría:</strong> ${product.categoria}</p>
                 <p><strong>Nivel:</strong> ${product.nivel}</p>
                 <p><strong>Precio:</strong> $${product.precio} MXN</p>
-                <button>50% off</button> 
+                <button>50% off</button>
             </div>
             `;
 
@@ -58,23 +58,20 @@
         })
         .catch(err => console.error("Error al cargar productos:", err));
 
-    // === Modal ===
-    btnPagar = document.getElementById("btnPagar");
-
+    // === Redirección del botón "Realizar pago" ===
     btnPagar.addEventListener("click", () => {
-    window.location.href = "../views/registro.html";
+        window.location.href = "../views/registro.html";
     });
 
-
+    // === Botones del modal (solo en caso de que aún lo uses en otro contexto) ===
     btnCancelar.addEventListener("click", () => {
         modal.style.display = "none";
     });
 
-        btnConfirmar.addEventListener("click", () => {
+    btnConfirmar.addEventListener("click", () => {
         const correo = document.getElementById("correo").value.trim() || "No especificado";
-
         alert(`Datos de facturación enviados a: ${correo}`);
         modal.style.display = "none";
     });
-
     });
+
