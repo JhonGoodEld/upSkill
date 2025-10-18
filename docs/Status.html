@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disponibilidad del Servicio (SLA)</title>
+  <link rel="stylesheet" href="../css/stylePrin.css">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <h1>Infraestructura</h1>
+
+  <nav class="nav-links">
+    <a href="../views/pagPrin.html" class="menu-link">Inicio</a>
+
+    <div class="menu-container">
+      <button class="menu-btn">Configuración <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="#" onclick="toggleTheme()">Tema</a>
+        <a href="#" onclick="toggleLanguage()">Idioma</a>
+      </div>
+    </div>
+
+    <div class="menu-container">
+      <button class="menu-btn">Documentos <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="../docs/ADR-001.html">Tecnología Propuesta</a>
+        <a href="../views/disponibilidad.html">Disponibilidad (SLA)</a>
+        <a href="../views/status.html">Estado del Servicio</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <div class="card">
+        <h1>Estado del Servicio: 🟢 ON</h1>
+        <div class="kpi"><strong>Uptime:</strong> <span class="ok">99.9%</span></div>
+        <div class="kpi"><strong>Latencia promedio:</strong> 120 ms</div>
+        <div class="kpi"><strong>Última actualización:</strong> 18/10/2025 10:30</div>
+    </div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<section class="login-section">
+  <form class="login-form panel">
+    <h1>Disponibilidad del Servicio (SLA)</h1>
+    <p>
+      En esta sección presentamos los acuerdos de nivel de servicio (SLA) que garantizan la disponibilidad y desempeño de nuestras plataformas.
+    </p>
+
+    <table class="sla-table" style="width:100%; border-collapse:collapse; margin-top:1.5rem;">
+      <thead style="background-color:#40739e; color:white;">
+        <tr>
+          <th style="padding:12px; text-align:left;">Servicio</th>
+          <th style="padding:12px; text-align:left;">Disponibilidad Garantizada</th>
+          <th style="padding:12px; text-align:left;">Tiempo de Respuesta</th>
+          <th style="padding:12px; text-align:left;">Ventana de Mantenimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color:#f5f6fa;">
+          <td style="padding:10px;">API Principal</td>
+          <td style="padding:10px;">99.9%</td>
+          <td style="padding:10px;">&lt; 200 ms</td>
+          <td style="padding:10px;">Sábados 02:00–03:00 AM (UTC)</td>
+        </tr>
+        <tr>
+          <td style="padding:10px;">Panel de Control</td>
+          <td style="padding:10px;">99.5%</td>
+          <td style="padding:10px;">&lt; 500 ms</td>
+          <td style="padding:10px;">Domingos 01:00–02:00 AM (UTC)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note" style="margin-top:1.5rem; background-color:#e1f5e6; border-left:5px solid #44bd32; padding:1rem; border-radius:6px;">
+      <strong>Nota al cliente:</strong>  
+      Trabajamos constantemente para mantener la disponibilidad de nuestros servicios por encima del 99.9%.  
+      En caso de incidentes o mantenimientos programados, notificaremos con anticipación en la página de 
+      <a href="../docs/Status.html" style="color:#40739e; text-decoration:underline;">Estado del Servicio</a>.
+    </div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Contáctanos: info@upskillacademy.com</p>
+  <div class="socials">
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">X</a>
+  </div>
+
+  <div class="map-box">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7405.016463787836!2d-102.26194134999997!3d21.876496550000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee06c2b22ec7%3A0x9b6c521bf9a86b1a!2sInstituto%20Tecnol%C3%B3gico%20de%20Aguascalientes!5e0!3m2!1ses-419!2smx!4v1758165144069!
