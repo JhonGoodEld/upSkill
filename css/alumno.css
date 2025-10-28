@@ -92,3 +92,27 @@
     color: #6b7280;
     font-size: 13px;
     }
+
+    /* ===== Barra de progreso ===== */
+.progreso-container {
+    width: 100%;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 6px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.progreso-barra {
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 6px 0 0 6px;
+    transition: width 0.5s ease;
+}
+
+.porcentaje {
+    font-size: 14px;
+    color: #555;
+    text-align: right;
+    margin-top: 4px;
+}

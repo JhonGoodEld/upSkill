@@ -13,6 +13,11 @@
         <h3>${curso.nombre}</h3>
         <p><strong>Duración:</strong> ${curso.duracion}</p>
         <p><strong>Precio:</strong> $${curso.precio} MXN</p>
+        <div class="progreso-container">
+        <div class="progreso-barra" style="width: ${Math.floor(Math.random() * 100)}%;"></div>
+        </div>
+        <p class="porcentaje">${Math.floor(Math.random() * 100)}% completado</p>
+
         `;
 
         cursosContainer.appendChild(card);
@@ -80,3 +85,8 @@
     `;
     mensajesContainer.appendChild(div);
     });
+    
+
+
+
+
