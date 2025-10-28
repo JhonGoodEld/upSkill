@@ -19,6 +19,10 @@
             <p><strong>Categoría:</strong> ${curso.categoria}</p>
             <p><strong>Nivel:</strong> ${curso.nivel}</p>
             </div>
+            <div class="progreso-container">
+            <div class="progreso-barra" style="width: ${Math.floor(Math.random() * 100)}%;"></div>
+            </div>
+            <p class="porcentaje">${Math.floor(Math.random() * 100)}% completado</p>
         `;
         cursosContainer.appendChild(card);
         });
