@@ -154,3 +154,24 @@
     `;
     modificarContainer.appendChild(div);
     });
+
+
+    /* escript de lo que viene siendoo la barra de progreso*/
+    document.addEventListener("DOMContentLoaded", () => {
+    // Porcentaje del docente
+    const porcentajeDocente = Math.floor(Math.random() * 51) + 50; // entre 50 y 100
+    // El grupo no puede superar al docente
+    const porcentajeGrupo = Math.floor(Math.random() * (porcentajeDocente + 1));
+
+    const barraDocente = document.getElementById("barraDocente");
+    const barraGrupo = document.getElementById("barraGrupo");
+    const textoDocente = document.getElementById("porcentajeDocente");
+    const textoGrupo = document.getElementById("porcentajeGrupo");
+
+    // Asignar valores visuales
+    barraDocente.style.width = `${porcentajeDocente}%`;
+    barraGrupo.style.width = `${porcentajeGrupo}%`;
+
+    textoDocente.textContent = `${porcentajeDocente}% completado`;
+    textoGrupo.textContent = `${porcentajeGrupo}% completado`;
+});
