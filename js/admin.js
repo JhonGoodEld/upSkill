@@ -157,6 +157,7 @@
 
 
     /* escript de lo que viene siendoo la barra de progreso*/
+
     document.addEventListener("DOMContentLoaded", () => {
     // Porcentaje del docente
     const porcentajeDocente = Math.floor(Math.random() * 51) + 50; // entre 50 y 100
@@ -175,3 +176,52 @@
     textoDocente.textContent = `${porcentajeDocente}% completado`;
     textoGrupo.textContent = `${porcentajeGrupo}% completado`;
 });
+
+/* escript de las estadisticas*/
+ 
+    document.addEventListener("DOMContentLoaded", () => {
+    // 🔹 Generar estadísticas aleatorias
+    const visitas = Math.floor(Math.random() * 9000) + 1000; // 1,000 - 10,000
+    const sesiones = Math.floor(visitas * (0.8 + Math.random() * 0.4)); // 80%–120% de visitas
+    const usuarios = Math.floor(sesiones * (0.5 + Math.random() * 0.3)); // 50%–80%
+    const duracion = (Math.random() * 5 + 1).toFixed(2); // 1.00–6.00 min
+    const navegadores = Math.floor(Math.random() * 6) + 1; // 1–6 navegadores distintos
+    const redes = Math.floor(visitas * (0.1 + Math.random() * 0.3)); // 10%–40% de visitas desde redes
+
+    // 🔹 Mostrar en el HTML
+    document.getElementById("visitas").textContent = visitas.toLocaleString();
+    document.getElementById("sesiones").textContent = sesiones.toLocaleString();
+    document.getElementById("usuarios").textContent = usuarios.toLocaleString();
+    document.getElementById("duracion").textContent = `${duracion} min`;
+    document.getElementById("navegadores").textContent = `${navegadores}`;
+    document.getElementById("redes").textContent = redes.toLocaleString();
+
+    // 🔹 Crear gráfico de crecimiento mensual (Chart.js)
+    const ctx = document.getElementById("graficoCrecimiento").getContext("2d");
+
+    const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const datosMensuales = meses.map(() => Math.floor(Math.random() * 9000) + 1000);
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+        labels: meses,
+        datasets: [{
+            label: "Visitas mensuales",
+            data: datosMensuales,
+            borderColor: "#2196F3",
+            backgroundColor: "rgba(33, 150, 243, 0.2)",
+            fill: true,
+            tension: 0.3,
+        }]
+        },
+        options: {
+        responsive: true,
+        scales: {
+            y: {
+            beginAtZero: true,
+            }
+        }
+        }
+    });
+    });

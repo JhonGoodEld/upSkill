@@ -138,6 +138,51 @@
     </div>
     </section>
 
+        <!-- Estadísticas del sitio -->
+    <section class="admin-section">
+    <button class="accordion">📈 Estadísticas del sitio</button>
+    <div class="panel">
+        <div class="estadisticas-grid">
+        <div class="stat-card">
+            <h4>👀 Visitas nuevas</h4>
+            <p id="visitas"></p>
+        </div>
+
+        <div class="stat-card">
+            <h4>💻 Sesiones</h4>
+            <p id="sesiones"></p>
+        </div>
+
+        <div class="stat-card">
+            <h4>🧑‍💻 Usuarios nuevos</h4>
+            <p id="usuarios"></p>
+        </div>
+
+        <div class="stat-card">
+            <h4>⏱️ Duración media</h4>
+            <p id="duracion"></p>
+        </div>
+
+        <div class="stat-card">
+            <h4>🌐 Navegadores usados</h4>
+            <p id="navegadores"></p>
+        </div>
+
+        <div class="stat-card">
+            <h4>📢 Desde redes sociales</h4>
+            <p id="redes"></p>
+        </div>
+        </div>
+
+        <!-- Gráfico -->
+        <div class="grafico-container">
+        <h3>📊 Crecimiento mensual del sitio</h3>
+        <canvas id="graficoCrecimiento" width="400" height="200"></canvas>
+        </div>
+    </div>
+    </section>
+
+
         <!-- Modal de confirmación -->
     <div id="modalPlan" class="modal">
         <div class="modal-content">
@@ -171,7 +216,8 @@
         </div>
 
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--Chart.js toma datos (por ejemplo, números de visitas o ventas) y los transforma en gráficos interactivos-->
     <script src="../js/script.js"></script>
     <script src="../js/admin.js"></script>
     </body>
