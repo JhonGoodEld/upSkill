@@ -100,3 +100,22 @@ function toggleLanguage() {
     if (elements[el.innerText]) el.innerText = elements[el.innerText];
   });
 }
+
+
+// Mostrar el modal al cargar la página si no hay elección previa
+window.addEventListener('load', () => {
+  const userChoice = localStorage.getItem('cookieChoice');
+  if (!userChoice) {
+    document.getElementById('cookieModal').style.display = 'flex';
+  }
+});
+
+function closeModal(choice) {
+  localStorage.setItem('cookieChoice', choice);
+  document.getElementById('cookieModal').style.display = 'none';
+}
+
+// Botones
+document.getElementById('acceptAll').addEventListener('click', () => closeModal('accepted'));
+document.getElementById('rejectAll').addEventListener('click', () => closeModal('rejected'));
+document.getElementById('onlyNecessary').addEventListener('click', () => closeModal('necessary'));
