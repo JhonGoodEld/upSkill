@@ -1,166 +1,146 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ===== FORMULARIO DE REGISTRO =====
   const form = document.querySelector('.register-form');
   const modal = document.getElementById('successModal');
   const closeBtn = document.getElementById('closeModalBtn');
   const promo = document.querySelector('.promo-code');
 
-  if (!form || !modal) {
-    console.error('Formulario o modal no encontrados en el DOM.');
-    return;
+  if (form && modal) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      modal.setAttribute('aria-hidden', 'false');
+      // form.reset();
+    });
+
+    const closeSuccessModal = () => modal.setAttribute('aria-hidden', 'true');
+    window.closeSuccessModal = closeSuccessModal; // para onclick="closeSuccessModal()"
+    if (closeBtn) closeBtn.addEventListener('click', closeSuccessModal);
+
+    window.addEventListener('click', e => {
+      if (e.target === modal) closeSuccessModal();
+    });
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeSuccessModal();
+    });
+  } else {
+    console.warn('⚠️ Formulario o modal de éxito no encontrados.');
   }
 
-  // Mostrar modal al enviar
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    // Aquí podrías recoger valores si quisieras...
-    modal.setAttribute('aria-hidden', 'false');
-    // opcional: limpiar el formulario
-    // form.reset();
-  });
-
-  // Función para cerrar modal (expuesta a window por si tienes onclick inline)
-  function closeModal() {
-    modal.setAttribute('aria-hidden', 'true');
-  }
-  window.closeModal = closeModal; // si en HTML usas onclick="closeModal()"
-
-  // Botón cerrar
-  closeBtn.addEventListener('click', closeModal);
-
-  // Cerrar al hacer clic fuera del contenido
-  window.addEventListener('click', function(e) {
-    if (e.target === modal) closeModal();
-  });
-
-  // Cerrar con Escape
-  window.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // Copiar código promocional al portapapeles al hacer clic
+  // ===== COPIAR CÓDIGO PROMOCIONAL =====
   if (promo && navigator.clipboard) {
     promo.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(promo.textContent.trim());
-        // Puedes cambiar esto por un toast; uso alert por simplicidad
         alert('Código copiado: ' + promo.textContent.trim());
       } catch (err) {
         console.error('No se pudo copiar: ', err);
       }
     });
   }
-  
-// Abrir/cerrar menú hamburguesa tipo acordeón
-document.querySelectorAll(".menu-btn").forEach(btn => {
-  btn.addEventListener("click", e => {
-    const container = btn.parentElement;
-    // cerrar otros menús
-    document.querySelectorAll(".menu-container").forEach(c => {
-      if (c !== container) c.classList.remove("open");
+
+  // ===== MENÚ HAMBURGUESA =====
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const container = btn.parentElement;
+      document.querySelectorAll('.menu-container').forEach(c => {
+        if (c !== container) c.classList.remove('open');
+      });
+      container.classList.toggle('open');
+      e.stopPropagation();
     });
-    container.classList.toggle("open");
-    e.stopPropagation();
   });
-});
 
-// Cerrar menú al hacer clic fuera
-window.addEventListener("click", () => {
-  document.querySelectorAll(".menu-container").forEach(c => c.classList.remove("open"));
-});
+  window.addEventListener('click', () => {
+    document.querySelectorAll('.menu-container').forEach(c => c.classList.remove('open'));
+  });
 
-// === Configuración: Tema ===
-function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
-}
+  // ===== CONFIGURACIÓN DE TEMA =====
+  window.toggleTheme = () => document.body.classList.toggle('dark-mode');
 
-// === Configuración: Idioma ===
-function toggleLanguage() {
-  const elements = {
-    "Upskill Academy": "Upskill Academy",
-    "Inicio": "Home",
-    "Catálogo": "Catalog",
-    "Cursos": "Courses",
-    "Planes de carrera": "Career Paths",
-    "Certificate": "Certificate",
-    "Carrito": "Cart",
-    "Usuarios": "Users",
-    "Alumnos": "Students",
-    "Docentes": "Teachers",
-    "Configuración": "Settings",
-    "Tema": "Theme",
-    "Idioma": "Language",
-    "Documentos": "Documents",
-    "Tecnología propuesta": "Proposed Technology",
-    "Login": "Login"
+  // ===== CAMBIO DE IDIOMA =====
+  window.toggleLanguage = () => {
+    const elements = {
+      'Upskill Academy': 'Upskill Academy',
+      'Inicio': 'Home',
+      'Catálogo': 'Catalog',
+      'Cursos': 'Courses',
+      'Planes de carrera': 'Career Paths',
+      'Certificate': 'Certificate',
+      'Carrito': 'Cart',
+      'Usuarios': 'Users',
+      'Alumnos': 'Students',
+      'Docentes': 'Teachers',
+      'Configuración': 'Settings',
+      'Tema': 'Theme',
+      'Idioma': 'Language',
+      'Documentos': 'Documents',
+      'Tecnología propuesta': 'Proposed Technology',
+      'Login': 'Login'
+    };
+
+    document.querySelectorAll('a, button, h1').forEach(el => {
+      if (elements[el.innerText]) el.innerText = elements[el.innerText];
+    });
   };
 
-  document.querySelectorAll("a, button, h1").forEach(el => {
-    if (elements[el.innerText]) el.innerText = elements[el.innerText];
-  });
-}
+  // ===== MODAL DE COOKIES =====
+  const cookieModal = document.getElementById('cookieModal');
+  const acceptAll = document.getElementById('acceptAll');
+  const rejectAll = document.getElementById('rejectAll');
+  const onlyNecessary = document.getElementById('onlyNecessary');
 
+  if (cookieModal) {
+    const userChoice = localStorage.getItem('cookieChoice');
+    if (!userChoice) cookieModal.style.display = 'flex';
 
-// Mostrar el modal al cargar la página si no hay elección previa
-window.addEventListener('load', () => {
-  const userChoice = localStorage.getItem('cookieChoice');
-  if (!userChoice) {
-    document.getElementById('cookieModal').style.display = 'flex';
+    const closeCookieModal = choice => {
+      localStorage.setItem('cookieChoice', choice);
+      cookieModal.style.display = 'none';
+    };
+
+    if (acceptAll) acceptAll.addEventListener('click', () => closeCookieModal('accepted'));
+    if (rejectAll) rejectAll.addEventListener('click', () => closeCookieModal('rejected'));
+    if (onlyNecessary) onlyNecessary.addEventListener('click', () => closeCookieModal('necessary'));
   }
-});
 
-function closeModal(choice) {
-  localStorage.setItem('cookieChoice', choice);
-  document.getElementById('cookieModal').style.display = 'none';
-}
+  // ===== MODALES DE TÉRMINOS Y PRIVACIDAD =====
+  const terminosModal = document.getElementById('terminosModal');
+  const openTerminos = document.getElementById('openTerminos');
+  const cerrarTerminos = document.getElementById('cerrarTerminos');
 
-// Botones
-document.getElementById('acceptAll').addEventListener('click', () => closeModal('accepted'));
-document.getElementById('rejectAll').addEventListener('click', () => closeModal('rejected'));
-document.getElementById('onlyNecessary').addEventListener('click', () => closeModal('necessary'));
+  const privacidadModal = document.getElementById('privacidadModal');
+  const openPrivacidad = document.getElementById('openPrivacidad');
+  const cerrarPrivacidad = document.getElementById('cerrarPrivacidad');
 
+  const closeIcons = document.querySelectorAll('.close');
 
-// === MODAL: Términos y Condiciones ===
-const terminosModal = document.getElementById("terminosModal");
-const openTerminos = document.getElementById("openTerminos");
-const cerrarTerminos = document.getElementById("cerrarTerminos");
-
-// === MODAL: Aviso de Privacidad ===
-const privacidadModal = document.getElementById("privacidadModal");
-const openPrivacidad = document.getElementById("openPrivacidad");
-const cerrarPrivacidad = document.getElementById("cerrarPrivacidad");
-
-// Botones e íconos de cierre
-const closeIcons = document.querySelectorAll(".close");
-
-openTerminos.addEventListener("click", (e) => {
-  e.preventDefault();
-  terminosModal.style.display = "flex";
-});
-
-openPrivacidad.addEventListener("click", (e) => {
-  e.preventDefault();
-  privacidadModal.style.display = "flex";
-});
-
-cerrarTerminos.addEventListener("click", () => {
-  terminosModal.style.display = "none";
-});
-
-cerrarPrivacidad.addEventListener("click", () => {
-  privacidadModal.style.display = "none";
-});
-
-closeIcons.forEach(icon => {
-  icon.addEventListener("click", () => {
-    icon.parentElement.parentElement.style.display = "none";
-  });
-});
-
-window.addEventListener("click", (event) => {
-  if (event.target === terminosModal || event.target === privacidadModal) {
-    event.target.style.display = "none";
+  if (openTerminos && terminosModal) {
+    openTerminos.addEventListener('click', e => {
+      e.preventDefault();
+      terminosModal.style.display = 'flex';
+    });
+    cerrarTerminos.addEventListener('click', () => terminosModal.style.display = 'none');
   }
-});
 
+  if (openPrivacidad && privacidadModal) {
+    openPrivacidad.addEventListener('click', e => {
+      e.preventDefault();
+      privacidadModal.style.display = 'flex';
+    });
+    cerrarPrivacidad.addEventListener('click', () => privacidadModal.style.display = 'none');
+  }
+
+  closeIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      icon.closest('.modal').style.display = 'none';
+    });
+  });
+
+  window.addEventListener('click', e => {
+    if (e.target === terminosModal || e.target === privacidadModal) {
+      e.target.style.display = 'none';
+    }
+  });
 });
 
