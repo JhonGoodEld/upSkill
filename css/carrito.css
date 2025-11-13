@@ -286,3 +286,20 @@ body {
 .close:hover {
   color: #000;
 }
+
+
+.legal-links {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.legal-links a {
+  color: #1a73e8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.legal-links a:hover {
+  color: #0d57bd;
+}
