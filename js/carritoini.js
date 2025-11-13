@@ -75,3 +75,27 @@
     });
     });
 
+    // === Modal Políticas ===
+    const modalPoliticas = document.getElementById("politicasModal");
+    const openPoliticas = document.getElementById("openPoliticas");
+    const closePoliticas = document.getElementById("cerrarPoliticas");
+    const spanClose = document.querySelector(".close");
+
+    openPoliticas.addEventListener("click", (e) => {
+    e.preventDefault();
+    modalPoliticas.style.display = "flex";
+    });
+
+    closePoliticas.addEventListener("click", () => {
+    modalPoliticas.style.display = "none";
+    });
+
+    spanClose.addEventListener("click", () => {
+    modalPoliticas.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+    if (event.target === modalPoliticas) {
+        modalPoliticas.style.display = "none";
+    }
+    });
