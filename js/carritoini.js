@@ -73,8 +73,7 @@
         alert(`Datos de facturación enviados a: ${correo}`);
         modal.style.display = "none";
     });
-    });
-
+    
     // === Modal Políticas ===
     const modalPoliticas = document.getElementById("politicasModal");
     const openPoliticas = document.getElementById("openPoliticas");
@@ -101,45 +100,47 @@
     });
 
 
-    // === MODAL: Términos y Condiciones ===
-const terminosModal = document.getElementById("terminosModal");
-const openTerminos = document.getElementById("openTerminos");
-const cerrarTerminos = document.getElementById("cerrarTerminos");
+        // === MODAL: Términos y Condiciones ===
+    const terminosModal = document.getElementById("terminosModal");
+    const openTerminos = document.getElementById("openTerminos");
+    const cerrarTerminos = document.getElementById("cerrarTerminos");
 
-// === MODAL: Aviso de Privacidad ===
-const privacidadModal = document.getElementById("privacidadModal");
-const openPrivacidad = document.getElementById("openPrivacidad");
-const cerrarPrivacidad = document.getElementById("cerrarPrivacidad");
+    // === MODAL: Aviso de Privacidad ===
+    const privacidadModal = document.getElementById("privacidadModal");
+    const openPrivacidad = document.getElementById("openPrivacidad");
+    const cerrarPrivacidad = document.getElementById("cerrarPrivacidad");
 
-// Botones e íconos de cierre
-const closeIcons = document.querySelectorAll(".close");
+    // Botones e íconos de cierre
+    const closeIcons = document.querySelectorAll(".close");
 
-openTerminos.addEventListener("click", (e) => {
-  e.preventDefault();
-  terminosModal.style.display = "flex";
-});
+    openTerminos.addEventListener("click", (e) => {
+    e.preventDefault();
+    terminosModal.style.display = "flex";
+    });
 
-openPrivacidad.addEventListener("click", (e) => {
-  e.preventDefault();
-  privacidadModal.style.display = "flex";
-});
+    openPrivacidad.addEventListener("click", (e) => {
+    e.preventDefault();
+    privacidadModal.style.display = "flex";
+    });
 
-cerrarTerminos.addEventListener("click", () => {
-  terminosModal.style.display = "none";
-});
+    cerrarTerminos.addEventListener("click", () => {
+    terminosModal.style.display = "none";
+    });
 
-cerrarPrivacidad.addEventListener("click", () => {
-  privacidadModal.style.display = "none";
-});
+    cerrarPrivacidad.addEventListener("click", () => {
+    privacidadModal.style.display = "none";
+    });
 
-closeIcons.forEach(icon => {
-  icon.addEventListener("click", () => {
-    icon.parentElement.parentElement.style.display = "none";
-  });
-});
+    closeIcons.forEach(icon => {
+    icon.addEventListener("click", () => {
+        icon.parentElement.parentElement.style.display = "none";
+    });
+    });
 
-window.addEventListener("click", (event) => {
-  if (event.target === terminosModal || event.target === privacidadModal) {
-    event.target.style.display = "none";
-  }
-});
+    window.addEventListener("click", (event) => {
+    if (event.target === terminosModal || event.target === privacidadModal) {
+        event.target.style.display = "none";
+    }
+    });
+    });
+

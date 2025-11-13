@@ -73,9 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
     alert(`Datos de facturación enviados a: ${correo}`);
     modal.style.display = "none";
   });
-
-});
-
 // === Modal Políticas ===
 const modalPoliticas = document.getElementById("politicasModal");
 const openPoliticas = document.getElementById("openPoliticas");
@@ -143,5 +140,8 @@ window.addEventListener("click", (event) => {
   if (event.target === terminosModal || event.target === privacidadModal) {
     event.target.style.display = "none";
   }
+});
+
+
 });
 

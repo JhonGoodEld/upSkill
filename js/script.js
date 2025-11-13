@@ -49,9 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
-
-
+  
 // Abrir/cerrar menú hamburguesa tipo acordeón
 document.querySelectorAll(".menu-btn").forEach(btn => {
   btn.addEventListener("click", e => {
@@ -163,3 +161,6 @@ window.addEventListener("click", (event) => {
     event.target.style.display = "none";
   }
 });
+
+});
+

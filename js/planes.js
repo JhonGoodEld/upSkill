@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", () => {
 // ===============================
 // 📘 Generador dinámico de Planes de Carrera (versión moderna)
 // ===============================
@@ -138,4 +139,5 @@ window.addEventListener("click", (event) => {
   if (event.target === terminosModal || event.target === privacidadModal) {
     event.target.style.display = "none";
   }
+});
 });
