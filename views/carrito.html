@@ -58,9 +58,11 @@
       <p><strong>IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
       <p><strong>Total:</strong> <span id="total">$0.00 MXN</span></p>
 
-      <button id="btnPagar" class="btn-pagar">Realizar pago</button>
+      <!--<button id="btnPagar" class="btn-pagar">Realizar pago</button> -->
+      <button id="btnPagar" class="btn-pagar" onclick="window.location.href='pago.html'">
+  Realizar pago
+</button>
 
-          
     <!-- Enlace a las políticas -->
     <p class="politica-link">
       <a href="#" id="openPoliticas">Política de Devolución y Cancelación — Upskill Academy</a>
@@ -113,23 +115,6 @@
 
     </aside>
   </main>
-
-    <!-- 🪟 Modal de confirmación -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h2>Confirmar pago</h2>
-      <p>Introduce tu correo para enviar los datos de facturación:</p>
-      <input type="email" id="correo" placeholder="tuemail@ejemplo.com">
-      <div class="modal-actions">
-        <button id="btnConfirmar" class="btn-confirmar">Confirmar</button>
-        <button id="btnCancelar" class="btn-cancelar">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
-
-
-
 
   <!-- FOOTER -->
   <footer class="footer">
