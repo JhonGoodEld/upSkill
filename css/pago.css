@@ -137,3 +137,108 @@ body {
     color: #ffdd57;
 }
 
+/* ============================= */
+/*           FORMULARIO          */
+/* ============================= */
+
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+}
+
+.form-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #0f172a;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #0f172a;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #1e40af; 
+    outline: none;
+}
+
+/* ============================= */
+/*          ACORDEÓN             */
+/* ============================= */
+
+.metodo-box {
+    margin-top: 20px;
+}
+
+.metodo-option {
+    background: #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s ease;
+}
+
+.metodo-option:hover {
+    border-color: #1e40af;
+}
+
+.metodo-detalle {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f8fafc;
+    display: none;
+}
+
+/* Mostrar cuando se activa por JS */
+.metodo-option.active .metodo-detalle {
+    display: block;
+}
+
+/* ============================= */
+/*          BOTÓN FINAL          */
+/* ============================= */
+
+.btn-continuar {
+    width: 100%;
+    background: #1e40af;
+    color: white;
+    padding: 14px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s ease;
+}
+
+.btn-continuar:hover {
+    background: #0f256b;
+}

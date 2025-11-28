@@ -31,16 +31,16 @@
 
         <!-- Datos del cliente -->
         <label>Nombre:</label>
-        <input type="text" name="nombre" required>
+        <input type="text" name="nombre" >
 
         <label>Apellido:</label>
-        <input type="text" name="apellido" required>
+        <input type="text" name="apellido" >
 
         <label>Edad:</label>
-        <input type="number" name="edad" min="1" max="99" required>
+        <input type="number" name="edad" min="1" max="99" >
 
         <label>Sexo:</label>
-        <select name="sexo" required>
+        <select name="sexo" >
             <option value="">Seleccione...</option>
             <option value="Hombre">Hombre</option>
             <option value="Mujer">Mujer</option>
@@ -48,11 +48,11 @@
         </select>
 
         <label>Ocupación:</label>
-        <input type="text" name="ocupacion" required>
+        <input type="text" name="ocupacion" >
 
         <!-- Métodos de pago -->
         <label style="margin-top: 20px;">Método de pago:</label>
-        <select name="metodo" id="metodoPago" required>
+        <select name="metodo" id="metodoPago" >
             <option value="">Seleccione...</option>
             <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
             <option value="PayPal">PayPal</option>
@@ -106,9 +106,6 @@
 
         <button type="submit">Continuar</button>
     </form>
-
-    <!-- JS externo -->
-    <script src="pago.js"></script>
 
     </body>
 
