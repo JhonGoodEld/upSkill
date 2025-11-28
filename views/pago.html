@@ -4,15 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pago — Upskill Academy</title>
-    <style>
-    body {
-        background: url("src/carrito.jpg") no-repeat center center fixed;
-        background-size: cover;
-        color: #192433;
-        line-height: 1.6;
-    }
-</style>
-    <link rel="stylesheet" href="../css/stylePrin.css">
+    
+    <link rel="stylesheet" href="../css/pago.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/admin.css" />
     </head>
@@ -31,6 +24,92 @@
 
 
     <body>
+
+        <h2>Información del Pago (Simulado)</h2>
+
+    <form id="formPago" action="pago-metodo.html" method="GET">
+
+        <!-- Datos del cliente -->
+        <label>Nombre:</label>
+        <input type="text" name="nombre" required>
+
+        <label>Apellido:</label>
+        <input type="text" name="apellido" required>
+
+        <label>Edad:</label>
+        <input type="number" name="edad" min="1" max="99" required>
+
+        <label>Sexo:</label>
+        <select name="sexo" required>
+            <option value="">Seleccione...</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Otro">Otro</option>
+        </select>
+
+        <label>Ocupación:</label>
+        <input type="text" name="ocupacion" required>
+
+        <!-- Métodos de pago -->
+        <label style="margin-top: 20px;">Método de pago:</label>
+        <select name="metodo" id="metodoPago" required>
+            <option value="">Seleccione...</option>
+            <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Tienda">Pago en tienda (OXXO)</option>
+        </select>
+
+        <!-- Tarjeta -->
+        <div id="tarjetaSection" class="section hidden">
+            <h3>Pago con Tarjeta</h3>
+
+            <label>Banco emisor:</label>
+            <select name="banco">
+                <option>BBVA</option>
+                <option>Banorte</option>
+                <option>Santander</option>
+                <option>Scotiabank</option>
+                <option>HSBC</option>
+            </select>
+
+            <label>Número de tarjeta (simulada):</label>
+            <input type="text" value="4111 1111 1111 1111" disabled>
+
+            <label>Fecha de expiración:</label>
+            <input type="text" value="12/29" disabled>
+
+            <label>CVV:</label>
+            <input type="text" value="123" disabled>
+        </div>
+
+        <!-- PayPal -->
+        <div id="paypalSection" class="section hidden">
+            <h3>Pago con PayPal</h3>
+
+            <p>Se generará un ID de transacción simulado.</p>
+
+            <label>ID de pago (simulado):</label>
+            <input type="text" value="PAYPAL-TX-982712" readonly>
+        </div>
+
+        <!-- Pago en tienda -->
+        <div id="tiendaSection" class="section hidden">
+            <h3>Pago en tienda (OXXO)</h3>
+
+            <p>Utiliza la siguiente línea para realizar el depósito simulado:</p>
+
+            <label>CLABE simulada:</label>
+            <input type="text" value="0021 8000 1234 5678 90" readonly>
+
+            <p style="font-size: 14px;">Tu pago se confirmará automáticamente al continuar.</p>
+        </div>
+
+        <button type="submit">Continuar</button>
+    </form>
+
+    <!-- JS externo -->
+    <script src="pago.js"></script>
+
     </body>
 
     
@@ -157,6 +236,7 @@
     <!--Chart.js toma datos (por ejemplo, números de visitas o ventas) y los transforma en gráficos interactivos-->
     <script src="../js/script.js"></script>
     <script src="../js/admin.js"></script>
+    <script src="../js/pago.js"></script>
     </body>
     </html>
 
