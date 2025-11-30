@@ -1,112 +1,188 @@
-/* ===========================
-   ESTILOS GENERALES
-=========================== */
+/* ========== RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
 
 /* Fondo general */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0a0d27, #1b2369);
+    background: url("../src/carrito.jpg") no-repeat center center fixed;
+    background-size: cover;
     color: #fff;
-    padding-bottom: 200px; /* espacio para footer */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Títulos */
-h2 {
-    text-align: center;
-    margin-top: 20px;
-}
-
-h3 {
-    margin-bottom: 10px;
-}
-
-/* ===========================
-   FORMULARIO
-=========================== */
-
-form {
-    width: 90%;
-    max-width: 500px;
-    margin: 30px auto;
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(6px);
+/* Contenedor principal para empujar el footer abajo */
+.main-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto 50px auto;
     padding: 20px;
-    border-radius: 10px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 14px;
+    flex: 1;
 }
 
-/* Campos del formulario */
+/* ========== NAVBAR (versión B) ========== */
+.navbar {
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+
+.nav-left h1 {
+    font-size: 1.6rem;
+}
+
+.nav-center p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.nav-right a {
+    color: #ffd36a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-right a:hover {
+    text-decoration: underline;
+}
+
+/* ========== FORMULARIO DE PAGO ========== */
+h2 {
+    margin-bottom: 15px;
+}
+
 form label {
     display: block;
     margin-top: 12px;
-    font-size: 15px;
+    font-weight: 600;
 }
 
 form input,
 form select {
     width: 100%;
+    margin-top: 5px;
     padding: 10px;
-    margin-top: 3px;
     border-radius: 8px;
     border: none;
-    font-size: 14px;
+    background: rgba(255,255,255,0.9);
 }
 
-/* Botón */
-form button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 12px;
-    background: #00c3ff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: bold;
+.section {
+    margin-top: 18px;
+    padding: 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
 }
 
-form button:hover {
-    background: #0099cc;
-}
-
-/* Secciones ocultas */
 .hidden {
     display: none;
 }
 
-/* Caja de pago */
-.section {
-    margin-top: 18px;
+/* Botón */
+button[type="submit"] {
+    margin-top: 25px;
+    width: 100%;
     padding: 12px;
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #ffd36a;
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
 }
 
+button[type="submit"]:hover {
+    background-color: #ffdd8a;
+}
 
-/* ===========================
-   FOOTER + MAPBOX
-=========================== */
-
-footer {
-    width: 100%;
-    background: #0a0c2d;
-    color: #ccc;
+/* ========== FOOTER ========== */
+.footer {
+    background: rgba(28, 28, 29, 0.9);
+    color: white;
     text-align: center;
-    padding: 20px 10px;
-    bottom: 0;
-    left: 0;
+    padding: 25px;
+    border-radius: 30px 30px 0 0;
+    margin-top: auto;
 }
 
-/* Contenedor del mapa */
-#map {
-    width: 100%;
-    height: 160px;
-    border-radius: 10px;
+.footer .socials a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer .socials a:hover {
+    color: #ffdd57;
+}
+
+/* Mini mapa */
+.map-box {
+    margin: 20px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+/* Legal links */
+.legal-links {
     margin-top: 15px;
 }
 
-/* Texto del footer */
-footer p {
-    margin: 6px 0;
+.legal-links a {
+    color: #1a73e8;
+    text-decoration: underline;
 }
 
+/* Modales legales */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    color: #333;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.btn-cerrar {
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #1a73e8;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
