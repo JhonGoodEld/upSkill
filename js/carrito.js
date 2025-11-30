@@ -58,6 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(err => console.error("Error al cargar productos:", err));
 
+      localStorage.setItem("carritoProductos", JSON.stringify(seleccionados));
+    localStorage.setItem("subtotal", subtotal);
+    localStorage.setItem("iva", subtotal * 0.16);
+    localStorage.setItem("total", subtotal * 1.16);
   // === Modal ===
   btnPagar.addEventListener("click", () => {
     modal.style.display = "flex";

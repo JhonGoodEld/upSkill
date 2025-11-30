@@ -30,6 +30,36 @@
 
 <!-- si contenido de pago-confirmacion       -->
 
+    <div class="main-container" id="metodoContainer">
+
+    <h2>Detalles del Método de Pago</h2>
+
+    <!-- Resumen del método elegido -->
+    <div class="section" id="resumenMetodo">
+        <h3>Método seleccionado</h3>
+        <p id="metodoElegido">Cargando...</p>
+    </div>
+
+    <!-- Resumen del pedido -->
+    <div class="section" id="resumenPedido">
+        <h3>Resumen del pedido</h3>
+        <ul id="listaProductos"></ul>
+
+        <p><strong>Subtotal:</strong> <span id="subResumen">$0.00</span></p>
+        <p><strong>IVA (16%):</strong> <span id="ivaResumen">$0.00</span></p>
+        <p><strong>Total:</strong> <span id="totalResumen">$0.00</span></p>
+    </div>
+
+    <!-- Datos específicos del método -->
+    <div class="section" id="detallesMetodo">
+        <h3>Detalles del pago</h3>
+        <div id="contenidoMetodo"></div>
+    </div>
+
+    <button id="btnConfirmarPago" class="btnConfirmarPago">
+        Confirmar pago simulado
+    </button>
+</div>
 
 <!-- FOOTER -->
     <footer class="footer">
@@ -150,6 +180,9 @@
 
     <script src="../js/script.js"></script>
     <script src="../js/pago.js"></script>
+    <script src="../js/pago-metodo.js"></script>
+
+
     </body>
     </html>
 
