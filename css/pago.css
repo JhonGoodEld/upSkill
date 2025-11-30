@@ -53,6 +53,12 @@ body {
     text-decoration: none;
 }
 
+.nav-side a {
+    color: #ffd36a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 .nav-right a:hover {
     text-decoration: underline;
 }
