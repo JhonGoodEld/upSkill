@@ -1,4 +1,7 @@
-const metodoSelect = document.getElementById("metodoPago");
+document.addEventListener("DOMContentLoaded", () => {
+
+    const metodoPago = document.getElementById("metodoPago");
+    const formPago = document.getElementById("formPago");
 
 const tarjeta = document.getElementById("tarjetaSection");
 const paypal = document.getElementById("paypalSection");
@@ -18,9 +21,19 @@ metodoSelect.addEventListener("change", () => {
     if (metodo === "PayPal") paypal.classList.remove("hidden");
     if (metodo === "Tienda") tienda.classList.remove("hidden");
 });
+// Modificar la URL para enviar el método correctamente
+    formPago.addEventListener("submit", (e) => {
+        const metodo = metodoPago.value.trim();
 
-// Evita que el formulario intente enviarse (mock)
-document.getElementById("formPago")?.addEventListener("submit", (e) => {
-    e.preventDefault(); // evita validaciones nativas
-    window.location.href = "pago-metodo.html"; // continuar al siguiente paso
+        // Si no seleccionó método, evitar errores
+        if (!metodo) {
+            alert("Por favor selecciona un método de pago");
+            e.preventDefault();
+            return;
+        }
+
+        // Reemplaza el action dinámicamente
+        formPago.action = "pago-metodo.html?metodo=" + encodeURIComponent(metodo);
+    });
+
 });
