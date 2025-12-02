@@ -6,21 +6,34 @@ document.addEventListener("DOMContentLoaded", () => {
 const tarjeta = document.getElementById("tarjetaSection");
 const paypal = document.getElementById("paypalSection");
 const tienda = document.getElementById("tiendaSection");
+const monedero = document.getElementById("monederoSection");
+    const cheque = document.getElementById("chequeSection");
+    const transferencia = document.getElementById("transferenciaSection");
 
-function ocultarTodo() {
-    tarjeta.classList.add("hidden");
-    paypal.classList.add("hidden");
-    tienda.classList.add("hidden");
-}
+    const todasLasSecciones = [
+        tarjeta,
+        paypal,
+        tienda,
+        monedero,
+        cheque,
+        transferencia
+    ];
 
-metodoSelect.addEventListener("change", () => {
-    ocultarTodo();
-    const metodo = metodoSelect.value;
+     function ocultarTodo() {
+        todasLasSecciones.forEach(sec => sec.classList.add("hidden"));
+    }
 
-    if (metodo === "Tarjeta") tarjeta.classList.remove("hidden");
-    if (metodo === "PayPal") paypal.classList.remove("hidden");
-    if (metodo === "Tienda") tienda.classList.remove("hidden");
-});
+     metodoSelect.addEventListener("change", () => {
+        const metodo = metodoSelect.value;
+        ocultarTodo();
+
+        if (metodo === "Tarjeta") tarjeta.classList.remove("hidden");
+        if (metodo === "PayPal") paypal.classList.remove("hidden");
+        if (metodo === "Tienda") tienda.classList.remove("hidden");
+        if (metodo === "Monedero") monedero.classList.remove("hidden");
+        if (metodo === "Cheque") cheque.classList.remove("hidden");
+        if (metodo === "Transferencia") transferencia.classList.remove("hidden");
+    });
 // Modificar la URL para enviar el método correctamente
     formPago.addEventListener("submit", (e) => {
         const metodo = metodoPago.value.trim();

@@ -57,6 +57,9 @@
             <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
             <option value="PayPal">PayPal</option>
             <option value="Tienda">Pago en tienda (OXXO)</option>
+            <option value="Monedero">Monedero electrónico</option>
+    <option value="Cheque">Cheque</option>
+    <option value="Transferencia">Transferencia bancaria</option>
         </select>
 
         <!-- Tarjeta -->
@@ -103,6 +106,51 @@
 
             <p style="font-size: 14px;">Tu pago se confirmará automáticamente al continuar.</p>
         </div>
+
+        <!-- Monedero electrónico -->
+<div id="monederoSection" class="section hidden">
+    <h3>Monedero Electrónico</h3>
+
+    <label>ID de monedero:</label>
+    <input type="text" value="WALLET-98271" readonly>
+
+    <label>Saldo disponible (simulado):</label>
+    <input type="text" value="$1,250 MXN" readonly>
+
+    <p style="font-size: 14px;">Tu saldo se verificará automáticamente al continuar.</p>
+</div>
+
+<!-- Cheque -->
+<div id="chequeSection" class="section hidden">
+    <h3>Pago con Cheque</h3>
+
+    <p>El pago se acreditará una vez que el cheque sea validado (simulado).</p>
+
+    <label>Banco emisor (simulado):</label>
+    <input type="text" value="Banorte" readonly>
+
+    <label>Número de cheque:</label>
+    <input type="text" value="CHQ-00-2198" readonly>
+</div>
+
+<!-- Transferencia bancaria -->
+<div id="transferenciaSection" class="section hidden">
+    <h3>Transferencia Bancaria</h3>
+
+    <label>Banco receptor (simulado):</label>
+    <select>
+        <option>BBVA</option>
+        <option>Santander</option>
+        <option>Banorte</option>
+        <option>HSBC</option>
+    </select>
+
+    <label>CLABE para transferencia:</label>
+    <input type="text" value="0021 9000 4455 6678 01" readonly>
+
+    <p style="font-size: 14px;">Tu pago será confirmado automáticamente después de continuar.</p>
+</div>
+
 
         <button type="submit">Continuar</button>
     </form>
