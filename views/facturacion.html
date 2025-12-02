@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturacion — Upskill Academy</title>
+    <link rel="stylesheet" href="../css/facturacion.css"> 
+    <link rel="stylesheet" href="../css/pago.css">
+    </head>
+
+    <body>
+    <header class="navbar">
+
+    <div class="nav-left">
+        <h1>Sección de facturacion</h1>
+    </div>
+
+    <div class="nav-center">
+        <p>Facturacion</p>
+    </div>
+
+    <div class="nav-side">
+        <a href="../views/pagPrin.html">Volver </a>
+    </div>
+
+</header>
+
+<!-- contenido de la facturacion      -->
+    <div class="factura-container">
+
+    <h2>Factura Electrónica (Simulación)</h2>
+
+    <div class="factura-box">
+
+        <!-- Datos del negocio -->
+        <h3>Datos del Emisor (Negocio)</h3>
+        <p><strong>Razón Social:</strong> Upskill Academy S.A. de C.V.</p>
+        <p><strong>RFC:</strong> DEMO123456XX0</p>
+        <p><strong>Régimen Fiscal:</strong> 601 - General de Ley Personas Morales</p>
+        <p><strong>Domicilio Fiscal:</strong> Aguascalientes, Ags, México</p>
+
+        <hr>
+
+        <!-- Datos del cliente -->
+        <h3>Datos del Cliente</h3>
+        <p><strong>Nombre/Razón Social:</strong> Cliente Público en General (Simulado)</p>
+        <p><strong>RFC Cliente:</strong> XAXX010101000</p>
+        <p><strong>Domicilio Fiscal:</strong> No registrado (Simulación)</p>
+        <p><strong>Régimen Fiscal:</strong> 612 - Personas Físicas con Actividades (Simulado)</p>
+        <p><strong>Uso CFDI:</strong> G03 - Gastos en general</p>
+
+        <hr>
+
+        <!-- Datos de operación -->
+        <h3>Datos del Comprobante</h3>
+        <p><strong>Folio:</strong> FCT-001</p>
+        <p><strong>Fecha:</strong> 2025-05-20</p>
+        <p><strong>Método de pago:</strong> <span id="metodoPago"></span></p>
+        <p><strong>Forma de pago:</strong> PUE - Pago en una sola exhibición (Simulado)</p>
+        <p><strong>Total:</strong> <span id="facturaTotal">$0.00 MXN</span></p>
+
+        <hr>
+
+        <!-- Sello digital -->
+        <h3>Sello Digital del CFDI (Simulación)</h3>
+        <p class="sello">
+            00000XYZSIMULADOSELLOCFDI123456ABCDEF98765432100SIMULADO998877665544332211
+        </p>
+
+        <h3>Cadena Original (Simulada)</h3>
+        <p class="sello">
+            ||1.1|FCT-001|2025-05-20|XAXX010101000|DEMO123456XX0|1000.00|G03||
+        </p>
+
+        <p style="font-size: 13px; margin-top: 10px;">
+            Este comprobante es una representación visual simulada.  
+            No es un CFDI real ni tiene validez fiscal.
+        </p>
+    </div>
+
+    <button id="btnDescargar" class="btnConfirmarPago">
+        Descargar factura (simulado)
+    </button>
+
+</div>
+
+
+<!-- FOOTER -->
+    <footer class="footer">
+        <p>Contáctanos: info@upskillacademy.com</p>
+        <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="https://www.instagram.com/upsk.ilacademy?igsh=MWdyNmN2M2Z2dHQxZw==">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">X</a>
+        </div>
+
+        <!-- Mini mapa -->
+        <div class="map-box">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7405.016463787836!2d-102.26194134999997!3d21.876496550000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee06c2b22ec7%3A0x9b6c521bf9a86b1a!2sInstituto%20Tecnol%C3%B3gico%20de%20Aguascalientes%2C%20Aguascalientes%2C%20Ags.!5e0!3m2!1ses-419!2smx!4v1758165144069!5m2!1ses-419!2smx" 
+            width="300" 
+            height="200" 
+            style="border:0; border-radius:12px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        </div>
+
+
+
+                <div class="legal-links">
+        <a href="#" id="openTerminos">Términos y Condiciones</a> |
+        <a href="#" id="openPrivacidad">Aviso de Privacidad</a>
+        </div>
+
+        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
+    </footer>
+
+    <!-- ===== MODAL: Términos y Condiciones ===== -->
+    <div id="terminosModal" class="modal">
+        <div class="modal-content politicas">
+        <span class="close">&times;</span>
+        <h2>Términos y Condiciones — Upskill Academy</h2>
+        <div class="modal-scroll">
+            <p>
+            Bienvenido a <strong>Upskill Academy</strong>. Al acceder a nuestro sitio, aceptas los presentes términos y condiciones.  
+            Nuestro objetivo es ofrecerte acceso a cursos en línea y materiales educativos de calidad.
+            </p>
+            <h3>1. Uso del sitio</h3>
+            <p>El usuario se compromete a utilizar la plataforma de manera lícita, sin afectar la experiencia de otros usuarios ni realizar actividades que perjudiquen el funcionamiento del servicio.</p>
+
+        <h3>2. Propiedad intelectual</h3>
+        <p>Todo el contenido (textos, videos, logotipos, imágenes, código) es propiedad de Upskill Academy o de sus proveedores. Está prohibida su reproducción sin autorización escrita.</p>
+
+        <h3>3. Registro y acceso</h3>
+        <p>El usuario deberá mantener la confidencialidad de sus credenciales y es responsable de todas las actividades realizadas desde su cuenta.</p>
+
+        <h3>4. Pagos y facturación</h3>
+        <p>Los precios se muestran en la moneda correspondiente y pueden cambiar sin previo aviso. Todos los pagos se procesan mediante pasarelas seguras de terceros.</p>
+
+        <h3>5. Limitación de responsabilidad</h3>
+        <p>Upskill Academy no se hace responsable por interrupciones del servicio, pérdida de datos o daños indirectos derivados del uso de la plataforma.</p>
+
+        <h3>6. Modificaciones</h3>
+        <p>Podemos actualizar estos términos en cualquier momento. La fecha de última actualización estará disponible al final del documento.</p>
+
+        <h3>7. Contacto</h3>
+        <p>Para aclaraciones o soporte: <strong>soporte@upskillacademy.com</strong></p>
+
+            <p style="font-size:0.9em; color:#555;">Última actualización: Enero 2025</p>
+        </div>
+        <button id="cerrarTerminos" class="btn-cerrar">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Aviso de Privacidad ===== -->
+    <div id="privacidadModal" class="modal">
+        <div class="modal-content politicas">
+        <span class="close">&times;</span>
+        <h2>Aviso de Privacidad — Upskill Academy</h2>
+        <div class="modal-scroll">
+            <p>
+            En <strong>Upskill Academy</strong> valoramos tu privacidad. Este aviso explica cómo recopilamos, usamos, protegemos y compartimos tu información personal, conforme a la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México)</strong>.
+            </p>
+
+        <h3>1. Datos personales que recolectamos</h3>
+        <p>Recolectamos datos como nombre, correo electrónico, información de pago, y preferencias académicas para procesar tus compras y mejorar nuestros servicios.</p>
+
+            <h3>2. Finalidades del tratamiento</h3>
+            <ul>
+            <li>Gestionar tu registro y acceso a los cursos.</li>
+            <li>Emitir comprobantes de pago y certificaciones.</li>
+            <li>Enviar notificaciones relevantes (por ejemplo, recordatorios o promociones).</li>
+            </ul>
+
+        <h3>3. Derechos ARCO</h3>
+        <p>Tienes derecho a <strong>Acceder, Rectificar, Cancelar u Oponerte</strong> (ARCO) al tratamiento de tus datos personales.  
+        Para ejercerlos, envía una solicitud a: <strong>privacidad@upskillacademy.com</strong></p>
+
+        <h3>4. Procedimiento para ejercer los derechos ARCO</h3>
+        <p>Tu solicitud deberá incluir nombre completo, medio de contacto y una descripción clara del derecho que deseas ejercer.  
+        Recibirás respuesta en un máximo de 20 días hábiles.</p>
+
+        <h3>5. Transferencia de datos</h3>
+        <p>No compartimos tu información con terceros, salvo cuando sea necesario para cumplir obligaciones legales o procesar pagos mediante proveedores certificados.</p>
+
+        <h3>6. Seguridad de la información</h3>
+        <p>Implementamos medidas técnicas y administrativas para proteger tus datos contra acceso no autorizado, pérdida o alteración.</p>
+
+        <h3>7. Contacto</h3>
+        <p>Para dudas sobre este aviso:  
+            📧 <strong>privacidad@upskillacademy.com</strong><br>
+            🌐 <a href="https://www.instagram.com/upsk.ilacademy" target="_blank">@upsk.ilacademy</a><br>
+            📍 Aguascalientes, México.
+            </p>
+
+            <p style="font-size:0.9em; color:#555;">Última actualización: Enero 2025</p>
+        </div>
+        <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
+        </div>
+    </div>
+        <script>
+        // Recupera total y método de pago de la URL
+        const params = new URLSearchParams(window.location.search);
+        const total = params.get("total") || "0.00";
+        const metodo = params.get("metodo") || "No especificado";
+
+        document.getElementById("facturaTotal").textContent = "$" + total + " MXN";
+        document.getElementById("metodoPago").textContent = metodo;
+
+        // Botón de descarga simulada
+        document.getElementById("btnDescargar").addEventListener("click", () => {
+            alert("📄 Descargando factura... (simulación)");
+        });
+    </script>
+    </body>
+    </html>
