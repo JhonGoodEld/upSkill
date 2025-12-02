@@ -39,6 +39,10 @@
     <button class="btnConfirmarPago" onclick="window.location.href='../views/cursos.html'">
         Ir a mis cursos
     </button>
+
+    <button class="btnConfirmarPago" style="margin-top:15px;" onclick="window.location.href='facturacion.html'">
+        Facturación
+    </button>
 </div>
 
 <!-- FOOTER -->
@@ -159,7 +163,13 @@
     </div>
 
     <script src="../js/script.js"></script>
+    <script>
+    // Mostrar el método de pago obtenido de la URL
+    const params = new URLSearchParams(window.location.search);
+    const metodo = params.get("metodo") || "No especificado";
 
+    document.getElementById("metodoSeleccionado").textContent = metodo;
+    </script>
 
     </body>
     </html>
