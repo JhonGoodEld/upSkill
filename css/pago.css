@@ -209,3 +209,25 @@ button[type="submit"]:hover {
 .hidden {
     display: none;
 }
+
+
+.btnConfirmarPago {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: block;
+    margin: 30px auto;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btnConfirmarPago:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #0090ff, #0050d4);
+}

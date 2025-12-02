@@ -85,3 +85,22 @@ generarDetalles();
 document.getElementById("btnConfirmarPago").addEventListener("click", () => {
     window.location.href = "confirmacion.html?metodo=" + metodo;
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const btnConfirmar = document.getElementById("btnConfirmarPago");
+
+    btnConfirmar.addEventListener("click", function (e) {
+        e.preventDefault(); // evita reload inmediato
+
+        // 50/50 → Math.random() < 0.5
+        const exito = Math.random() < 0.5;
+
+        if (exito) {
+            window.location.href = "confirmacion.html";
+        } else {
+            window.location.href = "error-pago.html";
+        }
+    });
+
+});
