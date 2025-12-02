@@ -131,3 +131,27 @@ footer .socials a:hover {
 .map-box {
     margin: 20px auto;
 }
+
+/* Secciones ocultas inicialmente */
+.oculto {
+    display: none;
+}
+
+/* Botón Firmar */
+.btnFirmar {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #213246;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btnFirmar:hover {
+    background: #2d425a;
+    transform: scale(1.02);
+}

@@ -61,26 +61,30 @@
 
         <hr>
 
-        <!-- Sello digital -->
-        <h3>Sello Digital del CFDI </h3>
-        <p class="sello">
-            00000XYZSIMULADOSELLOCFDI123456ABCDEF98765432100SIMULADO998877665544332211
-        </p>
+        <!-- Datos CFDI ocultos hasta presionar "Firmar" -->
+    <div id="sellosCFDI" class="oculto">
 
-        <h3>Cadena Original </h3>
-        <p class="sello">
-            ||1.1|FCT-001|2025-05-20|XAXX010101000|DEMO123456XX0|1000.00|G03||
-        </p>
+        <div class="factura-box">
+            <h3>Sello Digital del CFDI (Simulado)</h3>
+            <div class="sello">
+                SELLO12345-ABCDEF-9988776655-FAKE
+            </div>
+        </div>
 
-        <p style="font-size: 13px; margin-top: 10px;">
-            Este comprobante es una representación visual simulada.  
-            No es un CFDI real ni tiene validez fiscal.
-        </p>
+        <div class="factura-box">
+            <h3>Cadena Original (Simulada)</h3>
+            <div class="sello">
+                || RFC: DEMO123456XX0 || FECHA: 2025-05-20 || TOTAL: $850.00 ||
+            </div>
+        </div>
+
     </div>
 
     <button id="btnDescargar" class="btnConfirmarPago">
         Descargar factura 
     </button>
+
+    <button id="btnFirmar" class="btnFirmar">Firmar</button>
 
 </div>
 
@@ -214,6 +218,21 @@
         document.getElementById("btnDescargar").addEventListener("click", () => {
             alert("📄 Descargando factura... ");
         });
+        document.addEventListener("DOMContentLoaded", () => {
+    
+    const btnFirmar = document.getElementById("btnFirmar");
+    const seccionSellos = document.getElementById("sellosCFDI");
+
+    btnFirmar.addEventListener("click", () => {
+
+        seccionSellos.style.display = "block";
+
+        btnFirmar.innerText = "Firmado ✓";
+        btnFirmar.disabled = true;
+        btnFirmar.style.background = "#1c7c2a";
+        btnFirmar.style.cursor = "default";
+    });
+});
     </script>
     </body>
     </html>
