@@ -79,24 +79,33 @@ document.addEventListener("DOMContentLoaded", () => {
     alert(`Datos de facturación enviados a: ${correo}`);
     modal.style.display = "none";
   });
-// === Modal Políticas ===
+
+
+  // === Modal Políticas ===
 const modalPoliticas = document.getElementById("politicasModal");
 const openPoliticas = document.getElementById("openPoliticas");
-const closePoliticas = document.getElementById("cerrarPoliticas");
-const spanClose = document.querySelector(".close");
+const cerrarPoliticas = document.getElementById("cerrarPoliticas");
+// Este close es el de la X dentro del modal
+const closeIconPoliticas = modalPoliticas ? modalPoliticas.querySelector(".close") : null;
 
-openPoliticas.addEventListener("click", (e) => {
-  e.preventDefault();
-  modalPoliticas.style.display = "flex";
-});
+if (openPoliticas && modalPoliticas) {
+  openPoliticas.addEventListener("click", (e) => {
+    e.preventDefault();
+    modalPoliticas.style.display = "block";
+  });
+}
 
-closePoliticas.addEventListener("click", () => {
-  modalPoliticas.style.display = "none";
-});
+if (cerrarPoliticas && modalPoliticas) {
+  cerrarPoliticas.addEventListener("click", () => {
+    modalPoliticas.style.display = "none";
+  });
+}
 
-spanClose.addEventListener("click", () => {
-  modalPoliticas.style.display = "none";
-});
+if (closeIconPoliticas && modalPoliticas) {
+  closeIconPoliticas.addEventListener("click", () => {
+    modalPoliticas.style.display = "none";
+  });
+}
 
 window.addEventListener("click", (event) => {
   if (event.target === modalPoliticas) {
