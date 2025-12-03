@@ -60,3 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+document.addEventListener("DOMContentLoaded", () => {
+
+    const metodoPago = document.getElementById("metodoPago");
+
+    const secciones = {
+        "Tarjeta": document.getElementById("tarjetaSection"),
+        "PayPal": document.getElementById("paypalSection"),
+        "Tienda": document.getElementById("tiendaSection"),
+        "Monedero": document.getElementById("monederoSection"),
+        "Cheque": document.getElementById("chequeSection"),
+        "Transferencia": document.getElementById("transferenciaSection")
+    };
+
+    function ocultarTodo() {
+        Object.values(secciones).forEach(sec => sec.classList.add("hidden"));
+    }
+
+    metodoPago.addEventListener("change", () => {
+        ocultarTodo();
+        const metodo = metodoPago.value;
+        if (secciones[metodo]) {
+            secciones[metodo].classList.remove("hidden");
+        }
+    });
+
+});
