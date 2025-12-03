@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donaciones — Upskill Academy</title>
+
+    <link rel="stylesheet" href="../css/micropagos.css">
+    <link rel="stylesheet" href="../css/pago.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="nav-left"><h1>Donaciones</h1></div>
+    <div class="nav-center"><p>Apoya nuestra causa</p></div>
+    <div class="nav-right"><a href="../views/pagPrin.html">Volver</a></div>
+</header>
+
+
+<!-- =============== HERO / CAUSA =============== -->
+<section class="donacion-hero">
+    <h2>Ayúdanos a apoyar a estudiantes que desean aprender</h2>
+    <p>Tu aportación se destina al fondo de becas para estudiantes de bajos recursos.</p>
+</section>
+
+
+<!-- =============== FORMULARIO DE DONACIÓN =============== -->
+<div class="donacion-container">
+
+    <h3>Selecciona tu monto de donación</h3>
+
+    <div class="montos">
+        <button class="monto-btn" data-value="50">$50 MXN</button>
+        <button class="monto-btn" data-value="100">$100 MXN</button>
+        <button class="monto-btn" data-value="200">$200 MXN</button>
+        <button class="monto-btn" data-value="500">$500 MXN</button>
+    </div>
+
+    <label>Monto personalizado:</label>
+    <input type="number" id="montoPersonalizado" placeholder="Ingresa un monto">
+
+    <hr>
+
+    <h3>Método de pago</h3>
+    <select id="metodoDonacion">
+        <option value="">Seleccione...</option>
+        <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
+        <option value="PayPal">PayPal</option>
+        <option value="Tienda">Pago en tienda (OXXO)</option>
+        <option value="Monedero">Monedero electrónico</option>
+        <option value="Cheque">Cheque</option>
+        <option value="Transferencia">Transferencia bancaria</option>
+    </select>
+
+    <button id="btnDonar" class="btnConfirmarPago">Donar ahora</button>
+
+    <p class="politica-link">
+        <a href="#" id="openPoliticas">Política de Donaciones y Uso de Fondos</a>
+    </p>
+</div>
+
+
+
+<!-- =============== MODAL POLÍTICA =============== -->
+<div id="politicasModal" class="modal">
+    <div class="modal-content politicas">
+        <span class="close">&times;</span>
+        <h2>Política de Donaciones — Upskill Academy</h2>
+
+        <div class="modal-scroll">
+            <p>Las donaciones realizadas en esta plataforma son voluntarias y se destinan al Fondo de Becas Upskill Academy.</p>
+            <p>Las aportaciones no son reembolsables debido a la naturaleza del programa.</p>
+            <p>Todos los fondos se administran con transparencia y se publican reportes trimestrales.</p>
+        </div>
+
+        <button id="cerrarPoliticas" class="btn-cerrar">Cerrar</button>
+    </div>
+</div>
+
+
+
+<!-- =============== FOOTER =============== -->
+<footer class="footer">
+    <p>© 2025 Upskill Academy — Donaciones</p>
+</footer>
+
+<script src="../js/micropagos.js"></script>
+
+</body>
+</html>

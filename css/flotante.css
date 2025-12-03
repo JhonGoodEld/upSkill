@@ -1,0 +1,48 @@
+/* Sticker flotante */
+.sticker-donacion {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: linear-gradient(135deg, #ffeb3b, #ffc107);
+    padding: 12px 18px;
+    border-radius: 50px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    z-index: 9999;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.sticker-donacion:hover {
+    transform: scale(1.08);
+    background: linear-gradient(135deg, #fff176, #ffca28);
+}
+
+.sticker-donacion span {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Imagen del librito */
+.sticker-icon {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
+
+/* Animación opcional para llamar la atención */
+.sticker-donacion {
+    animation: floatPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes floatPulse {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
+}

@@ -6,6 +6,8 @@
   <title>Upskill academy</title>
   <link rel="stylesheet" href="../css/stylePrin.css">
   <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/flotante.css">
+
 </head>
 
 <body>
@@ -94,6 +96,13 @@
     </div>
   </section>
 
+  <!-- Sticker flotante de donaciones -->
+<div id="donacionSticker" class="sticker-donacion">
+    <img src="../src/libro.png" alt="Donar" class="sticker-icon">
+    <span>APOYA UNA BUENA CAUSA</span>
+</div>
+
+
       <!-- TRES OPCIONES -->
 <section class="options">
   <a href="../views/conocenos.html" class="option-card">
@@ -120,6 +129,8 @@
         <a href="../docs/Status.html" style="color:#40739e; text-decoration:underline;">Estado del Servicio</a>.
     </div>
   </section>
+
+
 
 
   <!-- FOOTER -->
@@ -240,7 +251,12 @@
 
     <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
   </footer>
-
+  
+<script>
+document.getElementById("donacionSticker").addEventListener("click", () => {
+    window.location.href = "donaciones.html";
+});
+</script>
   <script src="../js/script.js"></script>
 </body>
 </html>
