@@ -87,9 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const exito = Math.random() < 0.5;
 
         if (exito) {
-            window.location.href = `donacion-exito.html?monto=${monto}&metodo=${metodo}`;
+            window.location.href = `confirmacion.html?monto=${monto}&metodo=${metodo}`;
         } else {
-            window.location.href = `donacion-error.html?metodo=${metodo}`;
+            window.location.href = `error-pago.html?metodo=${metodo}`;
         }
     });
 

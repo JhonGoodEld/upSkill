@@ -51,6 +51,11 @@
     <main class="planes-container" id="planesContainer">
     <!-- Las tarjetas se generan dinámicamente -->
     </main>
+      <!-- Sticker flotante de donaciones -->
+<div id="donacionSticker" class="sticker-donacion">
+    <img src="../src/libro.png" alt="Donar" class="sticker-icon">
+    <span>APOYA UNA BUENA CAUSA</span>
+</div>
 
 
 
@@ -172,6 +177,11 @@
 
         <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
     </footer>
+    <script>
+document.getElementById("donacionSticker").addEventListener("click", () => {
+    window.location.href = "micropagos.html";
+});
+</script>
     <script src="../js/planes.js"></script>
     <script src="../js/script.js"></script>
 
