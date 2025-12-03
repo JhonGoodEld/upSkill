@@ -42,16 +42,107 @@
 
     <hr>
 
-    <h3>Método de pago</h3>
-    <select id="metodoDonacion">
-        <option value="">Seleccione...</option>
-        <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
-        <option value="PayPal">PayPal</option>
-        <option value="Tienda">Pago en tienda (OXXO)</option>
-        <option value="Monedero">Monedero electrónico</option>
-        <option value="Cheque">Cheque</option>
-        <option value="Transferencia">Transferencia bancaria</option>
+    
+        <!-- Métodos de pago -->
+        <label style="margin-top: 20px;">Método de pago:</label>
+        <select name="metodo" id="metodoPago" >
+            <option value="">Seleccione...</option>
+            <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Tienda">Pago en tienda (OXXO)</option>
+            <option value="Monedero">Monedero electrónico</option>
+    <option value="Cheque">Cheque</option>
+    <option value="Transferencia">Transferencia bancaria</option>
+        </select>
+
+        <!-- Tarjeta -->
+        <div id="tarjetaSection" class="section hidden">
+            <h3>Pago con Tarjeta</h3>
+
+            <label>Banco emisor:</label>
+            <select name="banco">
+                <option>BBVA</option>
+                <option>Banorte</option>
+                <option>Santander</option>
+                <option>Scotiabank</option>
+                <option>HSBC</option>
+            </select>
+
+            <label>Número de tarjeta (simulada):</label>
+            <input type="text" value="4111 1111 1111 1111" disabled>
+
+            <label>Fecha de expiración:</label>
+            <input type="text" value="12/29" disabled>
+
+            <label>CVV:</label>
+            <input type="text" value="123" disabled>
+        </div>
+
+        <!-- PayPal -->
+        <div id="paypalSection" class="section hidden">
+            <h3>Pago con PayPal</h3>
+
+            <p>Se generará un ID de transacción simulado.</p>
+
+            <label>ID de pago (simulado):</label>
+            <input type="text" value="PAYPAL-TX-982712" readonly>
+        </div>
+
+        <!-- Pago en tienda -->
+        <div id="tiendaSection" class="section hidden">
+            <h3>Pago en tienda (OXXO)</h3>
+
+            <p>Utiliza la siguiente línea para realizar el depósito simulado:</p>
+
+            <label>CLABE simulada:</label>
+            <input type="text" value="0021 8000 1234 5678 90" readonly>
+
+            <p style="font-size: 14px;">Tu pago se confirmará automáticamente al continuar.</p>
+        </div>
+
+        <!-- Monedero electrónico -->
+<div id="monederoSection" class="section hidden">
+    <h3>Monedero Electrónico</h3>
+
+    <label>ID de monedero:</label>
+    <input type="text" value="WALLET-98271" readonly>
+
+    <label>Saldo disponible (simulado):</label>
+    <input type="text" value="$1,250 MXN" readonly>
+
+    <p style="font-size: 14px;">Tu saldo se verificará automáticamente al continuar.</p>
+</div>
+
+<!-- Cheque -->
+<div id="chequeSection" class="section hidden">
+    <h3>Pago con Cheque</h3>
+
+    <p>El pago se acreditará una vez que el cheque sea validado (simulado).</p>
+
+    <label>Banco emisor (simulado):</label>
+    <input type="text" value="Banorte" readonly>
+
+    <label>Número de cheque:</label>
+    <input type="text" value="CHQ-00-2198" readonly>
+</div>
+
+<!-- Transferencia bancaria -->
+<div id="transferenciaSection" class="section hidden">
+    <h3>Transferencia Bancaria</h3>
+
+    <label>Banco receptor (simulado):</label>
+    <select>
+        <option>BBVA</option>
+        <option>Santander</option>
+        <option>Banorte</option>
+        <option>HSBC</option>
     </select>
+
+    <label>CLABE para transferencia:</label>
+    <input type="text" value="0021 9000 4455 6678 01" readonly>
+
+    <p style="font-size: 14px;">Tu pago será confirmado automáticamente después de continuar.</p>
+</div>
 
     <button id="btnDonar" class="btnConfirmarPago">Donar ahora</button>
 
@@ -223,8 +314,28 @@
         <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
         </div>
     </div>
-<script src="../js/micropagos.js"></script>
+    <script>
+         document.addEventListener("DOMContentLoaded", () => {
 
+    const btnConfirmar = document.getElementById("btnConfirmarPago");
+
+    btnConfirmar.addEventListener("click", function (e) {
+        e.preventDefault(); // evita reload inmediato
+
+        // 50/50 → Math.random() < 0.5
+        const exito = Math.random() < 0.5;
+
+        if (exito) {
+            window.location.href = "confirmacion.html";
+        } else {
+            window.location.href = "error-pago.html";
+        }
+    });
+
+});
+
+    </script>
+<script src="../js/micropagos.js"></script>
     <script src="../js/script.js"></script>
         <script src="../js/carrito.js"></script>
 </body>
