@@ -29,9 +29,8 @@
 <div class="main-container">
     <h2>Pago fallido </h2>
 
-    <div class="error-box">
-        <p>El pago no pudo completarse correctamente. Por favor intenta de nuevo.</p>
-    </div>
+    <p id="errorMotivo" class="error-detalle"></p>
+
 
     <button class="btnConfirmarPago" onclick="window.location.href='pago.html'">
         Reintentar pago
@@ -206,6 +205,25 @@
         <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
         </div>
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const motivos = [
+        "La tarjeta fue rechazada por el banco emisor (simulado).",
+        "PayPal no pudo autorizar la transacción (simulado).",
+        "El código de pago OXXO no pudo validarse (simulado).",
+        "El monedero electrónico no tiene saldo suficiente (simulado).",
+        "El cheque no pudo ser verificado por la institución bancaria (simulado).",
+        "La transferencia no fue confirmada por el banco receptor (simulado)."
+    ];
+
+    // Seleccionar motivo aleatorio
+    const motivoAleatorio = motivos[Math.floor(Math.random() * motivos.length)];
+
+    // Insertar motivo en el HTML
+    document.getElementById("errorMotivo").textContent = motivoAleatorio;
+});
+</script>
 
     <script src="../js/script.js"></script>
         <script src="../js/carrito.js"></script>

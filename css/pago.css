@@ -244,4 +244,11 @@ button[type="submit"]:hover {
     text-align: center;
 }
 
+.error-detalle {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    color: #ff6b6b;
+    font-weight: bold;
+    text-align: center;
+}
 
