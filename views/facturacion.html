@@ -264,8 +264,7 @@
         <p>Tu factura está siendo generada y descargada. Esto puede tardar unos segundos.</p>
     </div>
     </div>
-
-        <script>
+<script>
 // Recupera total y método de pago de la URL
 const params = new URLSearchParams(window.location.search);
 const total = params.get("total") || "0.00";
@@ -281,11 +280,12 @@ const modalDescarga = document.getElementById("descargaModal");
 btnDescargar.addEventListener("click", () => {
   modalDescarga.style.display = "block"; // Muestra el modal
 
-  // Simulación de descarga
+  // Simulación de descarga — se cierra el modal automáticamente
   setTimeout(() => {
-    modalDescarga.style.display = "none"; // Oculta el modal despues de 3 segundos
+    modalDescarga.style.display = "none";
   }, 3000);
 });
+
 // ==== Firmar factura ====
 document.addEventListener("DOMContentLoaded", () => {
   const btnFirmar = document.getElementById("btnFirmar");
@@ -300,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
         <script src="../js/carrito.js"></script>
     </body>
