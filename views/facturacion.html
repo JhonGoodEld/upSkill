@@ -256,35 +256,53 @@
         <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
         </div>
     </div>
+
+        <!-- ===== MODAL: Descarga de Factura ===== -->
+    <div id="descargaModal" class="modal">
+    <div class="modal-content descarga">
+        <h3>📄 Descargando factura...</h3>
+        <p>Tu factura está siendo generada y descargada. Esto puede tardar unos segundos.</p>
+    </div>
+    </div>
+
         <script>
-        // Recupera total y método de pago de la URL
-        const params = new URLSearchParams(window.location.search);
-        const total = params.get("total") || "0.00";
-        const metodo = params.get("metodo") || "No especificado";
+// Recupera total y método de pago de la URL
+const params = new URLSearchParams(window.location.search);
+const total = params.get("total") || "0.00";
+const metodo = params.get("metodo") || "No especificado";
 
-        document.getElementById("facturaTotal").textContent = "$" + total + " MXN";
-        document.getElementById("metodoPago").textContent = metodo;
+document.getElementById("facturaTotal").textContent = "$" + total + " MXN";
+document.getElementById("metodoPago").textContent = metodo;
 
-        // Botón de descarga simulada
-        document.getElementById("btnDescargar").addEventListener("click", () => {
-            alert("📄 Descargando factura... ");
-        });
-        document.addEventListener("DOMContentLoaded", () => {
-    
-    const btnFirmar = document.getElementById("btnFirmar");
-    const seccionSellos = document.getElementById("sellosCFDI");
+// ✅ Modal de descarga
+const btnDescargar = document.getElementById("btnDescargar");
+const modalDescarga = document.getElementById("descargaModal");
 
-    btnFirmar.addEventListener("click", () => {
+btnDescargar.addEventListener("click", () => {
+  modalDescarga.style.display = "block"; // Muestra el modal
 
-        seccionSellos.style.display = "block";
-
-        btnFirmar.innerText = "Firmado ✓";
-        btnFirmar.disabled = true;
-        btnFirmar.style.background = "#1c7c2a";
-        btnFirmar.style.cursor = "default";
-    });
+  // Simula la descarga y cierra después de 3 segundos
+  setTimeout(() => {
+    modalDescarga.style.display = "none";
+    alert("✅ Factura descargada correctamente (simulado)");
+  }, 3000);
 });
-    </script>
+
+// ==== Firmar factura ====
+document.addEventListener("DOMContentLoaded", () => {
+  const btnFirmar = document.getElementById("btnFirmar");
+  const seccionSellos = document.getElementById("sellosCFDI");
+
+  btnFirmar.addEventListener("click", () => {
+    seccionSellos.style.display = "block";
+    btnFirmar.innerText = "Firmado ✓";
+    btnFirmar.disabled = true;
+    btnFirmar.style.background = "#1c7c2a";
+    btnFirmar.style.cursor = "default";
+  });
+});
+</script>
+
         <script src="../js/carrito.js"></script>
     </body>
     </html>
