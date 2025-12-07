@@ -94,13 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault(); // evita reload inmediato
 
         // 50/50 → Math.random() < 0.5
-        const exito = Math.random() < 0.5;
-
-        if (exito) {
+        const exito = Math.random() < 1;
+        //acierto directo 
             window.location.href = "confirmacion.html";
-        } else {
-            window.location.href = "error-pago.html";
-        }
+        
     });
 
 });
