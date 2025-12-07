@@ -207,23 +207,28 @@
     </div>
     <script>
 document.addEventListener("DOMContentLoaded", () => {
+    // Obtener el parámetro "metodo" desde la URL
+    const params = new URLSearchParams(window.location.search);
+    const metodo = params.get("metodo");
 
-    const motivos = [
-        "La tarjeta fue rechazada por el banco emisor (simulado).",
-        "PayPal no pudo autorizar la transacción (simulado).",
-        "El código de pago OXXO no pudo validarse (simulado).",
-        "El monedero electrónico no tiene saldo suficiente (simulado).",
-        "El cheque no pudo ser verificado por la institución bancaria (simulado).",
-        "La transferencia no fue confirmada por el banco receptor (simulado)."
-    ];
+    // Definir mensajes específicos por método
+    const mensajesError = {
+        "Tarjeta": "La tarjeta fue rechazada por el banco emisor (simulado).",
+        "PayPal": "PayPal no pudo autorizar la transacción (simulado).",
+        "Tienda": "El código de pago en tienda (OXXO) no pudo validarse (simulado).",
+        "Monedero": "El monedero electrónico no tiene saldo suficiente (simulado).",
+        "Cheque": "El cheque no pudo ser verificado por la institución bancaria (simulado).",
+        "Transferencia": "La transferencia no fue confirmada por el banco receptor (simulado)."
+    };
 
-    // Seleccionar motivo aleatorio
-    const motivoAleatorio = motivos[Math.floor(Math.random() * motivos.length)];
+    // Obtener el mensaje según el método o uno genérico
+    const mensaje = mensajesError[metodo] || "Ocurrió un error inesperado al procesar el pago.";
 
-    // Insertar motivo en el HTML
-    document.getElementById("errorMotivo").textContent = motivoAleatorio;
+    // Insertar el motivo en el HTML
+    document.getElementById("errorMotivo").textContent = mensaje;
 });
 </script>
+
 
     <script src="../js/script.js"></script>
         <script src="../js/carrito.js"></script>

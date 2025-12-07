@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         todasLasSecciones.forEach(sec => sec.classList.add("hidden"));
     }
 
-    // ⭐ ESTA ERA LA LÍNEA QUE FALLABA ⭐
+    // Mostrar la sección según el método de pago seleccionado
     metodoPago.addEventListener("change", () => {
         const metodo = metodoPago.value;
         ocultarTodo();
@@ -48,5 +48,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         formPago.action = "pago-metodo.html?metodo=" + encodeURIComponent(metodo);
     });
+
+    // ====== NUEVO BOTÓN: IR A PÁGINA DE ERROR ======
+    const btnError = document.getElementById("btnErrorPago");
+    if (btnError) {
+        btnError.addEventListener("click", () => {
+            const metodo = metodoPago.value.trim();
+
+            if (!metodo) {
+                alert("Selecciona un método de pago antes de simular un error.");
+                return;
+            }
+
+            // Redirigir a error-pago.html con el método seleccionado
+            window.location.href = "error-pago.html?metodo=" + encodeURIComponent(metodo);
+        });
+    }
 
 });
