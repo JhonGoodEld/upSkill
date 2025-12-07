@@ -295,11 +295,11 @@ body {
 }
 
 .legal-links a {
-  color: #1a73e8;
+  color: #f2f3f6;
   text-decoration: underline;
   cursor: pointer;
 }
 
 .legal-links a:hover {
-  color: #0d57bd;
+  color: #f6f6f7;
 }
