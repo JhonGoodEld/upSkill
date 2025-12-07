@@ -254,20 +254,14 @@ button[type="submit"]:hover {
 
 /* ========== no pos .. a ver sobrescrito ========== */
 
-/* === Enlaces blancos === */
-.legal-links a,
-.footer .socials a,
-.nav-right a,
-.nav-side a {
-  color: #ffffff !important; /* blanco puro */
+a {
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.legal-links a:hover,
-.footer .socials a:hover,
-.nav-right a:hover,
-.nav-side a:hover {
-  color: #cccccc !important; /* gris claro al pasar el mouse */
+a:hover {
+  color: #cccccc;
   text-decoration: underline;
 }
+
