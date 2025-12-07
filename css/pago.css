@@ -252,3 +252,22 @@ button[type="submit"]:hover {
     text-align: center;
 }
 
+/* ========== no pos .. a ver sobrescrito ========== */
+
+/* === Enlaces blancos === */
+.legal-links a,
+.footer .socials a,
+.nav-right a,
+.nav-side a {
+  color: #ffffff !important; /* blanco puro */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.legal-links a:hover,
+.footer .socials a:hover,
+.nav-right a:hover,
+.nav-side a:hover {
+  color: #cccccc !important; /* gris claro al pasar el mouse */
+  text-decoration: underline;
+}
