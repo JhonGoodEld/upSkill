@@ -281,13 +281,11 @@ const modalDescarga = document.getElementById("descargaModal");
 btnDescargar.addEventListener("click", () => {
   modalDescarga.style.display = "block"; // Muestra el modal
 
-  // Simula la descarga y cierra después de 3 segundos
+  // Simulación de descarga
   setTimeout(() => {
-    modalDescarga.style.display = "none";
-    alert("✅ Factura descargada correctamente (simulado)");
+    modalDescarga.style.display = "none"; // Oculta el modal despues de 3 segundos
   }, 3000);
 });
-
 // ==== Firmar factura ====
 document.addEventListener("DOMContentLoaded", () => {
   const btnFirmar = document.getElementById("btnFirmar");
