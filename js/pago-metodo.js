@@ -72,6 +72,42 @@ function generarDetalles() {
         `;
     }
 
+    if (metodo === "Monedero") {
+        const ref = "Wallet-" + Math.floor(100000 + Math.random() * 900000);
+        let fecha = new Date();
+        fecha.setDate(fecha.getDate() + 2);
+
+        html = `
+            <p><strong>Saldo insuficiente</strong></p>
+            <p><strong>Identificador de wallet:</strong> ${ref}</p>
+            <p><strong>Monto:</strong> $${total.toFixed(2)- Math.floor(100000 + Math.random() * 900000)} MXN</p>
+        `;
+    }
+
+        if (metodo === "Cheque") {
+            const ref = "Clave de banco emisor-" + Math.floor(100000 + Math.random() * 900000);
+            let fecha = new Date();
+            fecha.setDate(fecha.getDate() + 2);
+
+            html = `
+                <p><strong>QUIEN EN SU SANO JUICIO PAGA UNA APLICACION CON CHEQUE ?</strong></p>
+                <p><strong>Identificador de BANCO :</strong> ${ref}</p>
+                <p><strong>Monto:</strong> $${total.toFixed(2)- Math.floor(100000 + Math.random() * 900000)} MXN</p>
+                <p><strong>EL BANCO RECHAZO TU CHEQUE ... PA QUE SE TE QUITE </strong></p>
+            `;
+        }
+
+        if (metodo === "Transferencia") {
+            const ultimos = Math.floor(1000 + Math.random() * 9000);
+        const auth = "AUTH-" + Math.floor(100000 + Math.random() * 900000);
+
+        html = `
+            <p><strong>Banco:</strong> ${["BBVA","Banorte","HSBC","Santander"][Math.floor(Math.random()*4)]}</p>
+            
+            <p><strong>Cobro estimado:</strong> $${total.toFixed(2)} MXN , SALDO INSUFICIENTE</p>
+        `;
+        }
+
     if (!metodo) {
         html = "<p>No se seleccionó ningún método</p>";
     }

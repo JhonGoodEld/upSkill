@@ -214,13 +214,32 @@
         </div>
     </div>
 
-    
-    <script>
-    // Mostrar el método de pago obtenido de la URL
-    const params = new URLSearchParams(window.location.search);
-    const metodo = params.get("metodo") || "No especificado";
+        
+        <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Obtener el parámetro "metodo" desde la URL
+        const params = new URLSearchParams(window.location.search);
+        const metodo = params.get("metodo") || "No especificado";
 
-    document.getElementById("metodoSeleccionado").textContent = metodo;
+        // Mostrar el método de pago en el HTML
+        document.getElementById("metodoSeleccionado").textContent = metodo;
+
+        // Mensajes de error según método
+        const mensajesError = {
+            "Tarjeta": "La tarjeta fue rechazada por el banco emisor (simulado).",
+            "PayPal": "PayPal no pudo autorizar la transacción (simulado).",
+            "Tienda": "El código de pago en tienda (OXXO) no pudo validarse (simulado).",
+            "Monedero": "El monedero electrónico no tiene saldo suficiente (simulado).",
+            "Cheque": "El cheque no pudo ser verificado por la institución bancaria (simulado).",
+            "Transferencia": "La transferencia no fue confirmada por el banco receptor (simulado)."
+        };
+
+        // Obtener el mensaje según el método o uno genérico
+        const mensaje = mensajesError[metodo] || "Ocurrió un error inesperado al procesar el pago.";
+
+        // Mostrar el mensaje de error en el HTML
+        document.getElementById("errorMotivo").textContent = mensaje;
+    });
     </script>
         
         <script src="../js/script.js"></script>
