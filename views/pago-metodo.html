@@ -146,7 +146,6 @@
 
         <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
     </footer>
-
     <!-- ===== MODAL: Términos y Condiciones ===== -->
     <div id="terminosModal" class="modal">
         <div class="modal-content politicas">
@@ -230,32 +229,42 @@
         <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
         </div>
     </div>
-    <script>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/pago.js"></script>
+    <script src="../js/pago-metodo.js"></script>
+    <script src="../js/carrito.js"></script>
+        <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // 1️⃣ Obtener el método desde la URL
+    // 🧩 1️⃣ Obtener el método desde la URL
     const params = new URLSearchParams(window.location.search);
-    const metodo = params.get("metodo") || "No especificado";
+    const metodo = params.get("metodo");
 
-    // 2️⃣ Mostrarlo en pantalla
-    document.getElementById("metodoElegido").textContent = metodo;
+    console.log("Método recibido en pago-metodo:", metodo);
 
-    // 3️⃣ Configurar el botón para reenviar a confirmacion.html con el mismo método
+    // 🧩 2️⃣ Mostrarlo en pantalla
+    const metodoEl = document.getElementById("metodoElegido");
+    if (metodoEl) {
+        metodoEl.textContent = metodo || "No especificado";
+    }
+
+    // 🧩 3️⃣ Reenviar a confirmacion.html conservando el método
     const btnConfirmar = document.getElementById("btnConfirmarPago");
     if (btnConfirmar) {
         btnConfirmar.addEventListener("click", (e) => {
             e.preventDefault();
+            
+            if (!metodo) {
+                alert("No se ha recibido ningún método de pago desde la página anterior.");
+                return;
+            }
 
-            // Redirigir manteniendo el método
+            // ✅ Redirige con el método correcto
             window.location.href = "confirmacion.html?metodo=" + encodeURIComponent(metodo);
         });
     }
 });
 </script>
-
-    <script src="../js/script.js"></script>
-    <script src="../js/pago.js"></script>
-    <script src="../js/pago-metodo.js"></script>
-        <script src="../js/carrito.js"></script>
 
 
     </body>
