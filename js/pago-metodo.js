@@ -117,23 +117,20 @@ function generarDetalles() {
 
 generarDetalles();
 
-// ===== BOTÓN CONFIRMAR PAGO =====
-document.getElementById("btnConfirmarPago").addEventListener("click", () => {
-    window.location.href = "confirmacion.html?metodo=" + metodo;
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-
+    document.addEventListener("DOMContentLoaded", () => {
     const btnConfirmar = document.getElementById("btnConfirmarPago");
 
     btnConfirmar.addEventListener("click", function (e) {
         e.preventDefault(); // evita reload inmediato
 
-        // 50/50 → Math.random() < 0.5
-        const exito = Math.random() < 1;
-        //acierto directo 
-            window.location.href = "confirmacion.html";
-        
+        // Aquí obtienes el método (según cómo lo definas en tu página de pago)
+        const metodo = document.querySelector('input[name="metodo"]:checked')?.value 
+                    || document.getElementById("metodoPago")?.value 
+                    || "No especificado";
+
+        // Redirigir con el parámetro del método
+        window.location.href = "confirmacion.html?metodo=" + encodeURIComponent(metodo);
+    });
     });
 
-});
+
