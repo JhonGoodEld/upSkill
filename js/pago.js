@@ -36,20 +36,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (metodo === "Transferencia") transferencia.classList.remove("hidden");
     });
 
-    // Ajustar la URL para enviar el método
+    // ✅ AJUSTE: Enviar método de pago por URL a pago-metodo.html
     formPago.addEventListener("submit", (e) => {
+        e.preventDefault(); // evitamos el envío automático del form
+
         const metodo = metodoPago.value.trim();
 
         if (!metodo) {
             alert("Por favor selecciona un método de pago");
-            e.preventDefault();
             return;
         }
 
-        formPago.action = "pago-metodo.html?metodo=" + encodeURIComponent(metodo);
+        // 🔥 Redirigimos manualmente con el método seleccionado
+        window.location.href = "pago-metodo.html?metodo=" + encodeURIComponent(metodo);
     });
 
-    // ====== NUEVO BOTÓN: IR A PÁGINA DE ERROR ======
+    // ====== BOTÓN DE SIMULAR ERROR (opcional) ======
     const btnError = document.getElementById("btnErrorPago");
     if (btnError) {
         btnError.addEventListener("click", () => {
@@ -60,9 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Redirigir a error-pago.html con el método seleccionado
             window.location.href = "error-pago.html?metodo=" + encodeURIComponent(metodo);
         });
     }
 
 });
+

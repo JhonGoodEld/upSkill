@@ -230,6 +230,27 @@
         <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
         </div>
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 1️⃣ Obtener el método desde la URL
+    const params = new URLSearchParams(window.location.search);
+    const metodo = params.get("metodo") || "No especificado";
+
+    // 2️⃣ Mostrarlo en pantalla
+    document.getElementById("metodoElegido").textContent = metodo;
+
+    // 3️⃣ Configurar el botón para reenviar a confirmacion.html con el mismo método
+    const btnConfirmar = document.getElementById("btnConfirmarPago");
+    if (btnConfirmar) {
+        btnConfirmar.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Redirigir manteniendo el método
+            window.location.href = "confirmacion.html?metodo=" + encodeURIComponent(metodo);
+        });
+    }
+});
+</script>
 
     <script src="../js/script.js"></script>
     <script src="../js/pago.js"></script>
