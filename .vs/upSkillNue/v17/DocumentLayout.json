@@ -30,8 +30,7 @@
               "RelativeToolTip": "views\\registro.html",
               "ViewState": "AQIAAA4AAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-08-29T04:43:19.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-29T04:43:19.088Z"
             },
             {
               "$type": "Document",
@@ -41,7 +40,7 @@
               "RelativeDocumentMoniker": "database\\clientes.json",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\database\\clientes.json",
               "RelativeToolTip": "database\\clientes.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-08-29T04:37:27.984Z",
               "EditorCaption": ""

@@ -2,7 +2,7 @@
   "clientes": [
     {
       "id": 1,
-      "nombre": "Juan Pérez",
+      "nombre": "Juan Perez",
       "correo": "juan.perez@example.com",
       "telefono": "4491234567",
       "empresa": "Empresa ABC",
@@ -11,10 +11,10 @@
     },
     {
       "id": 2,
-      "nombre": "María González",
+      "nombre": "Maria Gonzalez",
       "correo": "maria.gonzalez@example.com",
       "telefono": "4499876543",
-      "empresa": "Tecnologías XYZ",
+      "empresa": "Tecnologias XYZ",
       "fecha_registro": "2026-08-28",
       "estado": "activo"
     }
