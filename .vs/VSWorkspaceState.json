@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\data",
-    "\\database"
+    "\\views"
   ],
-  "SelectedNode": "\\html",
+  "SelectedNode": "\\views\\registro.html",
   "PreviewInSolutionExplorer": false
 }
