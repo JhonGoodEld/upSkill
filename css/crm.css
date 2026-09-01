@@ -54,6 +54,32 @@ body {
 
 .crm-login form { display: flex; flex-direction: column; gap: 12px; }
 
+/* Selector de rol en el login unificado */
+.role-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.crm-login .role-tabs button {
+  flex: 1;
+  background: #f1f5f9;
+  color: var(--muted);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 8px 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.crm-login .role-tabs button:hover { background: #e2e8f0; }
+.crm-login .role-tabs button.activo {
+  background: var(--azul-2);
+  color: #fff;
+  border-color: var(--azul-2);
+  font-weight: 600;
+}
+.crm-login .hint a { color: var(--azul-2); text-decoration: none; }
+.crm-login .hint a:hover { text-decoration: underline; }
+
 .crm-login input {
   padding: 10px 12px;
   border: 1px solid #cbd5e1;
@@ -203,6 +229,13 @@ table.crm td.acciones { display: flex; gap: 6px; }
 .pill.etapa-Activo { background: #dcfce7; color: #166534; }
 .pill.etapa-Frecuente { background: #fef9c3; color: #854d0e; }
 .pill.etapa-Inactivo { background: #f1f5f9; color: #475569; }
+
+/* Etapas del CRM docente */
+.pill.et-prospecto { background: #e0e7ff; color: #3730a3; }
+.pill.et-inscrito { background: #dbeafe; color: #1e40af; }
+.pill.et-al-dia { background: #dcfce7; color: #166534; }
+.pill.et-en-riesgo { background: #fee2e2; color: #991b1b; }
+.pill.et-graduado { background: #fef9c3; color: #854d0e; }
 
 select.etapa-select {
   padding: 4px 6px;

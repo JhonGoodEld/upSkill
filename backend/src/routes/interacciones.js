@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { crear, misInteracciones } from '../controllers/interaccionesController.js';
-import { autenticar } from '../middleware/auth.js';
+import { autenticar, requiereRol } from '../middleware/auth.js';
 
 const router = Router();
 
-router.use(autenticar);
+router.use(autenticar, requiereRol('admin'));
 
 router.post('/', crear);
 router.get('/mias', misInteracciones);

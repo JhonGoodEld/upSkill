@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="../css/alumno.css" >
     <link rel="stylesheet" href="../css/flotante.css">
 
+    <script>
+      // Guard: exige sesión de alumno (login unificado).
+      (function () {
+        var API = localStorage.getItem('crm_api') || 'http://localhost:3000/api';
+        var token = localStorage.getItem('crm_token');
+        if (!token) { location.href = 'login.html'; return; }
+        fetch(API + '/auth/me', { headers: { Authorization: 'Bearer ' + token } })
+          .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (u) {
+            localStorage.setItem('crm_usuario', JSON.stringify(u));
+            if (u.rol === 'admin') location.href = 'crm.html';
+            else if (u.rol === 'docente') location.href = 'crm-docente.html';
+          })
+          .catch(function () {
+            localStorage.removeItem('crm_token');
+            localStorage.removeItem('crm_usuario');
+            location.href = 'login.html';
+          });
+      })();
+    </script>
     </head>
     <body>
     <!--barra de la navegacion pa-->
@@ -34,7 +54,7 @@
         </div>
         </div>
 
-        <a href="../views/pagPrin.html" class="menu-link">Loggout</a>
+        <a href="#" class="menu-link" onclick="localStorage.removeItem('crm_token');localStorage.removeItem('crm_usuario');location.href='login.html';return false;">Cerrar sesión</a>
     </nav>
     </header>
 

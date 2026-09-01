@@ -13,8 +13,8 @@ export const register = wrap(async (req, res) => {
   assertEmail(correo);
   if (String(password).length < 6) throw new AppError(400, 'La contraseña debe tener al menos 6 caracteres');
 
-  let rol = req.body.rol || 'usuario';
-  assertEnum(rol, ['admin', 'usuario'], 'rol');
+  let rol = req.body.rol || 'alumno';
+  assertEnum(rol, ['admin', 'docente', 'alumno'], 'rol');
 
   // El primer usuario del sistema se crea como admin automáticamente.
   const { total } = db.prepare('SELECT COUNT(*) AS total FROM usuarios').get();

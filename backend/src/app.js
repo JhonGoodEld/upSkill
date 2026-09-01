@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.js';
 import clientesRoutes from './routes/clientes.js';
 import interaccionesRoutes from './routes/interacciones.js';
 import metricasRoutes from './routes/metricas.js';
+import docenteRoutes from './routes/docente.js';
 
 export function crearApp() {
   const app = express();
@@ -21,11 +22,12 @@ export function crearApp() {
   app.use('/api/clientes', clientesRoutes);
   app.use('/api/interacciones', interaccionesRoutes);
   app.use('/api/metricas', metricasRoutes);
+  app.use('/api/docente', docenteRoutes);
 
   // Sirve el front-end estático del proyecto (raíz del repo) para desarrollo.
-  // Así http://localhost:3000/views/crm.html funciona sin otro servidor.
+  // Así http://localhost:3000/ abre la página principal (index.html -> views/pagPrin.html)
+  // y http://localhost:3000/views/crm.html abre el CRM, sin otro servidor.
   const raizRepo = resolve(dirname(fileURLToPath(import.meta.url)), '../../');
-  app.get('/', (_req, res) => res.redirect('/views/crm.html'));
   app.use(express.static(raizRepo));
 
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));

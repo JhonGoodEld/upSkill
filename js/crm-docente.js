@@ -1,19 +1,21 @@
 /* ============================================================
-   CRM upSkill — Front-end (Etapa 1)
-   Se conecta al back-end de /backend (Node + Express + SQLite).
+   CRM Docente — upSkill (Etapa 1)
+   Pipeline de contactos del docente (prospecto -> graduado) + seguimientos.
+   Se conecta a /api/docente/* del back-end. Datos aislados por docente.
    ============================================================ */
 
 const API = localStorage.getItem('crm_api') || 'http://localhost:3000/api';
+const DESTINO_ROL = { admin: 'crm.html', alumno: 'alumno.html' };
+
+const ETAPAS = ['Prospecto', 'Inscrito', 'Al dia', 'En riesgo', 'Graduado'];
+const etapaClase = (e) => 'et-' + String(e).toLowerCase().replace(/\s+/g, '-');
 
 const state = {
   token: localStorage.getItem('crm_token') || null,
   usuario: JSON.parse(localStorage.getItem('crm_usuario') || 'null'),
-  clientes: [],
+  contactos: [],
   chart: null,
 };
-
-// A dónde mandar a cada rol que NO sea admin.
-const DESTINO_ROL = { docente: 'crm-docente.html', alumno: 'alumno.html' };
 
 /* ---------- Utilidades ---------- */
 const $ = (sel) => document.querySelector(sel);
@@ -57,9 +59,7 @@ async function api(ruta, opciones = {}) {
   }
 
   let data = null;
-  if (res.status !== 204) {
-    data = await res.json().catch(() => null);
-  }
+  if (res.status !== 204) data = await res.json().catch(() => null);
   if (!res.ok) throw new Error(data?.error || `Error ${res.status}`);
   return data;
 }
@@ -76,9 +76,8 @@ function cerrarSesion() {
 function entrarApp() {
   $('#appView').classList.remove('oculto');
   $('#userNombre').textContent = state.usuario?.nombre || '';
-  $('#userRol').textContent = state.usuario?.rol || '';
-  cambiarTab('clientes');
-  cargarClientes();
+  cambiarTab('contactos');
+  cargarContactos();
 }
 
 $('#btnLogout').addEventListener('click', cerrarSesion);
@@ -88,165 +87,160 @@ function cambiarTab(tab) {
   $$('.crm-tabs button').forEach((b) => b.classList.toggle('activo', b.dataset.tab === tab));
   $$('.crm-view').forEach((v) => v.classList.toggle('activo', v.id === 'tab-' + tab));
   if (tab === 'metricas') cargarMetricas();
-  if (tab === 'actividad') cargarActividad();
 }
 $$('.crm-tabs button').forEach((b) => b.addEventListener('click', () => cambiarTab(b.dataset.tab)));
 
 /* ============================================================
-   CLIENTES
+   CONTACTOS
    ============================================================ */
 let filtroTimer;
 ['#fBuscar', '#fEstado', '#fEtapa'].forEach((sel) => {
   $(sel).addEventListener('input', () => {
     clearTimeout(filtroTimer);
-    filtroTimer = setTimeout(cargarClientes, 250);
+    filtroTimer = setTimeout(cargarContactos, 250);
   });
 });
 
-async function cargarClientes() {
+async function cargarContactos() {
   const params = new URLSearchParams();
   if ($('#fBuscar').value.trim()) params.set('buscar', $('#fBuscar').value.trim());
   if ($('#fEstado').value) params.set('estado', $('#fEstado').value);
   if ($('#fEtapa').value) params.set('etapa', $('#fEtapa').value);
 
   try {
-    state.clientes = await api('/clientes?' + params.toString());
-    renderClientes();
+    state.contactos = await api('/docente/contactos?' + params.toString());
+    renderContactos();
   } catch (err) {
     toast(err.message, 'err');
   }
 }
 
-const ETAPAS = ['Prospecto', 'Activo', 'Frecuente', 'Inactivo'];
-const esAdmin = () => state.usuario?.rol === 'admin';
-
-function renderClientes() {
-  const tb = $('#tbodyClientes');
+function renderContactos() {
+  const tb = $('#tbodyContactos');
   tb.innerHTML = '';
-  $('#clientesVacio').classList.toggle('oculto', state.clientes.length > 0);
+  $('#contactosVacio').classList.toggle('oculto', state.contactos.length > 0);
 
-  state.clientes.forEach((c) => {
+  state.contactos.forEach((c) => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${c.id}</td>
       <td>${esc(c.nombre)}</td>
       <td>${esc(c.correo)}</td>
       <td>${esc(c.telefono || '—')}</td>
-      <td>${esc(c.empresa || '—')}</td>
+      <td>${esc(c.curso || '—')}</td>
       <td><span class="pill ${c.estado}">${c.estado}</span></td>
       <td>
         <select class="etapa-select" data-id="${c.id}">
-          ${ETAPAS.map((e) => `<option value="${e}" ${e === c.etapa_crm ? 'selected' : ''}>${e}</option>`).join('')}
+          ${ETAPAS.map((e) => `<option value="${e}" ${e === c.etapa ? 'selected' : ''}>${e}</option>`).join('')}
         </select>
       </td>
       <td class="acciones">
-        <button class="btn mini secundario" data-accion="historial" data-id="${c.id}">Historial</button>
+        <button class="btn mini secundario" data-accion="seguimiento" data-id="${c.id}">Seguimiento</button>
         <button class="btn mini secundario" data-accion="editar" data-id="${c.id}">Editar</button>
-        ${esAdmin() ? `<button class="btn mini peligro" data-accion="eliminar" data-id="${c.id}">Eliminar</button>` : ''}
+        <button class="btn mini peligro" data-accion="eliminar" data-id="${c.id}">Eliminar</button>
       </td>`;
     tb.appendChild(tr);
   });
 }
 
-$('#tbodyClientes').addEventListener('change', async (e) => {
+$('#tbodyContactos').addEventListener('change', async (e) => {
   const sel = e.target.closest('.etapa-select');
   if (!sel) return;
   try {
-    await api(`/clientes/${sel.dataset.id}/etapa`, {
+    await api(`/docente/contactos/${sel.dataset.id}/etapa`, {
       method: 'PUT',
-      body: JSON.stringify({ etapa_crm: sel.value }),
+      body: JSON.stringify({ etapa: sel.value }),
     });
     toast('Etapa actualizada', 'ok');
-    const c = state.clientes.find((x) => x.id == sel.dataset.id);
-    if (c) c.etapa_crm = sel.value;
+    const c = state.contactos.find((x) => x.id == sel.dataset.id);
+    if (c) c.etapa = sel.value;
   } catch (err) {
     toast(err.message, 'err');
-    cargarClientes();
+    cargarContactos();
   }
 });
 
-$('#tbodyClientes').addEventListener('click', (e) => {
+$('#tbodyContactos').addEventListener('click', (e) => {
   const btn = e.target.closest('button[data-accion]');
   if (!btn) return;
-  const id = btn.dataset.id;
-  const cliente = state.clientes.find((x) => x.id == id);
-  if (btn.dataset.accion === 'editar') abrirModalCliente(cliente);
-  if (btn.dataset.accion === 'historial') abrirHistorial(cliente);
-  if (btn.dataset.accion === 'eliminar') eliminarCliente(cliente);
+  const contacto = state.contactos.find((x) => x.id == btn.dataset.id);
+  if (btn.dataset.accion === 'editar') abrirModalContacto(contacto);
+  if (btn.dataset.accion === 'seguimiento') abrirSeguimiento(contacto);
+  if (btn.dataset.accion === 'eliminar') eliminarContacto(contacto);
 });
 
-async function eliminarCliente(c) {
-  if (!confirm(`¿Eliminar al cliente "${c.nombre}"? Se borrarán también sus interacciones.`)) return;
+async function eliminarContacto(c) {
+  if (!confirm(`¿Eliminar a "${c.nombre}"? Se borrarán también sus seguimientos.`)) return;
   try {
-    await api('/clientes/' + c.id, { method: 'DELETE' });
-    toast('Cliente eliminado', 'ok');
-    cargarClientes();
+    await api('/docente/contactos/' + c.id, { method: 'DELETE' });
+    toast('Contacto eliminado', 'ok');
+    cargarContactos();
   } catch (err) {
     toast(err.message, 'err');
   }
 }
 
-/* ---------- Modal cliente (alta / edición) ---------- */
-function abrirModalCliente(c = null) {
-  $('#modalClienteTitulo').textContent = c ? 'Editar cliente' : 'Nuevo cliente';
+/* ---------- Modal contacto (alta / edición) ---------- */
+function abrirModalContacto(c = null) {
+  $('#modalContactoTitulo').textContent = c ? 'Editar contacto' : 'Nuevo contacto';
   $('#cId').value = c?.id || '';
   $('#cNombre').value = c?.nombre || '';
   $('#cCorreo').value = c?.correo || '';
   $('#cTelefono').value = c?.telefono || '';
-  $('#cEmpresa').value = c?.empresa || '';
+  $('#cCurso').value = c?.curso || '';
   $('#cEstado').value = c?.estado || 'activo';
-  $('#cEtapa').value = c?.etapa_crm || 'Prospecto';
-  abrirModal('#modalCliente');
+  $('#cEtapa').value = c?.etapa || 'Prospecto';
+  abrirModal('#modalContacto');
 }
 
-$('#formCliente').addEventListener('submit', async (e) => {
+$('#formContacto').addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = $('#cId').value;
   const body = {
     nombre: $('#cNombre').value.trim(),
     correo: $('#cCorreo').value.trim(),
     telefono: $('#cTelefono').value.trim(),
-    empresa: $('#cEmpresa').value.trim(),
+    curso: $('#cCurso').value.trim(),
     estado: $('#cEstado').value,
-    etapa_crm: $('#cEtapa').value,
+    etapa: $('#cEtapa').value,
   };
   try {
-    await api(id ? '/clientes/' + id : '/clientes', {
+    await api(id ? '/docente/contactos/' + id : '/docente/contactos', {
       method: id ? 'PUT' : 'POST',
       body: JSON.stringify(body),
     });
-    toast(id ? 'Cliente actualizado' : 'Cliente creado', 'ok');
-    cerrarModal('#modalCliente');
-    cargarClientes();
+    toast(id ? 'Contacto actualizado' : 'Contacto creado', 'ok');
+    cerrarModal('#modalContacto');
+    cargarContactos();
   } catch (err) {
     toast(err.message, 'err');
   }
 });
 
-$('#btnNuevoCliente').addEventListener('click', () => abrirModalCliente());
+$('#btnNuevo').addEventListener('click', () => abrirModalContacto());
 
 /* ============================================================
-   HISTORIAL DE INTERACCIONES
+   SEGUIMIENTOS
    ============================================================ */
-async function abrirHistorial(c) {
-  $('#histTitulo').textContent = 'Historial — ' + c.nombre;
-  $('#iClienteId').value = c.id;
-  abrirModal('#modalHistorial');
+async function abrirSeguimiento(c) {
+  $('#segTitulo').textContent = 'Seguimiento — ' + c.nombre;
+  $('#sContactoId').value = c.id;
+  abrirModal('#modalSeguimiento');
   await refrescarTimeline(c.id);
 }
 
-async function refrescarTimeline(clienteId) {
+async function refrescarTimeline(contactoId) {
   try {
-    const rows = await api(`/clientes/${clienteId}/interacciones`);
+    const rows = await api(`/docente/contactos/${contactoId}/seguimientos`);
     const ul = $('#timeline');
     ul.innerHTML = '';
-    $('#histVacio').classList.toggle('oculto', rows.length > 0);
-    rows.forEach((i) => {
+    $('#segVacio').classList.toggle('oculto', rows.length > 0);
+    rows.forEach((s) => {
       const li = document.createElement('li');
       li.innerHTML = `
-        <div class="tipo">${esc(i.tipo)}</div>
-        <div>${esc(i.descripcion)}</div>
-        <div class="meta">${fechaCorta(i.fecha)} · ${esc(i.usuario_nombre || 'usuario')}</div>`;
+        <div class="tipo">${esc(s.tipo)}</div>
+        <div>${esc(s.descripcion)}</div>
+        <div class="meta">${fechaCorta(s.fecha)}</div>`;
       ul.appendChild(li);
     });
   } catch (err) {
@@ -254,21 +248,21 @@ async function refrescarTimeline(clienteId) {
   }
 }
 
-$('#formInteraccion').addEventListener('submit', async (e) => {
+$('#formSeguimiento').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const clienteId = $('#iClienteId').value;
+  const contactoId = $('#sContactoId').value;
   try {
-    await api('/interacciones', {
+    await api('/docente/seguimientos', {
       method: 'POST',
       body: JSON.stringify({
-        cliente_id: Number(clienteId),
-        tipo: $('#iTipo').value,
-        descripcion: $('#iDescripcion').value.trim(),
+        contacto_id: Number(contactoId),
+        tipo: $('#sTipo').value,
+        descripcion: $('#sDescripcion').value.trim(),
       }),
     });
-    $('#iDescripcion').value = '';
-    toast('Interacción registrada', 'ok');
-    refrescarTimeline(clienteId);
+    $('#sDescripcion').value = '';
+    toast('Seguimiento registrado', 'ok');
+    refrescarTimeline(contactoId);
   } catch (err) {
     toast(err.message, 'err');
   }
@@ -279,26 +273,28 @@ $('#formInteraccion').addEventListener('submit', async (e) => {
    ============================================================ */
 async function cargarMetricas() {
   try {
-    const m = await api('/metricas');
+    const m = await api('/docente/metricas');
+    const porEtapa = Object.fromEntries(m.por_etapa.map((e) => [e.etapa, e.n]));
 
     $('#cardsMetricas').innerHTML = [
-      ['Clientes', m.totales.clientes],
-      ['Activos', m.totales.activos],
-      ['Inactivos', m.totales.inactivos],
-      ['Interacciones', m.totales.interacciones],
-      ['En riesgo', m.totales.clientes_en_riesgo],
+      ['Contactos', m.totales.contactos],
+      ['Inscritos', porEtapa['Inscrito'] || 0],
+      ['Al día', porEtapa['Al dia'] || 0],
+      ['En riesgo', porEtapa['En riesgo'] || 0],
+      ['Graduados', porEtapa['Graduado'] || 0],
+      ['Sin seguimiento', m.totales.sin_seguimiento],
     ].map(([lbl, num]) => `<div class="crm-card"><div class="num">${num}</div><div class="lbl">${lbl}</div></div>`).join('');
 
-    $('#riesgoDias').textContent = `(> ${m.dias_sin_contacto} días sin contacto)`;
+    $('#riesgoDias').textContent = `(> ${m.dias_sin_contacto} días)`;
 
     const tb = $('#tbodyRiesgo');
     tb.innerHTML = '';
-    $('#riesgoVacio').classList.toggle('oculto', m.clientes_en_riesgo.length > 0);
-    m.clientes_en_riesgo.forEach((c) => {
+    $('#riesgoVacio').classList.toggle('oculto', m.sin_seguimiento.length > 0);
+    m.sin_seguimiento.forEach((c) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `<td>${esc(c.nombre)}</td>
-        <td><span class="pill etapa-${c.etapa_crm}">${c.etapa_crm}</span></td>
-        <td>${c.ultima_interaccion ? fechaCorta(c.ultima_interaccion) : 'Nunca'}</td>`;
+        <td><span class="pill ${etapaClase(c.etapa)}">${c.etapa}</span></td>
+        <td>${c.ultimo_seguimiento ? fechaCorta(c.ultimo_seguimiento) : 'Nunca'}</td>`;
       tb.appendChild(tr);
     });
 
@@ -310,42 +306,21 @@ async function cargarMetricas() {
 
 function dibujarChart(porEtapa) {
   const ctx = $('#chartEtapas').getContext('2d');
-  const labels = porEtapa.map((e) => e.etapa_crm);
-  const data = porEtapa.map((e) => e.n);
+  // Ordena las etapas siguiendo el pipeline.
+  const orden = ETAPAS.filter((e) => porEtapa.some((x) => x.etapa === e));
+  const mapa = Object.fromEntries(porEtapa.map((e) => [e.etapa, e.n]));
   if (state.chart) state.chart.destroy();
   state.chart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels,
+      labels: orden,
       datasets: [{
-        data,
-        backgroundColor: ['#818cf8', '#4ade80', '#facc15', '#94a3b8'],
+        data: orden.map((e) => mapa[e]),
+        backgroundColor: ['#818cf8', '#60a5fa', '#4ade80', '#f87171', '#facc15'],
       }],
     },
     options: { responsive: true, plugins: { legend: { position: 'bottom' } } },
   });
-}
-
-/* ============================================================
-   MI ACTIVIDAD
-   ============================================================ */
-async function cargarActividad() {
-  try {
-    const rows = await api('/interacciones/mias');
-    const tb = $('#tbodyActividad');
-    tb.innerHTML = '';
-    $('#actividadVacio').classList.toggle('oculto', rows.length > 0);
-    rows.forEach((i) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${fechaCorta(i.fecha)}</td>
-        <td>${esc(i.cliente_nombre || '')}</td>
-        <td>${esc(i.tipo)}</td>
-        <td>${esc(i.descripcion)}</td>`;
-      tb.appendChild(tr);
-    });
-  } catch (err) {
-    toast(err.message, 'err');
-  }
 }
 
 /* ============================================================
@@ -372,12 +347,9 @@ document.addEventListener('keydown', (e) => {
     return;
   }
   try {
-    // Valida el token guardado.
     state.usuario = await api('/auth/me');
     localStorage.setItem('crm_usuario', JSON.stringify(state.usuario));
-
-    // Este panel es solo para admin; a los demás roles se los redirige.
-    if (state.usuario.rol !== 'admin') {
+    if (state.usuario.rol !== 'docente') {
       location.href = DESTINO_ROL[state.usuario.rol] || 'login.html';
       return;
     }

@@ -3,34 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CRM — upSkill</title>
+  <title>CRM Docente — upSkill</title>
   <link rel="stylesheet" href="../css/crm.css" />
 </head>
 <body>
 
-  <!-- ===================== APP ===================== -->
   <div id="appView" class="oculto">
     <header class="crm-topbar">
-      <h1>CRM · Administración</h1>
+      <h1>CRM · Docente</h1>
       <div class="user">
         <span id="userNombre"></span>
-        <span class="rol" id="userRol"></span>
+        <span class="rol">docente</span>
         <button id="btnLogout">Salir</button>
       </div>
     </header>
 
     <nav class="crm-tabs">
-      <button data-tab="clientes" class="activo">Clientes</button>
+      <button data-tab="contactos" class="activo">Mis contactos</button>
       <button data-tab="metricas">Métricas</button>
-      <button data-tab="actividad">Mi actividad</button>
     </nav>
 
     <main class="crm-main">
 
-      <!-- -------- CLIENTES -------- -->
-      <section id="tab-clientes" class="crm-view activo">
+      <!-- -------- CONTACTOS -------- -->
+      <section id="tab-contactos" class="crm-view activo">
         <div class="crm-toolbar">
-          <input type="search" id="fBuscar" placeholder="Buscar por nombre, correo o empresa..." />
+          <input type="search" id="fBuscar" placeholder="Buscar por nombre, correo o curso..." />
           <select id="fEstado">
             <option value="">Todos los estados</option>
             <option value="activo">Activo</option>
@@ -39,11 +37,12 @@
           <select id="fEtapa">
             <option value="">Todas las etapas</option>
             <option value="Prospecto">Prospecto</option>
-            <option value="Activo">Activo</option>
-            <option value="Frecuente">Frecuente</option>
-            <option value="Inactivo">Inactivo</option>
+            <option value="Inscrito">Inscrito</option>
+            <option value="Al dia">Al día</option>
+            <option value="En riesgo">En riesgo</option>
+            <option value="Graduado">Graduado</option>
           </select>
-          <button class="btn" id="btnNuevoCliente">+ Nuevo cliente</button>
+          <button class="btn" id="btnNuevo">+ Nuevo contacto</button>
         </div>
 
         <div class="crm-tabla-wrap">
@@ -51,12 +50,12 @@
             <thead>
               <tr>
                 <th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th>
-                <th>Empresa</th><th>Estado</th><th>Etapa CRM</th><th>Acciones</th>
+                <th>Curso</th><th>Estado</th><th>Etapa</th><th>Acciones</th>
               </tr>
             </thead>
-            <tbody id="tbodyClientes"></tbody>
+            <tbody id="tbodyContactos"></tbody>
           </table>
-          <div id="clientesVacio" class="vacio oculto">Sin clientes que coincidan.</div>
+          <div id="contactosVacio" class="vacio oculto">Sin contactos que coincidan.</div>
         </div>
       </section>
 
@@ -65,60 +64,48 @@
         <div class="crm-cards" id="cardsMetricas"></div>
         <div class="crm-grid-2">
           <div class="crm-panel">
-            <h3>Clientes por etapa</h3>
+            <h3>Contactos por etapa</h3>
             <canvas id="chartEtapas" height="220"></canvas>
           </div>
           <div class="crm-panel">
-            <h3>Clientes en riesgo <small id="riesgoDias"></small></h3>
+            <h3>Sin seguimiento <small id="riesgoDias"></small></h3>
             <div class="crm-tabla-wrap">
               <table class="crm">
-                <thead><tr><th>Cliente</th><th>Etapa</th><th>Última interacción</th></tr></thead>
+                <thead><tr><th>Contacto</th><th>Etapa</th><th>Último seguimiento</th></tr></thead>
                 <tbody id="tbodyRiesgo"></tbody>
               </table>
-              <div id="riesgoVacio" class="vacio oculto">Ningún cliente en riesgo. 🎉</div>
+              <div id="riesgoVacio" class="vacio oculto">Todos con seguimiento reciente. 🎉</div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <!-- -------- MI ACTIVIDAD -------- -->
-      <section id="tab-actividad" class="crm-view">
-        <div class="crm-tabla-wrap">
-          <table class="crm">
-            <thead>
-              <tr><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Descripción</th></tr>
-            </thead>
-            <tbody id="tbodyActividad"></tbody>
-          </table>
-          <div id="actividadVacio" class="vacio oculto">Todavía no registras interacciones.</div>
         </div>
       </section>
 
     </main>
   </div>
 
-  <!-- ===================== MODAL CLIENTE ===================== -->
-  <div id="modalCliente" class="crm-modal oculto">
+  <!-- ===================== MODAL CONTACTO ===================== -->
+  <div id="modalContacto" class="crm-modal oculto">
     <div class="box">
-      <h2 id="modalClienteTitulo">Nuevo cliente</h2>
-      <form id="formCliente">
+      <h2 id="modalContactoTitulo">Nuevo contacto</h2>
+      <form id="formContacto">
         <input type="hidden" id="cId" />
         <label>Nombre *<input type="text" id="cNombre" required /></label>
         <label>Correo *<input type="email" id="cCorreo" required /></label>
         <label>Teléfono<input type="text" id="cTelefono" /></label>
-        <label>Empresa<input type="text" id="cEmpresa" /></label>
+        <label>Curso<input type="text" id="cCurso" /></label>
         <label>Estado
           <select id="cEstado">
             <option value="activo">Activo</option>
             <option value="inactivo">Inactivo</option>
           </select>
         </label>
-        <label>Etapa CRM
+        <label>Etapa
           <select id="cEtapa">
             <option value="Prospecto">Prospecto</option>
-            <option value="Activo">Activo</option>
-            <option value="Frecuente">Frecuente</option>
-            <option value="Inactivo">Inactivo</option>
+            <option value="Inscrito">Inscrito</option>
+            <option value="Al dia">Al día</option>
+            <option value="En riesgo">En riesgo</option>
+            <option value="Graduado">Graduado</option>
           </select>
         </label>
         <div class="fila">
@@ -129,30 +116,32 @@
     </div>
   </div>
 
-  <!-- ===================== MODAL HISTORIAL ===================== -->
-  <div id="modalHistorial" class="crm-modal ancho oculto">
+  <!-- ===================== MODAL SEGUIMIENTO ===================== -->
+  <div id="modalSeguimiento" class="crm-modal ancho oculto">
     <div class="box">
-      <h2 id="histTitulo">Historial del cliente</h2>
+      <h2 id="segTitulo">Seguimiento del contacto</h2>
 
-      <form id="formInteraccion">
-        <input type="hidden" id="iClienteId" />
+      <form id="formSeguimiento">
+        <input type="hidden" id="sContactoId" />
         <label>Tipo
-          <select id="iTipo">
+          <select id="sTipo">
+            <option value="mensaje">Mensaje</option>
+            <option value="tutoria">Tutoría</option>
             <option value="llamada">Llamada</option>
             <option value="correo">Correo</option>
             <option value="reunion">Reunión</option>
           </select>
         </label>
-        <label>Descripción *<textarea id="iDescripcion" rows="2" required></textarea></label>
+        <label>Descripción *<textarea id="sDescripcion" rows="2" required></textarea></label>
         <div class="fila">
-          <button type="submit" class="btn">Registrar interacción</button>
+          <button type="submit" class="btn">Registrar seguimiento</button>
         </div>
       </form>
 
       <hr style="border:0;border-top:1px solid var(--borde);margin:16px 0" />
 
       <ul class="timeline" id="timeline"></ul>
-      <div id="histVacio" class="vacio oculto">Sin interacciones registradas.</div>
+      <div id="segVacio" class="vacio oculto">Sin seguimientos registrados.</div>
 
       <div class="fila">
         <button type="button" class="btn secundario" data-cerrar>Cerrar</button>
@@ -163,6 +152,6 @@
   <div id="toast" class="crm-toast"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="../js/crm.js"></script>
+  <script src="../js/crm-docente.js"></script>
 </body>
 </html>

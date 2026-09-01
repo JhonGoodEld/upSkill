@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión — upSkill</title>
+  <link rel="stylesheet" href="../css/crm.css" />
+</head>
+<body>
+
+  <section class="crm-login">
+    <div class="card">
+      <h1>upSkill</h1>
+      <p class="sub">Ingresa según tu rol</p>
+
+      <div class="role-tabs" id="roleTabs">
+        <button type="button" data-rol="alumno">Alumno</button>
+        <button type="button" data-rol="docente">Docente</button>
+        <button type="button" data-rol="admin" class="activo">Administrador</button>
+      </div>
+
+      <form id="loginForm">
+        <input type="email" id="correo" placeholder="Correo" required autocomplete="username" />
+        <input type="password" id="password" placeholder="Contraseña" required autocomplete="current-password" />
+        <button type="submit">Entrar</button>
+      </form>
+
+      <p class="hint" id="hint">
+        Usuarios de prueba (tras <code>npm run seed</code>):<br />
+        admin@upskill.mx / admin123 &nbsp;·&nbsp; laura@upskill.mx / laura123<br />
+        diego@upskill.mx / diego123 &nbsp;·&nbsp; alumno@upskill.mx / alumno123
+      </p>
+
+      <p class="hint" style="border:0;padding-top:6px">
+        <a href="../views/pagPrin.html">← Ver el sitio</a>
+      </p>
+    </div>
+  </section>
+
+  <div id="toast" class="crm-toast"></div>
+
+  <script src="../js/login.js"></script>
+</body>
+</html>

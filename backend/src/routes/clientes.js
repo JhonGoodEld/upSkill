@@ -7,15 +7,15 @@ import { autenticar, requiereRol } from '../middleware/auth.js';
 
 const router = Router();
 
-// Todas las rutas de clientes requieren sesión.
-router.use(autenticar);
+// El CRM de administración es exclusivo del rol 'admin'.
+router.use(autenticar, requiereRol('admin'));
 
 router.get('/', listar);
 router.post('/', crear);
 router.get('/:id', obtener);
 router.put('/:id', actualizar);
 router.put('/:id/etapa', cambiarEtapa);
-router.delete('/:id', requiereRol('admin'), eliminar);
+router.delete('/:id', eliminar);
 
 // Historial de interacciones de un cliente.
 router.get('/:id/interacciones', listarPorCliente);
