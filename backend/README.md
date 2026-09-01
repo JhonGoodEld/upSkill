@@ -30,7 +30,8 @@ npm start                 # http://localhost:3000
 
 ## Flujo de acceso
 
-La raíz `/` redirige a **`/views/login.html`** — un login único con selección de rol
+La raíz `/` abre el sitio público **`/views/pagPrin.html`**. Desde su menú, el botón
+**"Iniciar sesión"** lleva a **`/views/login.html`** — un login único con selección de rol
 (Alumno · Docente · Administrador) que autentica contra `/api/auth/login` y redirige:
 
 | Rol      | Destino               |
