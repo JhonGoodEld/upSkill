@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\views"
+    "\\views",
+    "\\views\\CMR",
+    "\\views\\CMR\\Administradores",
+    "\\views\\CMR\\Docentes"
   ],
-  "SelectedNode": "\\views\\registro.html",
+  "SelectedNode": "\\views\\CMR\\logdocentes.html",
   "PreviewInSolutionExplorer": false
 }
