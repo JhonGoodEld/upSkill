@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\logalumno.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\logalumno.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\logdocentes.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\logdocentes.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\Administradores\\loggin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\pagPrin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\pagPrin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\Administradores\\loggin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\logalumno.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\logalumno.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -37,30 +37,33 @@
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "logdocentes.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\logdocentes.html",
               "RelativeDocumentMoniker": "views\\CMR\\logdocentes.html",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\logdocentes.html",
               "RelativeToolTip": "views\\CMR\\logdocentes.html",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAATAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-09-02T02:18:34.013Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "logalumno.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\logalumno.html",
               "RelativeDocumentMoniker": "views\\logalumno.html",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\logalumno.html",
               "RelativeToolTip": "views\\logalumno.html",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAAAB8AAABSAAAA",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAACEAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-09-02T02:18:26.721Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T02:18:26.721Z"
             },
             {
               "$type": "Document",
@@ -70,23 +73,21 @@
               "RelativeDocumentMoniker": "views\\pagPrin.html",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\pagPrin.html",
               "RelativeToolTip": "views\\pagPrin.html",
-              "ViewState": "AQIAADgAAAAAAAAAAAAAAEEAAABQAAAA",
+              "ViewState": "AgIAAN0AAAAAAAAAAAAwwPEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-09-01T18:49:50.324Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-01T18:49:50.324Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "loggin.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html",
               "RelativeDocumentMoniker": "views\\CMR\\Administradores\\loggin.html",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html",
               "RelativeToolTip": "views\\CMR\\Administradores\\loggin.html",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-09-01T05:39:15.869Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-01T05:39:15.869Z"
             },
             {
               "$type": "Bookmark",
