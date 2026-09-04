@@ -1,12 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\css",
     "\\views",
     "\\views\\CMR",
     "\\views\\CMR\\Administradores",
     "\\views\\CMR\\Docentes"
   ],
-  "SelectedNode": "\\css\\styles.css",
+  "SelectedNode": "\\views\\CMR\\Administradores\\admin.html",
   "PreviewInSolutionExplorer": false
 }
