@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\pagPrin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\pagPrin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\Administradores\\loggin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\admin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\Administradores\\admin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\logdocentes.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\logdocentes.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\pagPrin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\pagPrin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Docentes\\docente.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\Docentes\\docente.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\admin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:views\\CMR\\Administradores\\admin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,19 +46,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "admin.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\admin.html",
               "RelativeDocumentMoniker": "views\\CMR\\Administradores\\admin.html",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\admin.html",
               "RelativeToolTip": "views\\CMR\\Administradores\\admin.html",
-              "ViewState": "AgIAAB4BAAAAAAAAAAAwwDwBAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAB4BAAAAAAAAAAAwwDEBAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-09-04T17:33:19.614Z"
+              "WhenOpened": "2026-09-04T17:33:19.614Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "docente.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Docentes\\docente.html",
               "RelativeDocumentMoniker": "views\\CMR\\Docentes\\docente.html",
@@ -66,12 +67,11 @@
               "RelativeToolTip": "views\\CMR\\Docentes\\docente.html",
               "ViewState": "AgIAAJkAAAAAAAAAAAAAALAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-09-04T16:56:41.18Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-04T16:56:41.18Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "logdocentes.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\logdocentes.html",
               "RelativeDocumentMoniker": "views\\CMR\\logdocentes.html",
@@ -79,12 +79,11 @@
               "RelativeToolTip": "views\\CMR\\logdocentes.html",
               "ViewState": "AgIAAJwAAAAAAAAAAAAAAJ0AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-09-02T02:18:34.013Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-02T02:18:34.013Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "pagPrin.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\pagPrin.html",
               "RelativeDocumentMoniker": "views\\pagPrin.html",
@@ -97,13 +96,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "loggin.html",
               "DocumentMoniker": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html",
               "RelativeDocumentMoniker": "views\\CMR\\Administradores\\loggin.html",
               "ToolTip": "C:\\Users\\LuxNa\\source\\repos\\upSkillNue\\views\\CMR\\Administradores\\loggin.html",
               "RelativeToolTip": "views\\CMR\\Administradores\\loggin.html",
-              "ViewState": "AgIAAHoAAAAAAAAAAAAwwH0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAwwIkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-09-01T05:39:15.869Z",
               "EditorCaption": ""
