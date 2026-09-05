@@ -1,9 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\data",
-    "\\database"
+    "\\js",
+    "\\views",
+    "\\views\\CMR",
+    "\\views\\CMR\\Administradores",
+    "\\views\\CMR\\Docentes"
   ],
-  "SelectedNode": "\\database\\interacciones.json",
+  "SelectedNode": "\\js\\docente.js",
   "PreviewInSolutionExplorer": false
 }
