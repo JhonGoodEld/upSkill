@@ -1,284 +1,95 @@
-/* ========== RESET ========== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
-}
+/* ============================================================
+   Flujo de pago — usa el sistema de diseño (stylePrin.css)
+   ============================================================ */
 
-/* Fondo general */
-body {
-    background: url("../src/carrito.jpg") no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+body { display: flex; flex-direction: column; min-height: 100vh; }
 
-/* Contenedor principal para empujar el footer abajo */
+/* Contenedor principal como tarjeta */
 .main-container {
-    width: 100%;
-    max-width: 900px;
-    margin: 30px auto 50px auto;
-    padding: 20px;
-    background: rgba(0,0,0,0.6);
-    border-radius: 14px;
-    flex: 1;
+  width: 100%;
+  max-width: 760px;
+  margin: 36px auto 56px;
+  padding: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  flex: 1;
 }
+.main-container h2 { margin-bottom: 16px; }
 
-/* ========== NAVBAR (versión B) ========== */
-.navbar {
-    width: 100%;
-    background: rgba(0,0,0,0.85);
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-}
+/* Navbar de pago: 3 columnas (izq / centro / der) */
+.nav-left h1 { font-size: 1.05rem; color: #fff; }
+.nav-center p { font-size: .85rem; color: #eaf0ff; opacity: .9; }
+.nav-right a, .nav-side a { color: #fff; font-weight: 500; font-size: .85rem; opacity: .85; }
+.nav-right a:hover { opacity: 1; text-decoration: none; }
 
-.nav-left h1 {
-    font-size: 1.6rem;
-}
-
-.nav-center p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-}
-
-.nav-right a {
-    color: #ffd36a;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.nav-side a {
-    color: #ffd36a;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.nav-right a:hover {
-    text-decoration: underline;
-}
-
-/* ========== FORMULARIO DE PAGO ========== */
-h2 {
-    margin-bottom: 15px;
-}
-
-form label {
-    display: block;
-    margin-top: 12px;
-    font-weight: 600;
-}
-
+/* Formulario */
+form label { display: block; margin-top: 14px; font-weight: 500; font-size: .9rem; }
 form input,
 form select {
-    width: 100%;
-    margin-top: 5px;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    background: rgba(255,255,255,0.9);
-}
-
-.section {
-    margin-top: 18px;
-    padding: 15px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Botón */
-button[type="submit"] {
-    margin-top: 25px;
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    background-color: #ffd36a;
-    color: #000;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #ffdd8a;
-}
-
-/* ========== FOOTER ========== */
-.footer {
-    background: rgba(28, 28, 29, 0.9);
-    color: white;
-    text-align: center;
-    padding: 25px;
-    border-radius: 30px 30px 0 0;
-    margin-top: auto;
-}
-
-.footer .socials a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-.footer .socials a:hover {
-    color: #ffdd57;
-}
-
-/* Mini mapa */
-.map-box {
-    margin: 20px auto;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    border-radius: 12px;
-    overflow: hidden;
-    width: fit-content;
-}
-
-/* Legal links */
-.legal-links {
-    margin-top: 15px;
-}
-
-.legal-links a {
-    color: #f7f8fa;
-    text-decoration: underline;
-}
-
-/* Modales legales */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-.modal-content {
-    background: white;
-    color: #333;
-    padding: 25px;
-    border-radius: 12px;
-    max-width: 700px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.close {
-    float: right;
-    cursor: pointer;
-    font-size: 22px;
-}
-
-.btn-cerrar {
-    margin-top: 15px;
-    padding: 10px 18px;
-    background: #1a73e8;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-.section {
-    background: rgba(255,255,255,0.1);
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-    backdrop-filter: blur(4px);
-}
-
-.section h3 {
-    margin-top: 0;
-    color: #fff;
-}
-
-.hidden {
-    display: none;
-}
-
-
-.btnConfirmarPago {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    display: block;
-    margin: 30px auto;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.btnConfirmarPago:hover {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #0090ff, #0050d4);
-}
-
-.confirm-box, .error-box {
-    background: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 600px;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-    text-align: center;
-}
-
-.error-detalle {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    color: #ff6b6b;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* ========== no pos .. a ver sobrescrito ========== */
-
-a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #cccccc;
-  text-decoration: underline;
-}
-#btnError {
-  margin-top: 15px;
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
+  margin-top: 5px;
+  padding: 11px 12px;
+  border-radius: var(--radio-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: .95rem;
+}
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-050);
+}
+
+.section {
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
+}
+.section h3 { margin-top: 0; color: var(--text); }
+
+.hidden { display: none; }
+
+/* Botones */
+button[type="submit"],
+.btnConfirmarPago,
+#btnError {
+  margin-top: 24px;
+  width: 100%;
+  padding: 13px;
+  border-radius: var(--radio-pill);
   border: none;
-  background-color: #ff6b6b;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: bold;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background .2s var(--ease);
 }
+button[type="submit"]:hover,
+.btnConfirmarPago:hover { background: var(--accent-600); }
 
-#btnError:hover {
-  background-color: #ff4040;
+.btnConfirmarPago { display: block; margin: 28px auto; max-width: 320px; text-transform: none; }
+#btnError { background: var(--danger); }
+#btnError:hover { background: #b3271e; }
+
+/* Cajas de confirmación / error */
+.confirm-box, .error-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radio);
+  margin: 24px auto;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: var(--sombra);
+  text-align: center;
 }
-
+.error-detalle { margin-top: 15px; font-size: 1.05rem; color: var(--danger); font-weight: 600; text-align: center; }
