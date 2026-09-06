@@ -39,7 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== MENÚ HAMBURGUESA =====
+  // ===== NAV RESPONSIVA (hamburguesa) =====
+  const navbar = document.querySelector('.navbar');
+  const navLinks = navbar && navbar.querySelector('.nav-links');
+  if (navbar && navLinks && !navbar.querySelector('.nav-toggle')) {
+    const toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', 'Abrir menú');
+    toggle.innerHTML = '☰';
+    navLinks.parentElement.insertBefore(toggle, navLinks);
+    toggle.addEventListener('click', () => navbar.classList.toggle('nav-open'));
+    document.addEventListener('click', e => {
+      if (navbar.classList.contains('nav-open') && !navbar.contains(e.target)) {
+        navbar.classList.remove('nav-open');
+      }
+    });
+  }
+
+  // ===== MENÚ DESPLEGABLE =====
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       const container = btn.parentElement;
