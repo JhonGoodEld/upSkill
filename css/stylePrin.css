@@ -6,15 +6,16 @@
 
 :root {
   /* Color */
-  --bg:          #fbfbfd;
+  --bg:          #f4f7fd;
   --surface:     #ffffff;
-  --surface-2:   #f5f5f7;
+  --surface-2:   #eef3fb;
   --text:        #1d1d1f;
-  --text-soft:   #6e6e73;
-  --border:      #d2d2d7;
-  --accent:      #0071e3;
-  --accent-600:  #0077ed;
-  --accent-050:  #e8f1fd;
+  --text-soft:   #5b6472;
+  --border:      #d8e0ee;
+  --accent:      #1d4ed8;
+  --accent-600:  #1e40af;
+  --accent-050:  #e6efff;
+  --azul-nav:    #12245c;
   --ok:          #1d8f3b;
   --danger:      #d93025;
 
@@ -101,10 +102,10 @@ p  { color: var(--text-soft); }
   gap: 10px 22px;
   min-height: var(--nav-h);
   padding: 8px 22px;
-  background: rgba(22, 22, 23, .8);
+  background: linear-gradient(90deg, rgba(18, 36, 92, .92), rgba(29, 78, 216, .92));
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
   color: #f5f5f7;
   font-size: .85rem;
   text-align: left;
@@ -150,9 +151,10 @@ p  { color: var(--text-soft); }
   align-items: center;
   gap: 6px;
   font-size: .76rem;
-  color: #d2d2d7;
+  color: #eaf0ff;
+  background: rgba(255, 255, 255, .12);
   padding: 3px 10px;
-  border: 1px solid rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .22);
   border-radius: var(--radio-pill);
   white-space: nowrap;
 }
@@ -408,7 +410,7 @@ p  { color: var(--text-soft); }
   --text-soft: #a1a1a6;
   --border: #3a3a3c;
 }
-.dark-mode .navbar { background: rgba(28, 28, 30, .8); }
+.dark-mode .navbar { background: linear-gradient(90deg, rgba(12, 20, 48, .92), rgba(23, 55, 145, .92)); }
 
 /* ============================================================
    ANIMACIONES / UTILIDADES

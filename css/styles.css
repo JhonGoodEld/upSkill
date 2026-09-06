@@ -20,14 +20,21 @@
 
 /* ---------- Carrusel de certificaciones ---------- */
 .carousel {
-  padding: 64px 22px 40px;
+  position: relative;
+  padding: 72px 22px 48px;
   text-align: center;
   overflow: hidden;
+  max-width: none;          /* banda azul a todo el ancho */
+  background:
+    radial-gradient(1200px 340px at 50% -60px, rgba(29, 78, 216, .16), transparent 70%),
+    linear-gradient(180deg, #e7eefc 0%, var(--bg) 78%);
+  border-bottom: 1px solid var(--border);
 }
 .carousel h3 {
-  margin-bottom: 32px;
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
-  color: var(--text);
+  max-width: var(--ancho-max);
+  margin: 0 auto 32px;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--accent-600);
 }
 .carousel-container {
   display: flex;
