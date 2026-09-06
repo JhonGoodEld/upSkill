@@ -137,6 +137,15 @@ body {
   cursor: pointer;
 }
 .crm-topbar button:hover { background: rgba(255, 255, 255, .28); }
+.crm-topbar .crm-volver {
+  color: #fff;
+  text-decoration: none;
+  font-size: .85rem;
+  border: 1px solid rgba(255, 255, 255, .4);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.crm-topbar .crm-volver:hover { background: rgba(255, 255, 255, .28); }
 
 .crm-tabs {
   display: flex;

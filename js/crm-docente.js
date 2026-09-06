@@ -5,7 +5,7 @@
    ============================================================ */
 
 const API = localStorage.getItem('crm_api') || 'http://localhost:3000/api';
-const DESTINO_ROL = { admin: 'crm.html', alumno: 'alumno.html' };
+const DESTINO_ROL = { admin: 'admin.html', alumno: 'alumno.html' };
 
 const ETAPAS = ['Prospecto', 'Inscrito', 'Al dia', 'En riesgo', 'Graduado'];
 const etapaClase = (e) => 'et-' + String(e).toLowerCase().replace(/\s+/g, '-');

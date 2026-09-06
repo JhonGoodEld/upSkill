@@ -19,8 +19,8 @@
           .then(function (r) { if (!r.ok) throw 0; return r.json(); })
           .then(function (u) {
             localStorage.setItem('crm_usuario', JSON.stringify(u));
-            if (u.rol === 'admin') location.href = 'crm.html';
-            else if (u.rol === 'docente') location.href = 'crm-docente.html';
+            if (u.rol === 'admin') location.href = 'admin.html';
+            else if (u.rol === 'docente') location.href = 'docente.html';
           })
           .catch(function () {
             localStorage.removeItem('crm_token');

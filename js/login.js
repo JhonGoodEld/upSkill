@@ -5,10 +5,11 @@
 
 const API = localStorage.getItem('crm_api') || 'http://localhost:3000/api';
 
-// A dónde va cada rol después de entrar.
+// A dónde va cada rol después de entrar: a su panel.
+// El CRM se abre desde un botón dentro del panel (admin y docente).
 const DESTINO = {
-  admin: 'crm.html',
-  docente: 'crm-docente.html',
+  admin: 'admin.html',
+  docente: 'docente.html',
   alumno: 'alumno.html',
 };
 

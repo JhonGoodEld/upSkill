@@ -12,8 +12,8 @@ const state = {
   chart: null,
 };
 
-// A dónde mandar a cada rol que NO sea admin.
-const DESTINO_ROL = { docente: 'crm-docente.html', alumno: 'alumno.html' };
+// A dónde mandar a cada rol que NO sea admin: a su panel.
+const DESTINO_ROL = { docente: 'docente.html', alumno: 'alumno.html' };
 
 /* ---------- Utilidades ---------- */
 const $ = (sel) => document.querySelector(sel);

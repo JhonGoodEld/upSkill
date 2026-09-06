@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="../css/stylePrin.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/admin.css" />
+
+    <script>
+      // Guard: exige sesión de administrador (login unificado por rol).
+      (function () {
+        var API = localStorage.getItem('crm_api') || 'http://localhost:3000/api';
+        var token = localStorage.getItem('crm_token');
+        if (!token) { location.href = 'login.html'; return; }
+        fetch(API + '/auth/me', { headers: { Authorization: 'Bearer ' + token } })
+          .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (u) {
+            localStorage.setItem('crm_usuario', JSON.stringify(u));
+            if (u.rol === 'docente') location.href = 'docente.html';
+            else if (u.rol === 'alumno') location.href = 'alumno.html';
+          })
+          .catch(function () {
+            localStorage.removeItem('crm_token');
+            localStorage.removeItem('crm_usuario');
+            location.href = 'login.html';
+          });
+      })();
+    </script>
     </head>
     <body>
     <!--barra de la navegacion pa-->
@@ -16,8 +37,8 @@
 
     <!-- MENÚ SUPERIOR -->
     <nav class="nav-links">
-        <!-- Inicio -->
-        <a href="../views/pagPrin.html" class="menu-link">Loggout</a>
+        <a href="../views/crm.html" class="menu-link">CRM</a>
+        <a href="#" class="menu-link" onclick="localStorage.removeItem('crm_token');localStorage.removeItem('crm_usuario');location.href='login.html';return false;">Cerrar sesión</a>
     </nav>
     </header>
 
