@@ -33,9 +33,10 @@
 
 <!--barra de la navegacion pa-->
 <header class="navbar">
-  <h1>Upskill Academy</h1>
-
-  Estado del Servicio: 🟢 ON<br>
+  <div class="navbar-brand">
+    <h1>Upskill Academy</h1>
+    <span class="badge-estado">🟢 Estado del Servicio: ON</span>
+  </div>
 
   <!-- MENÚ SUPERIOR -->
   <nav class="nav-links">
@@ -76,16 +77,25 @@
 
   <!-- CARRUSEL -->
   <section class="carousel">
-    <h3>Aprende de las mejores academias del mundo !!!</h3>
+    <h3>Aprende de las mejores academias del mundo</h3>
     <div class="carousel-container" id="carousel">
-      <div class="slide"><img src= "../src/4-Best-Python-Certifications.jpg" alt="Certificación 1"></div>
-      <div class="slide"><img src= "../src/cisco_ccie_datacenter3128722680530508651.jpg" alt="Certificación 2"></div>
-      <div class="slide"><img src="../src/mysql2-300x300.jpg" alt="Certificación 3"></div>
-      <div class="slide"><img src= "../src/aws.jpg" alt="Certificación 4 "></div>
-      <div class="slide"><img src= "../src/azure.jpg" alt="Certificación 5"></div>
-      <div class="slide"><img src= "../src/js.jpg" alt="Certificación 6"></div>
-      <div class="slide"><img src= "../src/mongo.jpg" alt="Certificación 7"></div>
-      <div class="slide"><img src= "../src/html.jpg" alt="Certificación 8"></div>
+      <div class="slide"><img src="../src/4-Best-Python-Certifications.jpg" alt="Certificación Python"></div>
+      <div class="slide"><img src="../src/cisco_ccie_datacenter3128722680530508651.jpg" alt="Certificación Cisco CCIE"></div>
+      <div class="slide"><img src="../src/mysql2-300x300.jpg" alt="Certificación MySQL"></div>
+      <div class="slide"><img src="../src/aws.jpg" alt="Certificación AWS"></div>
+      <div class="slide"><img src="../src/azure.jpg" alt="Certificación Azure"></div>
+      <div class="slide"><img src="../src/js.jpg" alt="Certificación JavaScript"></div>
+      <div class="slide"><img src="../src/mongo.jpg" alt="Certificación MongoDB"></div>
+      <div class="slide"><img src="../src/html.jpg" alt="Certificación HTML"></div>
+      <!-- Copia para el bucle continuo -->
+      <div class="slide" aria-hidden="true"><img src="../src/4-Best-Python-Certifications.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/cisco_ccie_datacenter3128722680530508651.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/mysql2-300x300.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/aws.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/azure.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/js.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/mongo.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/html.jpg" alt=""></div>
     </div>
   </section>
 
@@ -115,8 +125,8 @@
 </section>
 
   <section class="loggin-form panel">
-    <div class="note" style="margin-top:auto; background-color:#e1f5e6; border-left:5px solid #44bd32; border-radius:6px;">
-        <strong>Nota al cliente:</strong>  
+    <div class="note">
+        <strong>Nota al cliente:</strong>
         Trabajamos constantemente para mantener la disponibilidad de nuestros servicios por encima del 99.9%. <br> 
         En caso de incidentes o mantenimientos programados, notificaremos con anticipación en la página de 
         <a href="../docs/Status.html" style="color:#40739e; text-decoration:underline;">Estado del Servicio</a>.
