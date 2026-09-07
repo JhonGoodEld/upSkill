@@ -1,12 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\js",
     "\\views",
     "\\views\\CMR",
     "\\views\\CMR\\Administradores",
     "\\views\\CMR\\Docentes"
   ],
-  "SelectedNode": "\\js\\docente.js",
   "PreviewInSolutionExplorer": false
 }
