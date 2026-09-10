@@ -35,40 +35,40 @@
 <header class="navbar">
   <h1>Upskill Academy</h1>
 
-  Estado del Servicio: 🟢 ON<br>
+  <span data-i18n="serviceStatus">Estado del Servicio: 🟢 ON</span><br>
 
   <!-- MENÚ SUPERIOR -->
                             <nav class="nav-links">
 
                                 <!-- Enlaces directos -->
-                                <a href="../views/cursos.html" class="menu-link">Cursos</a>
-                                <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
-                                <a href="#" class="menu-link">Certificate</a>
+                                <a href="../views/cursos.html" class="menu-link" data-i18n="courses">Cursos</a>
+                                <a href="../views/planes.html" class="menu-link" data-i18n="career">Planes de carrera</a>
+                                <a href="../views/upSkill.html" class="menu-link" data-i18n="certificate">Certificate</a>
 
 
                                 <!-- Carrito -->
-                                <a href="../views/carritoini.html" class="menu-link">Carrito</a>
+                                <a href="../views/carritoini.html" class="menu-link" data-i18n="cart">Carrito</a>
 
                                 <!-- Configuración -->
                                 <div class="menu-container">
-                                    <button class="menu-btn">Configuración <span class="icon">▼</span></button>
+                                    <button class="menu-btn" data-i18n="settings">Configuración <span class="icon">▼</span></button>
                                     <div class="menu-content">
-                                        <a href="#" onclick="toggleTheme()">Tema</a>
-                                        <a href="#" onclick="toggleLanguage()">Idioma</a>
+                                        <a href="#" onclick="toggleTheme(); return false;" data-i18n="theme">Tema</a>
+                                        <a href="#" onclick="toggleLanguage(); return false;" data-i18n="language">Idioma</a>
                                     </div>
                                 </div>
 
                                 <!-- Documentos -->
                                 <div class="menu-container">
-                                    <button class="menu-btn">Documentos <span class="icon">▼</span></button>
+                                    <button class="menu-btn" data-i18n="documents">Documentos <span class="icon">▼</span></button>
                                     <div class="menu-content">
-                                        <a href="../docs/tecProp.html">Tenologia Propuesta </a>
-                                        <a href="../docs/Status.html">Status</a>
+                                        <a href="../docs/tecProp.html" data-i18n="proposedTech">Tecnología Propuesta</a>
+                                        <a href="../docs/Status.html" data-i18n="status">Estado del Servicio</a>
                                     </div>
                                 </div>
 
                                 <!-- Usuarios -->
-                                <a href="../views/logalumno.html" class="menu-link">Loggin</a>
+                                <a href="../views/logalumno.html" class="menu-link" data-i18n="login">Iniciar sesión</a>
 
                             </nav>
 </header>
@@ -108,7 +108,7 @@
     <h4>Tu primer curso por 0 pesos</h4>
   </a>
 
-  <a href="#" class="option-card">
+  <a href="../views/cursos.html" class="option-card">
     <img src="../src/enseñanza.jpg" alt="Nueva enseñanza">
     <h4>Experimenta la nueva forma de enseñanza</h4>
   </a>

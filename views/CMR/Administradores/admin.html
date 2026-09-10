@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="../../../css/styles.css">
         <link rel="stylesheet" href="../../../css/admin.css">
     </head>
-    <body>
+    <body data-required-role="admin" data-api-base="../../../api" data-login-url="loggin.html">
+<div class="platform-page-tools"><button class="back-button" type="button" onclick="history.length>1?history.back():location.href='loggin.html'">← Regresar</button><button class="tool-button" type="button" onclick="toggleLanguage()">ES/EN</button><button class="tool-button" type="button" onclick="toggleTheme()">☾</button></div>
     <!--barra de la navegacion pa-->
     <header class="navbar">
     <h1>Dashboard</h1>
@@ -21,8 +22,45 @@
     </nav>
     </header>
 
-    <body>
     <main class="admin-container">
+        <section class="admin-section admin-priority">
+          <div class="admin-quick-grid">
+            <div><h2>CRM de Administrador</h2><p>Gestiona clientes, interacciones, etapas y métricas comerciales.</p></div>
+            <a class="admin-crm-link" href="../crm.html">Abrir CRM →</a>
+          </div>
+        </section>
+
+        <section class="admin-section admin-priority">
+          <button class="accordion active">✅ Solicitudes de registro pendientes</button>
+          <div class="panel" style="display:block">
+            <p>Los alumnos y docentes recién registrados no pueden iniciar sesión hasta ser aprobados.</p>
+            <div id="solicitudesNotice"></div>
+            <div class="admin-table-wrap"><table id="tablaSolicitudes" class="approval-table">
+              <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Empresa</th><th>Tipo</th><th>Especialidad</th><th>Curso solicitado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+              <tbody><tr><td colspan="10">Cargando solicitudes...</td></tr></tbody>
+            </table></div>
+          </div>
+        </section>
+
+        <section class="admin-section admin-priority" id="adminSuperSection" hidden>
+          <button class="accordion">🛡️ Administradores del sistema</button>
+          <div class="panel">
+            <p>Solo el administrador principal puede crear o desactivar otras cuentas administrativas.</p>
+            <div id="administradoresNotice"></div>
+            <form id="formAdministrador" class="admin-create-form" novalidate>
+              <input type="text" name="nombre" placeholder="Nombre completo" required>
+              <input type="email" name="correo" placeholder="Correo electrónico" required>
+              <input type="password" name="password" placeholder="Contraseña (mínimo 8 caracteres)" required>
+              <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" required>
+              <button type="submit">Crear administrador</button>
+            </form>
+            <div class="admin-table-wrap"><table id="tablaAdministradores" class="approval-table">
+              <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Tipo</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+              <tbody><tr><td colspan="7">Cargando administradores...</td></tr></tbody>
+            </table></div>
+          </div>
+        </section>
+
 
             <!-- Inventario de cursos -->
         <section class="admin-section">
@@ -188,10 +226,6 @@
 
     </main>
 
-    </body>
-
-
-
     <!-- FOOTER -->
     <footer class="footer">
         <p>Contáctanos: info@upskillacademy.com</p>
@@ -312,7 +346,9 @@
         <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!--Chart.js toma datos (por ejemplo, números de visitas o ventas) y los transforma en gráficos interactivos-->
+    <!-- Protección de rol y backend administrativo -->
+    <script src="../../../js/role-guard.js"></script>
+    <script src="../../../js/admin-backend.js"></script>
     <script src="../../../js/script.js"></script>
     <script src="../../../js/admin.js"></script>
     </body>

@@ -395,3 +395,8 @@
     border-radius: 12px;
 }
 
+
+/* CRM y aprobación de cuentas */
+.admin-priority{border:1px solid #cfe0f4;background:#f8fbff}.admin-quick-grid{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px}.admin-crm-link{background:#1356a2;color:#fff!important;padding:11px 18px;border-radius:9px;text-decoration:none;font-weight:700}.admin-table-wrap{overflow:auto}.approval-table{width:100%;border-collapse:collapse;min-width:850px}.approval-table th,.approval-table td{padding:10px;border-bottom:1px solid #dbe4ef;text-align:left}.approval-table th{background:#eef5fd}.approval-btn{border:0;border-radius:7px;padding:7px 10px;margin:2px;cursor:pointer;font-weight:700}.approve-btn{background:#dcecff;color:#114f91}.reject-btn{background:#fee4e2;color:#b42318}.admin-notice{padding:10px;border-radius:8px;margin:8px 0;background:#eaf3ff;color:#174f8f}.admin-notice.error{background:#fef3f2;color:#b42318}
+
+.admin-create-form{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:10px;margin:14px 0}.admin-create-form input{padding:10px;border:1px solid #c9d5e3;border-radius:8px}.admin-create-form button{grid-column:1/-1;background:#1356a2;color:#fff;border:0;border-radius:8px;padding:10px;font-weight:700;cursor:pointer}.admin-create-form button:hover{background:#0d457f}@media(max-width:700px){.admin-create-form{grid-template-columns:1fr}}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" data-language="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM — Upskill Academy</title>
+  <link rel="stylesheet" href="../../css/crm.css">
+</head>
+<body class="crm-body">
+<div class="crm-layout">
+  <aside class="crm-sidebar">
+    <div class="crm-brand">Upskill Academy<small>CRM Administrador</small></div>
+    <nav class="crm-nav">
+      <button class="active" data-section="dashboard">▦ <span data-i18n="dashboard">Dashboard</span></button>
+      <button data-section="clientes">♙ <span data-i18n="clients">Clientes</span></button>
+      <button data-section="interacciones">◷ <span data-i18n="interactions">Interacciones</span></button>
+      <button data-section="actividad">✓ <span data-i18n="activity">Mi actividad</span></button>
+      <button data-section="reportes">▥ <span data-i18n="reports">Reportes</span></button>
+      <button id="adminPanelBtn">⚙ Panel administrador</button>
+      <button id="logoutBtn">↪ <span data-i18n="logout">Cerrar sesión</span></button>
+    </nav>
+  </aside>
+
+  <main class="crm-main">
+    <header class="crm-topbar">
+      <button class="icon-btn" id="backBtn" title="Regresar">←</button>
+      <div class="top-search-wrap"><span>⌕</span><input id="globalSearch" placeholder="Buscar en CRM..."></div>
+      <div class="top-controls">
+        <button class="icon-btn" id="languageBtn" title="Cambiar idioma">ES</button>
+        <button class="icon-btn" id="themeBtn" title="Modo oscuro">☾</button>
+        <div class="admin-chip"><div class="avatar-mini" id="adminInitials">AD</div><div><strong id="adminName">Administrador</strong><small id="adminRole">Admin</small></div></div>
+      </div>
+    </header>
+
+    <header class="crm-heading">
+      <div><h1 id="pageTitle">Resumen CRM</h1><div id="userInfo" class="crm-user">Cargando sesión...</div></div>
+      <div class="crm-actions"><button class="btn btn-primary" id="nuevoClienteBtn">+ Nuevo cliente</button></div>
+    </header>
+
+    <section id="dashboard" class="section active">
+      <div id="dashboardCards" class="cards metric-cards">
+        <div class="card metric-card"><div class="metric-label">Total de clientes</div><div id="mTotal" class="metric-value">—</div><div class="metric-foot" id="mTotalFoot">Todos los clientes</div></div>
+        <div class="card metric-card"><div class="metric-label">Clientes activos</div><div id="mActivos" class="metric-value blue">—</div><div class="metric-foot" id="mActivosFoot">—</div></div>
+        <div class="card metric-card"><div class="metric-label">Interacciones (este mes)</div><div id="mInteracciones" class="metric-value">—</div><div class="metric-foot" id="mInteraccionesFoot">—</div></div>
+        <div class="card metric-card"><div class="metric-label">Clientes sin interacción</div><div id="mRiesgo" class="metric-value">—</div><div class="metric-foot">Últimos 30 días</div></div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="panel-card"><h2>Clientes activos vs. inactivos</h2><div id="estadoBars" class="bar-list"></div></div>
+        <div class="panel-card"><div class="panel-title-row"><h2>Clientes en riesgo</h2><button class="link-btn" id="toggleRiskBtn" hidden>Ver todos</button></div><p class="small">Clientes sin interacción en los últimos 30 días. Quienes nunca han tenido interacción aparecen primero.</p><div id="riskList" class="risk-list"></div></div>
+      </div>
+    </section>
+
+    <section id="clientes" class="section">
+      <div class="toolbar"><input id="buscarCliente" placeholder="Buscar por nombre, correo o empresa"><select id="filtroEstado"><option value="">Todos los estados</option><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select><select id="filtroEtapa"><option value="">Todas las etapas</option><option>Prospecto</option><option>Activo</option><option>Frecuente</option><option>Inactivo</option></select></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Teléfono</th><th>Etapa CRM</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="clientesBody"></tbody></table></div>
+    </section>
+
+    <section id="interacciones" class="section">
+      <div class="panel-card"><h2>Interacciones por cliente</h2><p class="small">Abre el historial de cualquier cliente con el botón del ojo.</p><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Etapa CRM</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="interaccionesClientesBody"></tbody></table></div></div>
+    </section>
+
+    <section id="actividad" class="section">
+      <div class="panel-card"><div class="panel-title-row"><h2>Mi actividad</h2><label class="month-filter">Mes <input type="month" id="actividadMes"></label></div><div class="table-wrap"><table class="table"><thead><tr><th>Fecha y hora</th><th>Cliente</th><th>Tipo</th><th>Responsable/contacto</th><th>Descripción</th></tr></thead><tbody id="actividadBody"></tbody></table></div></div>
+    </section>
+
+    <section id="reportes" class="section">
+      <div id="reportCards" class="cards metric-cards"></div>
+      <div class="dashboard-grid report-grid"><div class="panel-card"><h2>Interacciones por tipo</h2><div id="tipoVerticalChart" class="vertical-chart"></div></div><div class="panel-card"><h2>Clientes por etapa CRM</h2><div id="etapaPieWrap" class="pie-wrap"></div></div></div>
+    </section>
+  </main>
+</div>
+
+<!-- Modal alta/edición -->
+<div id="clienteModal" class="modal"><div class="modal-content"><h2 id="clienteModalTitle">Nuevo cliente</h2><div id="clienteFormNotice"></div><form id="clienteForm" class="form-grid"><input type="hidden" id="clienteId"><div><label>Nombre</label><input id="clienteNombre" required></div><div><label>Correo</label><input id="clienteCorreo" type="email" required></div><div><label>Teléfono</label><input id="clienteTelefono" inputmode="numeric" maxlength="12" placeholder="4492255316 o 449 225 5316" pattern="(?:\d{10}|\d{3} \d{3} \d{4})" required></div><div><label>Empresa</label><input id="clienteEmpresa" required></div><div><label>Estado</label><select id="clienteEstado"><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select></div><div class="full modal-actions"><button class="btn btn-primary" type="submit">Guardar</button><button class="btn btn-secondary" type="button" id="cerrarCliente">Cancelar</button></div></form></div></div>
+
+<!-- Detalle del cliente -->
+<div id="detalleClienteModal" class="modal"><div class="modal-content modal-wide"><div class="secondary-top"><button class="btn btn-secondary" id="volverDetalle">← Volver a Clientes</button><button class="icon-btn" id="cerrarDetalle">×</button></div><div id="clienteProfileCard"></div><div class="detail-actions"><button class="btn btn-primary" id="editarDesdeDetalle">Editar registro</button><button class="btn btn-secondary" id="cambiarEtapaDesdeDetalle">Cambiar Etapa CRM</button></div></div></div>
+
+<!-- Cambio de etapa -->
+<div id="etapaModal" class="modal"><div class="modal-content modal-small"><h2>Cambiar Etapa CRM</h2><label>Nueva etapa</label><select id="etapaSelect"><option>Prospecto</option><option>Activo</option><option>Frecuente</option><option>Inactivo</option></select><div class="modal-actions"><button class="btn btn-primary" id="guardarEtapaBtn">Guardar</button><button class="btn btn-secondary" id="cancelarEtapaBtn">Cancelar</button></div></div></div>
+
+<!-- Historial -->
+<div id="historialModal" class="modal"><div class="modal-content modal-wide"><div class="secondary-top"><button class="btn btn-secondary" id="volverHistorial">← Volver a Clientes</button><button class="icon-btn" id="cerrarHistorial">×</button></div><div class="history-title-row"><h2 id="historialTitle">Historial de interacciones</h2><button class="btn btn-deep" id="nuevaInteraccionBtn">+ Nueva interacción</button></div><div id="timelineContainer" class="timeline"></div></div></div>
+
+<!-- Nueva interacción -->
+<div id="interaccionModal" class="modal"><div class="modal-content"><h2>Nueva interacción</h2><div id="interaccionNotice"></div><form id="interaccionForm" class="form-grid"><input type="hidden" id="interaccionClienteId"><div><label>Tipo</label><select id="interaccionTipo"><option value="llamada">Llamada</option><option value="correo">Correo</option><option value="reunión">Reunión</option></select></div><div><label>Fecha y hora</label><input id="interaccionFecha" type="datetime-local" required></div><div class="full"><label>Responsable / contacto con quien se tuvo la interacción</label><input id="interaccionResponsable" maxlength="150" required></div><div class="full"><label>Descripción</label><textarea id="interaccionDescripcion" rows="4" required></textarea></div><div class="full modal-actions"><button class="btn btn-primary" type="submit">Guardar</button><button class="btn btn-cancel" type="button" id="cerrarInteraccion">Cancelar</button></div></form></div></div>
+<script src="../../js/crm.js"></script>
+</body>
+</html>

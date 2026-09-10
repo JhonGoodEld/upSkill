@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+<button class="back-button standalone-back" type="button" onclick="history.length>1?history.back():location.href='pagPrin.html'">← Regresar</button>
   <!-- NAVBAR -->
   <header class="navbar">
     <h1>Upskill Academy</h1>
@@ -27,12 +28,14 @@
   <!-- FORMULARIO DE REGISTRO -->
   <section class="form-section">
     <h2>Regístrate en Upskill Academy</h2>
-    <form class="register-form">
-      <input type="text" placeholder="Nombre completo" required>
-      <input type="email" placeholder="Correo electrónico" required>
-      <input type="password" not required placeholder="Contraseña"  required>
-      <input type="password" placeholder="Confirmar contraseña" required>
-      <button type="submit" class="form-btn" formnovalidate>Suscribirme</button>
+    <form class="register-form" data-registration-role="alumno" data-registration-api="../api">
+      <input type="text" name="nombre" placeholder="Nombre completo" autocomplete="name" required>
+      <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="email" required>
+      <input type="tel" name="telefono" placeholder="Teléfono (4492255316 o 449 225 5316)" autocomplete="tel" inputmode="numeric" required>
+      <input type="text" name="empresa" placeholder="Empresa o institución (opcional)" autocomplete="organization">
+      <input type="password" name="password" placeholder="Contraseña" autocomplete="new-password" required>
+      <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" autocomplete="new-password" required>
+      <button type="submit" class="form-btn">Suscribirme</button>
 
 
     </form>
@@ -42,10 +45,10 @@
   <div id="successModal" class="modal">
     <div class="modal-content">
       <h2>🎉 ¡FELICIDADES!</h2>
-      <p>Te has registrado exitosamente en <strong>Upskill Academy</strong>.</p>
-      <p>Usa el siguiente código para obtener <strong>25% de descuento</strong> en tu primer curso:</p>
+      <p><span class="registration-status">Tu solicitud fue registrada y está pendiente de aprobación por un administrador.</span></p>
+      <p>Cuando tu cuenta sea aprobada podrás iniciar sesión. Conservamos el código promocional para cuando tu acceso sea activado:</p>
       <div class="promo-code">UPSKILL25</div>
-      <a href="../views/loggin.html" id="closeModalBtn" class="form-btn">Cerrar</a>
+      <a href="../views/logalumno.html" id="closeModalBtn" class="form-btn">Cerrar</a>
 
 
     </div>

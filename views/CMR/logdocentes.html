@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../css/styles.css">
     </head>
     <body>
+<div class="platform-page-tools"><button class="back-button" type="button" onclick="history.length>1?history.back():location.href='../pagPrin.html'">← Regresar</button><button class="tool-button" type="button" onclick="toggleLanguage()">ES/EN</button><button class="tool-button" type="button" onclick="toggleTheme()">☾</button></div>
 
         <section class="hero">
     <img src="../../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
@@ -22,14 +23,12 @@
     <!-- FORMULARIO DE REGISTRO -->
     <section class="loggin-section">
         <img src="../../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
-        <form class="loggin-form">
-            <input type="text" placeholder="Usuario" required>
-            <input type="email" placeholder="Contraseña" required>
-            <a href="Docentes/docente.html" class="loggin-btn">Ingresar</a>
-            <p>
-                En caso de ser administrador entonces acceda al siguiente link para administrar el sistema:
-                <a href="Administradores/loggin.html">CRM de Administrador.</a>
-            </p>
+        <form class="loggin-form" data-crm-role="docente" data-crm-api="../../api" data-crm-redirect="Docentes/docente.html" novalidate>
+            <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="username" required>
+            <input type="password" name="password" placeholder="Contraseña" autocomplete="current-password" required>
+            <button type="submit" class="loggin-btn">Ingresar</button>
+            <p class="account-help">¿No tienes cuenta? <a href="../regdocentes.html">Contacta al administrador</a>.</p>
+            <p class="account-help">¿No tienes cuenta? <a href="../regdocentes.html">Contacta al administrador</a>; en caso de tú ser un administrador entonces accede al siguiente link para administrar el sistema: <a href="Administradores/loggin.html">CRM de Administrador.</a></p>
         </form>
     </section>
 

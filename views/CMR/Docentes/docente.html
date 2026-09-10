@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="../../../css/styles.css">
         <link rel="stylesheet" href="../../../css/docente.css">
     </head>
-    <body>
+    <body data-required-role="docente" data-api-base="../../../api" data-login-url="../logdocentes.html">
+<div class="platform-page-tools"><button class="back-button" type="button" onclick="history.length>1?history.back():location.href='../logdocentes.html'">← Regresar</button><button class="tool-button" type="button" onclick="toggleLanguage()">ES/EN</button><button class="tool-button" type="button" onclick="toggleTheme()">☾</button></div>
         <!--barra de la navegacion pa-->
         <header class="navbar">
             <h1>Upskill Academy</h1>
@@ -16,7 +17,7 @@
             <!-- MENÚ SUPERIOR -->
             <nav class="nav-links">
 
-                <a href="../../../index.html" class="menu-link">Loggout</a>
+                <a href="../logdocentes.html" class="menu-link">Cerrar sesión</a>
             </nav>
         </header>
 
@@ -175,5 +176,6 @@
         <script src="../../../js/script.js"></script>
         <script src="../../../js/docente.js"></script>
 
-    </body>
+    <script src="../../../js/role-guard.js"></script>
+</body>
 </html>
