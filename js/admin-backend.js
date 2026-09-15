@@ -22,12 +22,29 @@
     return data;
   }
 
-  function showNotice(id, message, error = false) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.className = `admin-notice${error ? ' error' : ''}`;
-    el.textContent = message;
-  }
+    function showNotice(
+        id,
+        message,
+        error = false
+    ) {
+        const el = document.getElementById(id);
+
+        if (!el) return;
+
+        el.className =
+            error
+                ? 'admin-notice error'
+                : 'admin-notice success';
+
+        el.textContent = message;
+
+        clearTimeout(el._noticeTimer);
+
+        el._noticeTimer = setTimeout(() => {
+            el.textContent = '';
+            el.className = 'admin-notice';
+        }, 5000);
+    }
 
   async function initSolicitudes() {
     const table = document.querySelector('#tablaSolicitudes tbody');
@@ -118,10 +135,99 @@
     }
   }
 
+    function confirmacionVisual(titulo, mensaje) {
+
+        return new Promise(resolve => {
+
+            const modal =
+                document.getElementById('confirmAdminModal');
+
+            const title =
+                document.getElementById('confirmAdminTitle');
+
+            const text =
+                document.getElementById('confirmAdminText');
+
+            const accept =
+                document.getElementById('confirmAdminAccept');
+
+            const cancel =
+                document.getElementById('confirmAdminCancel');
+
+            /*
+             * Protección por si falta algún elemento
+             * del modal en admin.html.
+             */
+            if (
+                !modal ||
+                !title ||
+                !text ||
+                !accept ||
+                !cancel
+            ) {
+                console.error(
+                    'No se encontraron los elementos del modal de confirmación.'
+                );
+
+                resolve(false);
+                return;
+            }
+
+            title.textContent = titulo;
+            text.textContent = mensaje;
+
+            modal.classList.add('open');
+
+            const cerrar = resultado => {
+
+                modal.classList.remove('open');
+
+                accept.onclick = null;
+                cancel.onclick = null;
+
+                resolve(resultado);
+            };
+
+            accept.onclick =
+                () => cerrar(true);
+
+            cancel.onclick =
+                () => cerrar(false);
+        });
+    }
+
   async function initSuperAdmin() {
     const section = document.getElementById('adminSuperSection');
     const table = document.querySelector('#tablaAdministradores tbody');
     const form = document.getElementById('formAdministrador');
+      const editarModal =
+          document.getElementById('editarAdminModal');
+
+      const editarForm =
+          document.getElementById('editarAdminForm');
+
+      const editarId =
+          document.getElementById('editarAdminId');
+
+      const editarNombre =
+          document.getElementById('editarAdminNombre');
+
+      const editarCorreo =
+          document.getElementById('editarAdminCorreo');
+
+      const editarPassword =
+          document.getElementById('editarAdminPassword');
+
+      const editarConfirmPassword =
+          document.getElementById(
+              'editarAdminConfirmPassword'
+          );
+
+      const cancelarEditar =
+          document.getElementById(
+              'cancelarEditarAdmin'
+          );
+
     if (!section || !table || !form) return;
 
     try {
@@ -140,7 +246,38 @@
             <td>${esc(a.id)}</td><td>${esc(a.nombre)}</td><td>${esc(a.correo)}</td>
             <td>${Number(a.es_superadmin) === 1 ? 'Principal' : 'Administrador'}</td>
             <td>${esc(a.estado)}</td><td>${esc(a.fecha_registro)}</td>
-            <td>${Number(a.es_superadmin) === 1 ? 'Protegido' : `<button type="button" class="approval-btn ${a.estado === 'activo' ? 'reject-btn' : 'approve-btn'} admin-state-btn" data-id="${esc(a.id)}" data-state="${a.estado === 'activo' ? 'inactivo' : 'activo'}">${a.estado === 'activo' ? 'Desactivar' : 'Activar'}</button>`}</td>
+            <td>${Number(a.es_superadmin) === 1
+                ? '<span>Protegido</span>'
+                : `
+                <button
+                  type="button"
+                  class="approval-btn edit-admin-btn"
+                  data-id="${esc(a.id)}"
+                  data-nombre="${esc(a.nombre)}"
+                  data-correo="${esc(a.correo)}"
+                >
+                  Editar
+                </button>
+
+                <button
+                  type="button"
+                  class="approval-btn
+                  ${a.estado === 'activo'
+                            ? 'reject-btn'
+                            : 'approve-btn'}
+                  admin-state-btn"
+                  data-id="${esc(a.id)}"
+                  data-state="${a.estado === 'activo'
+                            ? 'inactivo'
+                            : 'activo'}"
+                >
+                  ${a.estado === 'activo'
+                            ? 'Desactivar'
+                            : 'Activar'}
+                </button>
+              `
+              }
+            </td>
           </tr>`).join('') : '<tr><td colspan="7">No hay administradores registrados.</td></tr>';
       }
 
@@ -161,16 +298,253 @@
         } catch (error) { showNotice('administradoresNotice',error.message,true); }
       });
 
-      table.addEventListener('click', async e => {
-        const btn = e.target.closest('.admin-state-btn');
-        if (!btn) return;
-        if (!confirm(`${btn.dataset.state === 'activo' ? 'Activar' : 'Desactivar'} este administrador?`)) return;
-        try {
-          await request('administradores.php',{method:'PUT',body:JSON.stringify({id:Number(btn.dataset.id),estado:btn.dataset.state})});
-          showNotice('administradoresNotice','Estado actualizado.');
-          await loadAdmins();
-        } catch (error) { showNotice('administradoresNotice',error.message,true); }
-      });
+        table.addEventListener(
+            'click',
+            async e => {
+
+                /*
+                |--------------------------------------------------------------------------
+                | EDITAR ADMINISTRADOR
+                |--------------------------------------------------------------------------
+                */
+
+                const editBtn =
+                    e.target.closest(
+                        '.edit-admin-btn'
+                    );
+
+                if (editBtn) {
+
+                    editarId.value =
+                        editBtn.dataset.id;
+
+                    editarNombre.value =
+                        editBtn.dataset.nombre;
+
+                    editarCorreo.value =
+                        editBtn.dataset.correo;
+
+                    editarPassword.value = '';
+
+                    editarConfirmPassword.value = '';
+
+                    const notice =
+                        document.getElementById(
+                            'editarAdminNotice'
+                        );
+
+                    if (notice) {
+                        notice.textContent = '';
+                        notice.className =
+                            'admin-notice';
+                    }
+
+                    editarModal.classList.add(
+                        'open'
+                    );
+
+                    return;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | ACTIVAR / DESACTIVAR ADMINISTRADOR
+                |--------------------------------------------------------------------------
+                */
+
+                const btn =
+                    e.target.closest(
+                        '.admin-state-btn'
+                    );
+
+                if (!btn) {
+                    return;
+                }
+
+                const nuevoEstado =
+                    btn.dataset.state;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Confirmación mediante modal propio
+                |--------------------------------------------------------------------------
+                */
+
+                const confirmado =
+                    await confirmacionVisual(
+
+                        nuevoEstado === 'activo'
+                            ? 'Activar administrador'
+                            : 'Desactivar administrador',
+
+                        nuevoEstado === 'activo'
+                            ? '¿Deseas activar esta cuenta administrativa? El administrador podrá volver a iniciar sesión.'
+                            : '¿Deseas desactivar esta cuenta administrativa? El usuario dejará de poder iniciar sesión.'
+                    );
+
+                if (!confirmado) {
+                    return;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Enviar modificación al backend
+                |--------------------------------------------------------------------------
+                */
+
+                try {
+
+                    btn.disabled = true;
+
+                    const respuesta =
+                        await request(
+                            'administradores.php',
+                            {
+                                method: 'PUT',
+
+                                body:
+                                    JSON.stringify({
+                                        id:
+                                            Number(
+                                                btn.dataset.id
+                                            ),
+
+                                        estado:
+                                            nuevoEstado
+                                    })
+                            }
+                        );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Notificación de éxito
+                    |--------------------------------------------------------------------------
+                    */
+
+                    showNotice(
+                        'administradoresNotice',
+
+                        respuesta.mensaje ||
+                        (
+                            nuevoEstado === 'activo'
+                                ? 'Administrador activado correctamente.'
+                                : 'Administrador desactivado correctamente.'
+                        )
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Recargar tabla
+                    |--------------------------------------------------------------------------
+                    */
+
+                    await loadAdmins();
+
+                } catch (error) {
+
+                    btn.disabled = false;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Notificación de error
+                    |--------------------------------------------------------------------------
+                    */
+
+                    showNotice(
+                        'administradoresNotice',
+                        error.message,
+                        true
+                    );
+                }
+            }
+        );
+
+        cancelarEditar.addEventListener(
+            'click',
+            () => {
+                editarModal.classList.remove('open');
+            }
+        );
+
+        editarForm.addEventListener(
+            'submit',
+            async e => {
+
+                e.preventDefault();
+
+                const id =
+                    Number(editarId.value);
+
+                const nombre =
+                    editarNombre.value.trim();
+
+                const correo =
+                    editarCorreo.value.trim();
+
+                const password =
+                    editarPassword.value;
+
+                const confirmPassword =
+                    editarConfirmPassword.value;
+
+                if (!nombre || !correo) {
+                    return showNotice(
+                        'editarAdminNotice',
+                        'Nombre y correo son obligatorios.',
+                        true
+                    );
+                }
+
+                if (password !== confirmPassword) {
+                    return showNotice(
+                        'editarAdminNotice',
+                        'Las contraseñas no coinciden.',
+                        true
+                    );
+                }
+
+                try {
+
+                    const payload = {
+                        id,
+                        nombre,
+                        correo
+                    };
+
+                    if (password !== '') {
+                        payload.password = password;
+                    }
+
+                    const respuesta =
+                        await request(
+                            'administradores.php',
+                            {
+                                method: 'PUT',
+                                body:
+                                    JSON.stringify(payload)
+                            }
+                        );
+
+                    showNotice(
+                        'administradoresNotice',
+                        respuesta.mensaje
+                        || 'Administrador actualizado correctamente.'
+                    );
+
+                    editarModal.classList.remove('open');
+
+                    await loadAdmins();
+
+                } catch (error) {
+
+                    showNotice(
+                        'editarAdminNotice',
+                        error.message,
+                        true
+                    );
+                }
+            }
+        );
 
       await loadAdmins();
     } catch (error) {
