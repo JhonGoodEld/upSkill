@@ -16,57 +16,187 @@
       <button data-section="interacciones">◷ <span data-i18n="interactions">Interacciones</span></button>
       <button data-section="actividad">✓ <span data-i18n="activity">Mi actividad</span></button>
       <button data-section="reportes">▥ <span data-i18n="reports">Reportes</span></button>
+      <button data-section="perfil">
+          ⚙
+          <span>
+              Mi perfil
+          </span>
+      </button>
       <button id="adminPanelBtn">⚙ Panel administrador</button>
       <button id="logoutBtn">↪ <span data-i18n="logout">Cerrar sesión</span></button>
     </nav>
   </aside>
 
   <main class="crm-main">
-    <header class="crm-topbar">
-      <button class="icon-btn" id="backBtn" title="Regresar">←</button>
-      <div class="top-search-wrap"><span>⌕</span><input id="globalSearch" placeholder="Buscar en CRM..."></div>
-      <div class="top-controls">
-        <button class="icon-btn" id="languageBtn" title="Cambiar idioma">ES</button>
-        <button class="icon-btn" id="themeBtn" title="Modo oscuro">☾</button>
-        <div class="admin-chip"><div class="avatar-mini" id="adminInitials">AD</div><div><strong id="adminName">Administrador</strong><small id="adminRole">Admin</small></div></div>
-      </div>
-    </header>
+      <header class="crm-topbar">
+          <button class="icon-btn" id="backBtn" title="Regresar">←</button>
+          <div class="top-search-wrap"><span>⌕</span><input id="globalSearch" placeholder="Buscar en CRM..."></div>
+          <div class="top-controls">
+              <button class="icon-btn" id="languageBtn" title="Cambiar idioma">ES</button>
+              <button class="icon-btn" id="themeBtn" title="Modo oscuro">☾</button>
+              <div class="admin-chip"><div class="avatar-mini" id="adminInitials">AD</div><div><strong id="adminName">Administrador</strong><small id="adminRole">Admin</small></div></div>
+          </div>
+      </header>
 
-    <header class="crm-heading">
-      <div><h1 id="pageTitle">Resumen CRM</h1><div id="userInfo" class="crm-user">Cargando sesión...</div></div>
-      <div class="crm-actions"><button class="btn btn-primary" id="nuevoClienteBtn">+ Nuevo cliente</button></div>
-    </header>
+      <header class="crm-heading">
+          <div><h1 id="pageTitle">Resumen CRM</h1><div id="userInfo" class="crm-user">Cargando sesión...</div></div>
+          <div class="crm-actions"><button class="btn btn-primary" id="nuevoClienteBtn">+ Nuevo cliente</button></div>
+      </header>
 
-    <section id="dashboard" class="section active">
-      <div id="dashboardCards" class="cards metric-cards">
-        <div class="card metric-card"><div class="metric-label">Total de clientes</div><div id="mTotal" class="metric-value">—</div><div class="metric-foot" id="mTotalFoot">Todos los clientes</div></div>
-        <div class="card metric-card"><div class="metric-label">Clientes activos</div><div id="mActivos" class="metric-value blue">—</div><div class="metric-foot" id="mActivosFoot">—</div></div>
-        <div class="card metric-card"><div class="metric-label">Interacciones (este mes)</div><div id="mInteracciones" class="metric-value">—</div><div class="metric-foot" id="mInteraccionesFoot">—</div></div>
-        <div class="card metric-card"><div class="metric-label">Clientes sin interacción</div><div id="mRiesgo" class="metric-value">—</div><div class="metric-foot">Últimos 30 días</div></div>
-      </div>
-      <div class="dashboard-grid">
-        <div class="panel-card"><h2>Clientes activos vs. inactivos</h2><div id="estadoBars" class="bar-list"></div></div>
-        <div class="panel-card"><div class="panel-title-row"><h2>Clientes en riesgo</h2><button class="link-btn" id="toggleRiskBtn" hidden>Ver todos</button></div><p class="small">Clientes sin interacción en los últimos 30 días. Quienes nunca han tenido interacción aparecen primero.</p><div id="riskList" class="risk-list"></div></div>
-      </div>
-    </section>
+      <section id="dashboard" class="section active">
+          <div id="dashboardCards" class="cards metric-cards">
+              <div class="card metric-card"><div class="metric-label">Total de clientes</div><div id="mTotal" class="metric-value">—</div><div class="metric-foot" id="mTotalFoot">Todos los clientes</div></div>
+              <div class="card metric-card"><div class="metric-label">Clientes activos</div><div id="mActivos" class="metric-value blue">—</div><div class="metric-foot" id="mActivosFoot">—</div></div>
+              <div class="card metric-card"><div class="metric-label">Interacciones (este mes)</div><div id="mInteracciones" class="metric-value">—</div><div class="metric-foot" id="mInteraccionesFoot">—</div></div>
+              <div class="card metric-card"><div class="metric-label">Clientes sin interacción</div><div id="mRiesgo" class="metric-value">—</div><div class="metric-foot">Últimos 30 días</div></div>
+          </div>
+          <div class="dashboard-grid">
+              <div class="panel-card"><h2>Clientes activos vs. inactivos</h2><div id="estadoBars" class="bar-list"></div></div>
+              <div class="panel-card"><div class="panel-title-row"><h2>Clientes en riesgo</h2><button class="link-btn" id="toggleRiskBtn" hidden>Ver todos</button></div><p class="small">Clientes sin interacción en los últimos 30 días. Quienes nunca han tenido interacción aparecen primero.</p><div id="riskList" class="risk-list"></div></div>
+          </div>
+      </section>
 
-    <section id="clientes" class="section">
-      <div class="toolbar"><input id="buscarCliente" placeholder="Buscar por nombre, correo o empresa"><select id="filtroEstado"><option value="">Todos los estados</option><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select><select id="filtroEtapa"><option value="">Todas las etapas</option><option>Prospecto</option><option>Activo</option><option>Frecuente</option><option>Inactivo</option></select></div>
-      <div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Teléfono</th><th>Etapa CRM</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="clientesBody"></tbody></table></div>
-    </section>
+      <section id="clientes" class="section">
+          <div class="toolbar"><input id="buscarCliente" placeholder="Buscar por nombre, correo o empresa"><select id="filtroEstado"><option value="">Todos los estados</option><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select><select id="filtroEtapa"><option value="">Todas las etapas</option><option>Prospecto</option><option>Activo</option><option>Frecuente</option><option>Inactivo</option></select></div>
+          <div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Teléfono</th><th>Etapa CRM</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="clientesBody"></tbody></table></div>
+      </section>
 
-    <section id="interacciones" class="section">
-      <div class="panel-card"><h2>Interacciones por cliente</h2><p class="small">Abre el historial de cualquier cliente con el botón del ojo.</p><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Etapa CRM</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="interaccionesClientesBody"></tbody></table></div></div>
-    </section>
+      <section id="interacciones" class="section">
+          <div class="panel-card"><h2>Interacciones por cliente</h2><p class="small">Abre el historial de cualquier cliente con el botón del ojo.</p><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Empresa</th><th>Correo</th><th>Etapa CRM</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="interaccionesClientesBody"></tbody></table></div></div>
+      </section>
 
-    <section id="actividad" class="section">
-      <div class="panel-card"><div class="panel-title-row"><h2>Mi actividad</h2><label class="month-filter">Mes <input type="month" id="actividadMes"></label></div><div class="table-wrap"><table class="table"><thead><tr><th>Fecha y hora</th><th>Cliente</th><th>Tipo</th><th>Responsable/contacto</th><th>Descripción</th></tr></thead><tbody id="actividadBody"></tbody></table></div></div>
-    </section>
+      <section id="actividad" class="section">
+          <div class="panel-card"><div class="panel-title-row"><h2>Mi actividad</h2><label class="month-filter">Mes <input type="month" id="actividadMes"></label></div><div class="table-wrap"><table class="table"><thead><tr><th>Fecha y hora</th><th>Cliente</th><th>Tipo</th><th>Responsable/contacto</th><th>Descripción</th></tr></thead><tbody id="actividadBody"></tbody></table></div></div>
+      </section>
 
-    <section id="reportes" class="section">
-      <div id="reportCards" class="cards metric-cards"></div>
-      <div class="dashboard-grid report-grid"><div class="panel-card"><h2>Interacciones por tipo</h2><div id="tipoVerticalChart" class="vertical-chart"></div></div><div class="panel-card"><h2>Clientes por etapa CRM</h2><div id="etapaPieWrap" class="pie-wrap"></div></div></div>
-    </section>
+      <section id="reportes" class="section">
+          <div id="reportCards" class="cards metric-cards"></div>
+          <div class="dashboard-grid report-grid"><div class="panel-card"><h2>Interacciones por tipo</h2><div id="tipoVerticalChart" class="vertical-chart"></div></div><div class="panel-card"><h2>Clientes por etapa CRM</h2><div id="etapaPieWrap" class="pie-wrap"></div></div></div>
+      </section>
+
+      <section id="perfil"
+               class="section">
+
+          <div class="panel-card profile-panel">
+
+              <h2>
+                  Mi perfil
+              </h2>
+
+              <p class="small">
+                  Puedes modificar tus datos personales.
+                  Tu rol y privilegios administrativos
+                  no pueden cambiarse desde esta sección.
+              </p>
+
+              <div id="perfilNotice"></div>
+
+              <form id="perfilForm"
+                    class="form-grid">
+
+                  <div>
+                      <label>
+                          Nombre
+                      </label>
+
+                      <input type="text"
+                             id="perfilNombre"
+                             required>
+                  </div>
+
+                  <div>
+                      <label>
+                          Correo
+                      </label>
+
+                      <input type="email"
+                             id="perfilCorreo"
+                             required>
+                  </div>
+
+                  <div>
+                      <label>
+                          Rol
+                      </label>
+
+                      <input type="text"
+                             id="perfilRol"
+                             readonly>
+                  </div>
+
+                  <div>
+                      <label>
+                          Tipo de administrador
+                      </label>
+
+                      <input type="text"
+                             id="perfilTipo"
+                             readonly>
+                  </div>
+
+                  <div>
+                      <label>
+                          Estado
+                      </label>
+
+                      <input type="text"
+                             id="perfilEstado"
+                             readonly>
+                  </div>
+
+                  <div>
+                      <label>
+                          Fecha de registro
+                      </label>
+
+                      <input type="text"
+                             id="perfilFecha"
+                             readonly>
+                  </div>
+
+                  <div class="full">
+
+                      <hr>
+
+                      <h3>
+                          Cambiar contraseña
+                      </h3>
+
+                  </div>
+
+                  <div>
+                      <label>
+                          Contraseña actual
+                      </label>
+
+                      <input type="password"
+                             id="perfilPasswordActual">
+                  </div>
+
+                  <div>
+                      <label>
+                          Nueva contraseña
+                      </label>
+
+                      <input type="password"
+                             id="perfilPasswordNueva">
+                  </div>
+
+                  <div class="full">
+
+                      <button type="submit"
+                              class="btn btn-primary">
+                          Guardar cambios
+                      </button>
+
+                  </div>
+
+              </form>
+
+          </div>
+
+      </section>
+
   </main>
 </div>
 
