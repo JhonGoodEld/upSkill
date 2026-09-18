@@ -48,17 +48,190 @@ function prepararInteraccion(){if(!clienteSeleccionado)return;$('interaccionClie
 async function guardarInteraccion(e){e.preventDefault();const p={cliente_id:Number($('interaccionClienteId').value),tipo:$('interaccionTipo').value,descripcion:$('interaccionDescripcion').value.trim(),fecha:$('interaccionFecha').value,responsable:$('interaccionResponsable').value.trim()};if(!p.responsable){aviso('interaccionNotice','Indica el responsable o contacto con quien se tuvo la interacción.',true);return}try{await api('interacciones.php',{method:'POST',body:JSON.stringify(p)});cerrar('interaccionModal');await mostrarHistorial(p.cliente_id);await cargarMetricas();await cargarActividad()}catch(e){aviso('interaccionNotice',e.message,true)}}
 async function cargarActividad(){const mes=$('actividadMes').value;const d=await api(`actividad.php${mes?`?mes=${encodeURIComponent(mes)}`:''}`);$('actividadBody').innerHTML=d.actividad.length?d.actividad.map(x=>`<tr><td>${esc(fmtFecha(x.fecha))}</td><td>${esc(x.cliente)}</td><td>${esc(x.tipo)}</td><td>${esc(x.responsable||'')}</td><td>${esc(x.descripcion)}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">No hay actividades en este periodo.</td></tr>'}
 
-function cambiarSeccion(id){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('.crm-nav button[data-section]').forEach(b=>b.classList.toggle('active',b.dataset.section===id));const t={dashboard:'Resumen CRM',clientes:'Clientes',interacciones:'Interacciones',actividad:'Mi actividad',reportes:'Reportes'};$('pageTitle').textContent=t[id]||'CRM';if(id==='reportes'&&metricasActuales)renderReportes(metricasActuales)}
+function cambiarSeccion(id) { document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id)); document.querySelectorAll('.crm-nav button[data-section]').forEach(b => b.classList.toggle('active', b.dataset.section === id)); const t = { dashboard: 'Resumen CRM', clientes: 'Clientes', interacciones: 'Interacciones', actividad: 'Mi actividad', reportes: 'Reportes', perfil: 'Mi perfil'};$('pageTitle').textContent=t[id]||'CRM';if(id==='reportes'&&metricasActuales)renderReportes(metricasActuales)}
 function globalSearch(){const q=$('globalSearch').value.trim();const active=document.querySelector('.section.active')?.id;if(active==='clientes'){$('buscarCliente').value=q;renderClientes()}else if(active==='interacciones')renderInteraccionesClientes();else if(q){cambiarSeccion('clientes');$('buscarCliente').value=q;renderClientes()}}
 const translations={es:{dashboard:'Dashboard',clients:'Clientes',interactions:'Interacciones',activity:'Mi actividad',reports:'Reportes',logout:'Cerrar sesión'},en:{dashboard:'Dashboard',clients:'Clients',interactions:'Interactions',activity:'My activity',reports:'Reports',logout:'Log out'}};
 function applyLanguage(lang){document.documentElement.dataset.language=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=translations[lang]?.[el.dataset.i18n];if(v)el.textContent=v});$('languageBtn').textContent=lang==='es'?'ES':'EN';localStorage.setItem('upskillLanguage',lang)}
 function toggleTheme(){document.body.classList.toggle('dark-mode');localStorage.setItem('upskillTheme',document.body.classList.contains('dark-mode')?'dark':'light');$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾'}
 
-document.addEventListener('DOMContentLoaded',()=>{
+async function cargarPerfil() {
+
+    try {
+
+        const data =
+            await api('perfil.php');
+
+        const p =
+            data.perfil;
+
+        $('perfilNombre').value =
+            p.nombre || '';
+
+        $('perfilCorreo').value =
+            p.correo || '';
+
+        $('perfilRol').value =
+            p.rol || '';
+
+        $('perfilTipo').value =
+            Number(p.es_superadmin) === 1
+                ? 'Administrador principal'
+                : 'Administrador';
+
+        $('perfilEstado').value =
+            p.estado || '';
+
+        $('perfilFecha').value =
+            p.fecha_registro || '';
+
+    } catch (e) {
+
+        aviso(
+            'perfilNotice',
+            e.message,
+            true
+        );
+    }
+}
+
+async function guardarPerfil(e) {
+
+    e.preventDefault();
+
+    const nombre =
+        $('perfilNombre').value.trim();
+
+    const correo =
+        $('perfilCorreo').value.trim();
+
+    const passwordActual =
+        $('perfilPasswordActual').value;
+
+    const passwordNueva =
+        $('perfilPasswordNueva').value;
+
+    if (!nombre || !correo) {
+
+        return aviso(
+            'perfilNotice',
+            'Nombre y correo son obligatorios.',
+            true
+        );
+    }
+
+    try {
+
+        const respuesta =
+            await api(
+                'perfil.php',
+                {
+                    method: 'PUT',
+
+                    body: JSON.stringify({
+                        nombre,
+                        correo,
+
+                        password_actual:
+                            passwordActual,
+
+                        password_nueva:
+                            passwordNueva
+                    })
+                }
+            );
+
+        aviso(
+            'perfilNotice',
+            respuesta.mensaje
+            || 'Perfil actualizado correctamente.'
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Actualizar cabecera
+        |--------------------------------------------------------------------------
+        */
+        usuario.nombre = nombre;
+        usuario.correo = correo;
+
+        $('userInfo').textContent =
+            `${nombre} · ${usuario.rol}`;
+
+        $('adminName').textContent =
+            nombre;
+
+        $('adminInitials').textContent =
+            initials(nombre);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Limpiar contraseñas
+        |--------------------------------------------------------------------------
+        */
+        $('perfilPasswordActual').value =
+            '';
+
+        $('perfilPasswordNueva').value =
+            '';
+
+    } catch (e) {
+
+        aviso(
+            'perfilNotice',
+            e.message,
+            true
+        );
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    $('perfilForm').onsubmit =
+        guardarPerfil;
  if(localStorage.getItem('upskillTheme')==='dark')document.body.classList.add('dark-mode');applyLanguage(localStorage.getItem('upskillLanguage')||'es');$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾';
  $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=()=>applyLanguage(document.documentElement.dataset.language==='es'?'en':'es');$('backBtn').onclick=()=>history.length>1?history.back():location.href='Administradores/admin.html';$('adminPanelBtn').onclick=()=>location.href='Administradores/admin.html';$('globalSearch').addEventListener('input',globalSearch);
- document.querySelectorAll('.crm-nav button[data-section]').forEach(b=>b.onclick=()=>{cambiarSeccion(b.dataset.section);if(b.dataset.section==='actividad')cargarActividad()});$('nuevoClienteBtn').onclick=()=>abrirCliente();$('clienteForm').onsubmit=guardarCliente;$('cerrarCliente').onclick=()=>cerrar('clienteModal');$('interaccionForm').onsubmit=guardarInteraccion;$('cerrarInteraccion').onclick=()=>cerrar('interaccionModal');$('buscarCliente').oninput=renderClientes;$('filtroEstado').onchange=renderClientes;$('filtroEtapa').onchange=renderClientes;$('actividadMes').onchange=cargarActividad;
- $('clientesBody').onclick=e=>{const id=e.target.dataset.id;if(!id)return;if(e.target.classList.contains('ver-cliente'))mostrarHistorial(id);if(e.target.classList.contains('editar-cliente'))mostrarDetalle(id);if(e.target.classList.contains('eliminar-cliente'))eliminarCliente(id)};$('interaccionesClientesBody').onclick=e=>{if(e.target.classList.contains('ver-cliente'))mostrarHistorial(e.target.dataset.id)};$('riskList').onclick=e=>{const el=e.target.closest('.risk-open');if(el)mostrarDetalle(el.dataset.id)};$('toggleRiskBtn').onclick=()=>{riesgosExpandidos=!riesgosExpandidos;renderRiesgos(metricasActuales?.clientes_en_riesgo||[])};
+    document
+        .querySelectorAll('.crm-nav button[data-section]')
+        .forEach(b => {
+
+            b.onclick = () => {
+
+                const seccion =
+                    b.dataset.section;
+
+                cambiarSeccion(seccion);
+
+                /*
+                 * Si entramos a Mi actividad,
+                 * actualizamos la tabla.
+                 */
+                if (seccion === 'actividad') {
+                    cargarActividad();
+                }
+
+                /*
+                 * Si entramos a Mi perfil,
+                 * obtenemos los datos actuales
+                 * del administrador desde MySQL.
+                 */
+                if (seccion === 'perfil') {
+                    cargarPerfil();
+                }
+
+                /*
+                 * Si entramos a Reportes,
+                 * usamos las métricas actuales.
+                 */
+                if (
+                    seccion === 'reportes'
+                    && metricasActuales
+                ) {
+                    renderReportes(
+                        metricasActuales
+                    );
+                }
+            };
+        });
+ $('clientesBody').onclick = e => { const id = e.target.dataset.id; if (!id) return; if (e.target.classList.contains('ver-cliente')) mostrarHistorial(id); if (e.target.classList.contains('editar-cliente')) mostrarDetalle(id); if (e.target.classList.contains('eliminar-cliente')) eliminarCliente(id) }; $('interaccionesClientesBody').onclick = e => { if (e.target.classList.contains('ver-cliente')) mostrarHistorial(e.target.dataset.id) }; $('riskList').onclick = e => { const el = e.target.closest('.risk-open'); if (el) mostrarDetalle(el.dataset.id) }; $('toggleRiskBtn').onclick = () => { riesgosExpandidos = !riesgosExpandidos; renderRiesgos(metricasActuales?.clientes_en_riesgo || []) };
  $('volverDetalle').onclick=$('cerrarDetalle').onclick=()=>cerrar('detalleClienteModal');$('volverHistorial').onclick=$('cerrarHistorial').onclick=()=>cerrar('historialModal');$('editarDesdeDetalle').onclick=()=>{const id=clienteSeleccionado?.id;cerrar('detalleClienteModal');if(id)abrirCliente(id)};$('cambiarEtapaDesdeDetalle').onclick=()=>{if(!clienteSeleccionado)return;$('etapaSelect').value=clienteSeleccionado.etapa_crm;abrir('etapaModal')};$('guardarEtapaBtn').onclick=()=>clienteSeleccionado&&cambiarEtapa(clienteSeleccionado.id,$('etapaSelect').value);$('cancelarEtapaBtn').onclick=()=>cerrar('etapaModal');$('nuevaInteraccionBtn').onclick=prepararInteraccion;
  $('clienteTelefono').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^0-9 ]/g,'').replace(/ {2,}/g,' ').slice(0,12)});
  $('logoutBtn').onclick=async()=>{try{await api('logout.php',{method:'POST'})}finally{location.href='Administradores/loggin.html'}};
