@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" data-language="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCM — Upskill Academy</title>
+  <link rel="stylesheet" href="../../css/scm.css">
+</head>
+<body class="scm-body">
+<div class="scm-layout">
+  <aside class="scm-sidebar">
+    <div class="scm-brand">Upskill Academy<small>SCM Administrador</small></div>
+    <nav class="scm-nav">
+      <button class="active" data-section="inicio">⌂ <span>Inicio</span></button>
+      <button id="crmBtn">▦ <span>CRM</span></button>
+      <button data-section="productos">▣ <span>Productos</span></button>
+      <button data-section="proveedores">♟ <span>Proveedores</span></button>
+      <button data-section="inventario">◇ <span>Inventario</span></button>
+      <button data-section="movimientos">↔ <span>Movimientos</span></button>
+      <button data-section="logistica">⇄ <span>Logística</span></button>
+      <button data-section="pedidos">▤ <span>Pedidos</span></button>
+      <button data-section="madurez">◈ <span>Madurez SCM</span></button>
+      <button data-section="reportes">▥ <span>Reportes</span></button>
+      <button id="adminPanelBtn">⚙ Panel administrador</button>
+      <button id="logoutBtn">↪ Cerrar sesión</button>
+    </nav>
+  </aside>
+
+  <main class="scm-main">
+    <header class="scm-topbar">
+      <button class="icon-btn" id="backBtn">←</button>
+      <div class="top-search-wrap"><span>⌕</span><input id="globalSearch" placeholder="Buscar en SCM..."></div>
+      <div class="top-controls">
+        <button class="icon-btn" id="languageBtn">ES</button>
+        <button class="icon-btn" id="themeBtn">☾</button>
+        <div class="admin-chip"><div class="avatar-mini" id="adminInitials">AD</div><div><strong id="adminName">Administrador</strong><small id="adminRole">Admin</small></div></div>
+      </div>
+    </header>
+
+    <header class="scm-heading">
+      <div><h1 id="pageTitle">SCM</h1><div id="userInfo" class="small">Cargando sesión...</div></div>
+      <div id="pageActions"></div>
+    </header>
+
+    <section id="inicio" class="section active">
+      <div class="module-grid">
+        <button class="module-card" data-go="productos"><b>▣</b><strong>Productos</strong><span>Gestión de catálogo</span></button>
+        <button class="module-card" data-go="proveedores"><b>♟</b><strong>Proveedores</strong><span>Administrar proveedores</span></button>
+        <button class="module-card" data-go="inventario"><b>◇</b><strong>Inventario</strong><span>Control de existencias</span></button>
+        <button class="module-card" data-go="pedidos"><b>▤</b><strong>Pedidos</strong><span>Reposición y suministro</span></button>
+        <button class="module-card" data-go="logistica"><b>⇄</b><strong>Logística</strong><span>Push / Pull</span></button>
+        <button class="module-card" data-go="reportes"><b>▥</b><strong>Reportes</strong><span>Métricas y análisis</span></button>
+      </div>
+    </section>
+
+    <section id="productos" class="section">
+      <div class="toolbar"><input id="buscarProducto" placeholder="Buscar producto..."><select id="filtroCategoria"><option value="">Todas las categorías</option></select><button class="btn primary" id="nuevoProductoBtn">+ Nuevo producto</button></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Stock</th><th>Stock mín.</th><th>Proveedor</th><th>Estrategia</th><th>Acciones</th></tr></thead><tbody id="productosBody"></tbody></table></div></div>
+    </section>
+
+    <section id="proveedores" class="section">
+      <div class="toolbar"><input id="buscarProveedor" placeholder="Buscar proveedor..."><button class="btn primary" id="nuevoProveedorBtn">+ Nuevo proveedor</button></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>ID</th><th>Nombre</th><th>Contacto</th><th>Correo</th><th>Teléfono</th><th>Acciones</th></tr></thead><tbody id="proveedoresBody"></tbody></table></div></div>
+    </section>
+
+    <section id="inventario" class="section">
+      <div class="toolbar"><input id="buscarInventario" placeholder="Buscar producto..."></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>Producto</th><th>Stock actual</th><th>Stock mínimo</th><th>Estado</th><th>Estrategia</th><th>Acción</th></tr></thead><tbody id="inventarioBody"></tbody></table></div></div>
+    </section>
+
+    <section id="movimientos" class="section">
+      <div class="toolbar"><select id="filtroMovimientoTipo"><option value="">Todos los tipos</option><option value="entrada">Entrada</option><option value="salida">Salida</option></select><select id="filtroMovimientoProducto"><option value="">Todos los productos</option></select><button class="btn primary" id="nuevoMovimientoBtn">+ Nuevo movimiento</button></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Motivo</th><th>Usuario</th></tr></thead><tbody id="movimientosBody"></tbody></table></div></div>
+    </section>
+
+    <section id="logistica" class="section">
+      <div class="two-col">
+        <div class="panel"><h2>Configurar estrategia</h2><label>Producto</label><select id="estrategiaProducto"></select><label>Estrategia</label><div class="radio-row"><label><input type="radio" name="estrategia" value="PUSH"> PUSH</label><label><input type="radio" name="estrategia" value="PULL"> PULL</label></div><div class="strategy-info"><b>PUSH</b><span>Genera pedido automático cuando el stock llega al mínimo.</span></div><div class="strategy-info"><b>PULL</b><span>La reposición se realiza bajo pedido manual.</span></div><button class="btn primary" id="guardarEstrategiaBtn">Guardar</button><div id="estrategiaNotice" class="notice"></div></div>
+        <div class="panel"><h2>Productos por estrategia</h2><div class="strategy-summary"><div class="summary-box push"><b>PUSH</b><span id="pushCount">0 productos</span></div><div class="summary-box pull"><b>PULL</b><span id="pullCount">0 productos</span></div></div><div class="table-wrap"><table><thead><tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Stock mín.</th><th>Estrategia</th></tr></thead><tbody id="estrategiaBody"></tbody></table></div></div>
+      </div>
+    </section>
+
+    <section id="pedidos" class="section">
+      <div class="toolbar"><select id="filtroPedidoEstado"><option value="">Todos los estados</option><option>pendiente</option><option>en_proceso</option><option>surtido</option><option>cancelado</option></select><select id="filtroPedidoTipo"><option value="">Todos los tipos</option><option value="reposición">Reposición</option><option value="venta">Venta</option></select><button class="btn primary" id="nuevoPedidoBtn">+ Generar pedido</button></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Tipo</th><th>Estado</th><th>Origen</th><th>Acciones</th></tr></thead><tbody id="pedidosBody"></tbody></table></div></div>
+    </section>
+
+    <section id="madurez" class="section">
+      <div class="panel maturity"><h2>Nivel de madurez SCM</h2><div class="maturity-row"><strong>Nivel actual</strong><select id="nivelScm"><option>Inicial</option><option>En desarrollo</option><option>Optimizado</option></select><button class="btn primary" id="guardarNivelBtn">Guardar nivel</button></div><textarea id="nivelDescripcion" rows="3" placeholder="Descripción del nivel actual"></textarea><h3>Checklist de avance</h3><div id="checklistScm" class="checklist"></div><div id="nivelNotice" class="notice"></div></div>
+    </section>
+
+    <section id="reportes" class="section">
+      <div class="metric-grid"><div class="metric"><b id="rProductos">0</b><span>Productos</span></div><div class="metric"><b id="rProveedores">0</b><span>Proveedores</span></div><div class="metric"><b id="rPedidos">0</b><span>Pedidos en proceso</span></div><div class="metric warning"><b id="rStockBajo">0</b><span>Productos con stock bajo</span></div></div>
+      <div class="two-col"><div class="panel"><h2>Productos más vendidos</h2><div id="ventasChart" class="bars"></div></div><div class="panel"><h2>Comparación PUSH vs PULL</h2><div id="pushPullChart" class="bars"></div></div></div>
+      <div class="two-col"><div class="panel"><h2>Inventario crítico</h2><div class="table-wrap"><table><thead><tr><th>Producto</th><th>Stock actual</th><th>Stock mínimo</th><th>Estrategia</th></tr></thead><tbody id="criticoBody"></tbody></table></div></div><div class="panel"><h2>Productos con rotación lenta</h2><div class="table-wrap"><table><thead><tr><th>Producto</th><th>Stock</th><th>Última salida</th></tr></thead><tbody id="rotacionBody"></tbody></table></div></div></div>
+    </section>
+  </main>
+</div>
+
+<div id="productoModal" class="modal"><div class="modal-card"><div class="modal-head"><h2 id="productoModalTitle">Nuevo producto</h2><button class="x" data-close="productoModal">×</button></div><div id="productoNotice" class="notice"></div><form id="productoForm" class="form-grid"><input type="hidden" id="productoId"><label>Nombre<input id="productoNombre" required></label><label>Categoría<input id="productoCategoria" required></label><label class="full">Descripción<textarea id="productoDescripcion" rows="3"></textarea></label><label>Proveedor<select id="productoProveedor"></select></label><label>Stock actual<input id="productoStock" type="number" min="0" required></label><label>Stock mínimo<input id="productoMin" type="number" min="0" required></label><label>Estrategia<select id="productoEstrategia"><option>PUSH</option><option>PULL</option></select></label><label>Costo unitario<input id="productoCosto" type="number" min="0" step="0.01" required></label><div class="full modal-actions"><button class="btn secondary" type="button" data-close="productoModal">Cancelar</button><button class="btn primary" type="submit">Guardar</button></div></form></div></div>
+
+<div id="proveedorModal" class="modal"><div class="modal-card"><div class="modal-head"><h2 id="proveedorModalTitle">Nuevo proveedor</h2><button class="x" data-close="proveedorModal">×</button></div><div id="proveedorNotice" class="notice"></div><form id="proveedorForm" class="form-grid"><input type="hidden" id="proveedorId"><label>Nombre<input id="proveedorNombre" required></label><label>Contacto<input id="proveedorContacto" required></label><label>Correo<input id="proveedorCorreo" type="email" required></label><label>Teléfono<input id="proveedorTelefono" required></label><label class="full">Dirección<textarea id="proveedorDireccion" rows="3"></textarea></label><div class="full modal-actions"><button class="btn secondary" type="button" data-close="proveedorModal">Cancelar</button><button class="btn primary" type="submit">Guardar</button></div></form></div></div>
+
+<div id="movimientoModal" class="modal"><div class="modal-card"><div class="modal-head"><h2>Nuevo movimiento</h2><button class="x" data-close="movimientoModal">×</button></div><div id="movimientoNotice" class="notice"></div><form id="movimientoForm" class="form-grid"><label>Producto<select id="movimientoProducto" required></select></label><label>Tipo<select id="movimientoTipo"><option value="entrada">Entrada</option><option value="salida">Salida</option></select></label><label>Cantidad<input id="movimientoCantidad" type="number" min="1" required></label><label>Motivo<select id="movimientoMotivo"><option value="compra">Compra</option><option value="venta">Venta</option><option value="ajuste">Ajuste</option><option value="reposición">Reposición</option><option value="devolución">Devolución</option><option value="otro">Otro</option></select></label><label>Fecha<input id="movimientoFecha" type="datetime-local" required></label><label class="full">Detalle<input id="movimientoDetalle"></label><div class="full modal-actions"><button class="btn secondary" type="button" data-close="movimientoModal">Cancelar</button><button class="btn primary" type="submit">Guardar</button></div></form></div></div>
+
+<div id="pedidoModal" class="modal"><div class="modal-card"><div class="modal-head"><h2>Nuevo pedido</h2><button class="x" data-close="pedidoModal">×</button></div><div id="pedidoNotice" class="notice"></div><form id="pedidoForm" class="form-grid"><label>Producto<select id="pedidoProducto" required></select></label><label>Cantidad<input id="pedidoCantidad" type="number" min="1" required></label><label>Tipo<select id="pedidoTipo"><option value="reposición">Reposición</option><option value="venta">Venta</option></select></label><label>Proveedor<select id="pedidoProveedor"></select></label><label>Fecha<input id="pedidoFecha" type="datetime-local" required></label><label class="full">Notas<textarea id="pedidoNotas" rows="3"></textarea></label><div class="full modal-actions"><button class="btn secondary" type="button" data-close="pedidoModal">Cancelar</button><button class="btn primary" type="submit">Guardar</button></div></form></div></div>
+
+<script src="../../js/scm.js"></script>
+</body>
+</html>

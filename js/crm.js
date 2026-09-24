@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('perfilForm').onsubmit =
         guardarPerfil;
  if(localStorage.getItem('upskillTheme')==='dark')document.body.classList.add('dark-mode');applyLanguage(localStorage.getItem('upskillLanguage')||'es');$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾';
- $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=()=>applyLanguage(document.documentElement.dataset.language==='es'?'en':'es');$('backBtn').onclick=()=>history.length>1?history.back():location.href='Administradores/admin.html';$('adminPanelBtn').onclick=()=>location.href='Administradores/admin.html';$('globalSearch').addEventListener('input',globalSearch);
+ $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=()=>applyLanguage(document.documentElement.dataset.language==='es'?'en':'es');$('backBtn').onclick=()=>history.length>1?history.back():location.href='Administradores/admin.html';$('adminPanelBtn').onclick=()=>location.href='Administradores/admin.html';$('scmBtn').onclick=()=>location.href='../SCM/scm.html';$('globalSearch').addEventListener('input',globalSearch);
     document
         .querySelectorAll('.crm-nav button[data-section]')
         .forEach(b => {
