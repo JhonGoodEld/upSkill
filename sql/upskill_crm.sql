@@ -6,12 +6,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
  nombre VARCHAR(120) NOT NULL,
  correo VARCHAR(150) NOT NULL UNIQUE,
  password_hash VARCHAR(255) NOT NULL,
- rol ENUM('admin','docente','alumno') NOT NULL,
+ rol ENUM('admin','logistica','docente','alumno') NOT NULL,
  es_superadmin TINYINT(1) NOT NULL DEFAULT 0,
  estado ENUM('pendiente','activo','inactivo') NOT NULL DEFAULT 'pendiente',
  especialidad VARCHAR(150) NULL,
  curso_solicitado VARCHAR(180) NULL,
  fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ actualizado_en DATETIME NULL,
  INDEX idx_usuario_rol_estado(rol,estado),
  INDEX idx_usuario_superadmin(es_superadmin)
 ) ENGINE=InnoDB;

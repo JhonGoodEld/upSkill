@@ -24,9 +24,45 @@ function body_json(): array {
 }
 
 function require_login(): array {
-    if (empty($_SESSION['usuario'])) {
+    if (empty($_SESSION['usuario']['id'])) {
         json_response(['error' => 'Sesión no autenticada.'], 401);
     }
+
+    /*
+     * La sesión no es la fuente definitiva del rol. Se vuelve a consultar
+     * MySQL en cada petición protegida para evitar sesiones obsoletas si el
+     * administrador cambió roles/estado mientras la sesión seguía abierta.
+     */
+    $id = (int)$_SESSION['usuario']['id'];
+    $st = db()->prepare('SELECT id,nombre,correo,rol,estado,es_superadmin FROM usuarios WHERE id=? LIMIT 1');
+    $st->execute([$id]);
+    $user = $st->fetch();
+
+    if (!$user) {
+        unset($_SESSION['usuario']);
+        json_response(['error' => 'La cuenta asociada a esta sesión ya no existe.'], 401);
+    }
+
+    if ($user['estado'] !== 'activo') {
+        unset($_SESSION['usuario']);
+        json_response(['error' => 'La cuenta no está activa.'], 403);
+    }
+
+    /* Un superadministrador nunca debe quedar clasificado como logística. */
+    if ((int)$user['es_superadmin'] === 1 && $user['rol'] !== 'admin') {
+        db()->prepare("UPDATE usuarios SET rol='admin', actualizado_en=NOW() WHERE id=?")
+            ->execute([$id]);
+        $user['rol'] = 'admin';
+    }
+
+    $_SESSION['usuario'] = [
+        'id' => (int)$user['id'],
+        'nombre' => $user['nombre'],
+        'correo' => $user['correo'],
+        'rol' => $user['rol'],
+        'es_superadmin' => (int)$user['es_superadmin']
+    ];
+
     return $_SESSION['usuario'];
 }
 

@@ -6,6 +6,7 @@ $d = body_json();
 $correo = clean_string($d['correo'] ?? '');
 $password = (string)($d['password'] ?? '');
 $rolSolicitado = clean_string($d['rol'] ?? '');
+$portal = clean_string($d['portal'] ?? '');
 
 if ($correo === '' || $password === '') json_response(['error' => 'Correo y contraseña son obligatorios.'], 422);
 if (!validate_email($correo)) json_response(['error' => 'El correo no tiene un formato válido.'], 422);
@@ -19,6 +20,7 @@ if (!$u || !password_verify($password, $u['password_hash'])) json_response(['err
 if ($u['estado'] === 'pendiente') json_response(['error' => 'Tu cuenta está pendiente de aprobación por un administrador.'], 403);
 if ($u['estado'] === 'inactivo') json_response(['error' => 'Tu cuenta está desactivada. Contacta al administrador.'], 403);
 if ($rolSolicitado !== '' && $u['rol'] !== $rolSolicitado) json_response(['error' => 'Esta cuenta no tiene el rol requerido para este acceso.'], 403);
+if ($portal === 'gestion' && !in_array($u['rol'], ['admin','logistica'], true)) json_response(['error' => 'Esta cuenta no tiene acceso al portal de administración/logística.'], 403);
 
 session_regenerate_id(true);
 $_SESSION['usuario'] = [

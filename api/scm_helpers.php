@@ -1,8 +1,12 @@
 <?php
 require_once __DIR__ . '/helpers.php';
 
+/**
+ * Acceso completo al SCM para administradores y usuarios de logística.
+ * No concede permisos sobre CRM ni panel administrativo.
+ */
 function require_scm_admin(): array {
-    return require_role('admin');
+    return require_role('admin', 'logistica');
 }
 
 function scm_folio(PDO $pdo): string {
@@ -20,19 +24,48 @@ function scm_maybe_generate_push_order(PDO $pdo, int $productoId, int $usuarioId
     $st = $pdo->prepare("SELECT id,nombre,stock_actual,stock_minimo,proveedor_id,estrategia_logistica FROM productos WHERE id=? AND estado='activo' FOR UPDATE");
     $st->execute([$productoId]);
     $p = $st->fetch();
+
     if (!$p || $p['estrategia_logistica'] !== 'PUSH') return null;
     if ((int)$p['stock_actual'] > (int)$p['stock_minimo']) return null;
+    if (empty($p['proveedor_id'])) return null;
 
-    $check = $pdo->prepare("SELECT id FROM pedidos WHERE producto_id=? AND tipo='reposición' AND estado IN ('pendiente','en_proceso') LIMIT 1");
+    /*
+     * Si ya existe un pedido PUSH pendiente/en proceso, no duplicamos la reposición.
+     * Los nuevos pedidos PUSH creados por esta versión se surten de inmediato.
+     */
+    $check = $pdo->prepare("SELECT id FROM pedidos WHERE producto_id=? AND origen='automatico_push' AND estado IN ('pendiente','en_proceso') LIMIT 1");
     $check->execute([$productoId]);
     if ($check->fetch()) return null;
 
-    // Decisión de implementación: reponer hasta 2 x stock mínimo.
-    // El documento exige generar el pedido, pero no fija la cantidad automática.
+    // Objetivo de reposición: 2 x stock mínimo.
     $objetivo = max((int)$p['stock_minimo'] * 2, 1);
     $cantidad = max($objetivo - (int)$p['stock_actual'], 1);
     $folio = scm_folio($pdo);
-    $ins = $pdo->prepare("INSERT INTO pedidos(folio,producto_id,proveedor_id,cantidad,tipo,estado,origen,notas,creado_por) VALUES(?,?,?,?, 'reposición','pendiente','automatico_push',?,?)");
-    $ins->execute([$folio,$productoId,$p['proveedor_id'],$cantidad,'Pedido automático PUSH generado al alcanzar stock mínimo.',$usuarioId]);
-    return (int)$pdo->lastInsertId();
+
+    // El pedido automático queda surtido en la misma transacción.
+    $ins = $pdo->prepare("INSERT INTO pedidos(folio,producto_id,proveedor_id,cantidad,tipo,estado,origen,estrategia_origen,notas,fecha,creado_por,actualizado_en) VALUES(?,?,?,?, 'reposición','surtido','automatico_push','PUSH',?,NOW(),?,NOW())");
+    $ins->execute([
+        $folio,
+        $productoId,
+        $p['proveedor_id'],
+        $cantidad,
+        'Pedido automático PUSH generado y surtido al alcanzar el mínimo de licencias disponibles.',
+        $usuarioId
+    ]);
+    $pedidoId = (int)$pdo->lastInsertId();
+
+    $nuevoStock = (int)$p['stock_actual'] + $cantidad;
+    $pdo->prepare("UPDATE productos SET stock_actual=?,actualizado_en=NOW() WHERE id=?")
+        ->execute([$nuevoStock,$productoId]);
+
+    $pdo->prepare("INSERT INTO movimientos_inventario(producto_id,tipo,cantidad,motivo,detalle,fecha,usuario_id,pedido_id) VALUES(?,'entrada',?,'reposición',?,NOW(),?,?)")
+        ->execute([
+            $productoId,
+            $cantidad,
+            'Entrada automática de licencias por reposición PUSH. Pedido '.$folio.' surtido automáticamente.',
+            $usuarioId,
+            $pedidoId
+        ]);
+
+    return $pedidoId;
 }

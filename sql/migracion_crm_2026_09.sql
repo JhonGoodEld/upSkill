@@ -1,9 +1,9 @@
 USE upskill_crm;
 -- Migración acumulativa para una base upskill_crm creada con versiones anteriores.
 
-ALTER TABLE usuarios MODIFY rol ENUM('admin','usuario','docente','alumno') NOT NULL;
+ALTER TABLE usuarios MODIFY rol ENUM('admin','logistica','usuario','docente','alumno') NOT NULL;
 UPDATE usuarios SET rol='docente' WHERE rol='usuario';
-ALTER TABLE usuarios MODIFY rol ENUM('admin','docente','alumno') NOT NULL;
+ALTER TABLE usuarios MODIFY rol ENUM('admin','logistica','docente','alumno') NOT NULL;
 ALTER TABLE usuarios MODIFY estado ENUM('pendiente','activo','inactivo') NOT NULL DEFAULT 'pendiente';
 ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS es_superadmin TINYINT(1) NOT NULL DEFAULT 0 AFTER rol;
 ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS especialidad VARCHAR(150) NULL AFTER estado;

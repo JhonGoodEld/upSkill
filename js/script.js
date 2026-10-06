@@ -158,24 +158,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
       limpiarError(loginForm);
 
-      // Login real del CRM mediante API REST/PHP.
+      // Login real mediante API REST/PHP. El mismo portal admite admin y logística.
       if (crmRole) {
         const apiBase = loginForm.dataset.crmApi;
-        const redirect = loginForm.dataset.crmRedirect;
         try {
+          const payload = {
+            correo: correo.value.trim(),
+            password: password.value
+          };
+          if (crmRole === 'admin_logistica') payload.portal = 'gestion';
+          else payload.rol = crmRole;
+
           const response = await fetch(`${apiBase}/login.php`, {
             method: 'POST',
             credentials: 'same-origin',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              correo: correo.value.trim(),
-              password: password.value,
-              rol: crmRole
-            })
+            body: JSON.stringify(payload)
           });
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || 'No fue posible iniciar sesión.');
-          window.location.href = redirect;
+
+          if (crmRole === 'admin_logistica') {
+            const destino = data.usuario?.rol === 'logistica'
+              ? loginForm.dataset.logisticaRedirect
+              : loginForm.dataset.adminRedirect;
+            if (!destino) throw new Error('No se configuró el destino para este tipo de usuario.');
+            window.location.href = destino;
+          } else {
+            window.location.href = loginForm.dataset.crmRedirect;
+          }
         } catch (error) {
           mostrarError(loginForm, error.message || 'Error al conectar con el servidor.');
         }

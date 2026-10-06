@@ -28,6 +28,10 @@
                     <div><h2>CRM de Administrador</h2><p>Gestiona clientes, interacciones, etapas y métricas comerciales.</p></div>
                     <a class="admin-crm-link" href="../crm.html">Abrir CRM →</a>
                 </div>
+                <div class="admin-quick-grid" style="margin-top:12px">
+                    <div><h2>SCM — Cadena de suministros</h2><p>Gestiona cursos, proveedores, licencias, movimientos, logística PUSH/PULL y pedidos.</p></div>
+                    <a class="admin-crm-link" href="../../SCM/scm.html">Abrir SCM →</a>
+                </div>
             </section>
 
             <section class="admin-section admin-priority">
@@ -60,6 +64,24 @@
                         <table id="tablaAdministradores" class="approval-table">
                             <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Tipo</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
                             <tbody><tr><td colspan="7">Cargando administradores...</td></tr></tbody>
+                        </table>
+                    </div>
+
+                    <hr class="admin-divider">
+                    <button type="button" id="toggleLogisticaForm" class="logistica-create-toggle">+ Crear usuario de logística</button>
+                    <p class="admin-help">Los usuarios de logística pueden utilizar todo el SCM, pero no pueden acceder al panel administrativo ni al CRM.</p>
+                    <form id="formLogistica" class="admin-create-form" hidden novalidate>
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="email" name="correo" placeholder="Correo electrónico" required>
+                        <input type="password" name="password" placeholder="Contraseña (mínimo 8 caracteres)" required>
+                        <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" required>
+                        <button type="submit">Guardar usuario de logística</button>
+                    </form>
+                    <div id="logisticaNotice"></div>
+                    <div class="admin-table-wrap">
+                        <table id="tablaLogistica" class="approval-table">
+                            <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+                            <tbody><tr><td colspan="7">Cargando usuarios de logística...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -419,6 +441,28 @@
             </div>
         </div>
         
+        <div id="editarLogisticaModal" class="admin-modal">
+            <div class="admin-modal-content">
+                <h2>Editar usuario de logística</h2>
+                <div id="editarLogisticaNotice"></div>
+                <form id="editarLogisticaForm" novalidate>
+                    <input type="hidden" id="editarLogisticaId">
+                    <label>Nombre</label>
+                    <input type="text" id="editarLogisticaNombre" required>
+                    <label>Correo</label>
+                    <input type="email" id="editarLogisticaCorreo" required>
+                    <label>Nueva contraseña</label>
+                    <input type="password" id="editarLogisticaPassword" placeholder="Vacía para conservar la actual">
+                    <label>Confirmar nueva contraseña</label>
+                    <input type="password" id="editarLogisticaConfirmPassword" placeholder="Vacía si no cambiarás la contraseña">
+                    <div class="admin-modal-actions">
+                        <button type="submit" class="approval-btn approve-btn">Guardar cambios</button>
+                        <button type="button" id="cancelarEditarLogistica" class="approval-btn reject-btn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div id="confirmAdminModal" class="admin-modal">
 
             <div class="admin-modal-content">

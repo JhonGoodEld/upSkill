@@ -484,3 +484,11 @@
         color: #027a48;
         border-color: #abefc6;
     }
+
+/* ===== Usuarios de logística ===== */
+.admin-divider{border:0;border-top:1px solid #d9e1ea;margin:22px 0 16px}
+.logistica-create-toggle{background:#175f7a;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer;margin-bottom:8px}
+.logistica-create-toggle:hover{filter:brightness(.94)}
+.admin-help{color:#5f6f82;font-size:13px;margin:4px 0 12px}
+#formLogistica[hidden]{display:none!important}
+#formLogistica{margin-bottom:14px}

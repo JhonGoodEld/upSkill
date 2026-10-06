@@ -2,7 +2,7 @@ const API='../../api';
 let usuario=null, clientes=[], clienteSeleccionado=null, metricasActuales=null, riesgosExpandidos=false;
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const api=async(path,options={})=>{const res=await fetch(`${API}/${path}`,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});const data=await res.json().catch(()=>({error:'Respuesta no válida del servidor.'}));if(!res.ok)throw new Error(data.error||`Error HTTP ${res.status}`);return data};
+const api=async(path,options={})=>{const res=await fetch(`${API}/${path}`,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});const data=await res.json().catch(()=>({error:'Respuesta no válida del servidor.'}));if(!res.ok){const e=new Error(data.error||`Error HTTP ${res.status}`);e.status=res.status;throw e}return data};
 function aviso(id,msg,error=false){const el=$(id);el.className=`notice${error?' error':''}`;el.textContent=msg}
 function abrir(id){$(id).classList.add('open')} function cerrar(id){$(id).classList.remove('open')}
 function initials(nombre=''){return nombre.split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'CL'}
@@ -13,7 +13,7 @@ function telefonoValido(v){return /^(?:\d{10}|\d{3} \d{3} \d{4})$/.test(v.trim()
 async function iniciar(){
  try{
   const me=await api('me.php');usuario=me.usuario;
-  if(usuario.rol!=='admin'){alert('El CRM es exclusivo para administradores.');window.location.href='Administradores/loggin.html';return}
+  if(!usuario||usuario.rol!=='admin'){window.location.replace('../pagPrin.html');return}
   $('userInfo').textContent=`${usuario.nombre} · ${usuario.rol}`;$('adminName').textContent=usuario.nombre;$('adminRole').textContent='Administrador';$('adminInitials').textContent=initials(usuario.nombre);
   await cargarClientes();await cargarMetricas();await cargarActividad();
  }catch(e){console.error('Error al cargar el CRM:',e);alert('No fue posible cargar el CRM: '+e.message);if(/Sesión|permiso|autentic/i.test(e.message))window.location.href='Administradores/loggin.html'}
@@ -52,6 +52,8 @@ function cambiarSeccion(id) { document.querySelectorAll('.section').forEach(s =>
 function globalSearch(){const q=$('globalSearch').value.trim();const active=document.querySelector('.section.active')?.id;if(active==='clientes'){$('buscarCliente').value=q;renderClientes()}else if(active==='interacciones')renderInteraccionesClientes();else if(q){cambiarSeccion('clientes');$('buscarCliente').value=q;renderClientes()}}
 const translations={es:{dashboard:'Dashboard',clients:'Clientes',interactions:'Interacciones',activity:'Mi actividad',reports:'Reportes',logout:'Cerrar sesión'},en:{dashboard:'Dashboard',clients:'Clients',interactions:'Interactions',activity:'My activity',reports:'Reports',logout:'Log out'}};
 function applyLanguage(lang){document.documentElement.dataset.language=lang;document.querySelectorAll('[data-i18n]').forEach(el=>{const v=translations[lang]?.[el.dataset.i18n];if(v)el.textContent=v});$('languageBtn').textContent=lang==='es'?'ES':'EN';localStorage.setItem('upskillLanguage',lang)}
+async function validarSesionAlVolver(){try{const me=await api('me.php');usuario=me.usuario||null;if(!usuario||usuario.rol!=='admin')window.location.replace('Administradores/loggin.html')}catch(e){if(e.status===401||e.status===403)window.location.replace('Administradores/loggin.html');else aviso('globalNotice',e.message,true)}}
+
 function toggleTheme(){document.body.classList.toggle('dark-mode');localStorage.setItem('upskillTheme',document.body.classList.contains('dark-mode')?'dark':'light');$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾'}
 
 async function cargarPerfil() {
@@ -188,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('perfilForm').onsubmit =
         guardarPerfil;
  if(localStorage.getItem('upskillTheme')==='dark')document.body.classList.add('dark-mode');applyLanguage(localStorage.getItem('upskillLanguage')||'es');$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾';
- $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=()=>applyLanguage(document.documentElement.dataset.language==='es'?'en':'es');$('backBtn').onclick=()=>history.length>1?history.back():location.href='Administradores/admin.html';$('adminPanelBtn').onclick=()=>location.href='Administradores/admin.html';$('scmBtn').onclick=()=>location.href='../SCM/scm.html';$('globalSearch').addEventListener('input',globalSearch);
+ $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=()=>applyLanguage(document.documentElement.dataset.language==='es'?'en':'es');$('backBtn').onclick=()=>location.href='Administradores/admin.html';$('adminPanelBtn').onclick=()=>location.href='Administradores/admin.html';$('scmBtn').onclick=()=>location.href='../SCM/scm.html';$('globalSearch').addEventListener('input',globalSearch);
     document
         .querySelectorAll('.crm-nav button[data-section]')
         .forEach(b => {
@@ -234,6 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
  $('clientesBody').onclick = e => { const id = e.target.dataset.id; if (!id) return; if (e.target.classList.contains('ver-cliente')) mostrarHistorial(id); if (e.target.classList.contains('editar-cliente')) mostrarDetalle(id); if (e.target.classList.contains('eliminar-cliente')) eliminarCliente(id) }; $('interaccionesClientesBody').onclick = e => { if (e.target.classList.contains('ver-cliente')) mostrarHistorial(e.target.dataset.id) }; $('riskList').onclick = e => { const el = e.target.closest('.risk-open'); if (el) mostrarDetalle(el.dataset.id) }; $('toggleRiskBtn').onclick = () => { riesgosExpandidos = !riesgosExpandidos; renderRiesgos(metricasActuales?.clientes_en_riesgo || []) };
  $('volverDetalle').onclick=$('cerrarDetalle').onclick=()=>cerrar('detalleClienteModal');$('volverHistorial').onclick=$('cerrarHistorial').onclick=()=>cerrar('historialModal');$('editarDesdeDetalle').onclick=()=>{const id=clienteSeleccionado?.id;cerrar('detalleClienteModal');if(id)abrirCliente(id)};$('cambiarEtapaDesdeDetalle').onclick=()=>{if(!clienteSeleccionado)return;$('etapaSelect').value=clienteSeleccionado.etapa_crm;abrir('etapaModal')};$('guardarEtapaBtn').onclick=()=>clienteSeleccionado&&cambiarEtapa(clienteSeleccionado.id,$('etapaSelect').value);$('cancelarEtapaBtn').onclick=()=>cerrar('etapaModal');$('nuevaInteraccionBtn').onclick=prepararInteraccion;
  $('clienteTelefono').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^0-9 ]/g,'').replace(/ {2,}/g,' ').slice(0,12)});
- $('logoutBtn').onclick=async()=>{try{await api('logout.php',{method:'POST'})}finally{location.href='Administradores/loggin.html'}};
+ $('logoutBtn').onclick=async()=>{try{await api('logout.php',{method:'POST'})}catch(e){console.error(e)}finally{window.location.replace('../pagPrin.html')}};
  iniciar();
 });
+
+window.addEventListener('pageshow',()=>validarSesionAlVolver());

@@ -46,3 +46,39 @@ El documento exige generar un pedido automático al alcanzar el stock mínimo, p
 ## Seguridad
 
 Las APIs SCM requieren sesión con rol `admin` mediante `require_role('admin')`.
+
+## Actualización escolar: cursos como productos y licencias como inventario
+
+La versión actual adapta el SCM a UpSkill Academy:
+
+- `productos` representa cursos.
+- `stock_actual` representa licencias disponibles.
+- `stock_minimo` representa el mínimo de licencias antes de considerar reposición.
+- `unidad_inventario` se establece como `Licencia`.
+- `precio_venta` conserva el precio al alumno.
+- `costo_unitario` representa el costo simulado de una licencia para la escuela.
+- Se conservan PUSH/PULL para reposición automática o manual.
+
+Para una base ya creada, importar en phpMyAdmin:
+
+`sql/migracion_scm_licencias_cursos_2026_09.sql`
+
+IMPORTANTE: esta migración reemplaza los movimientos, pedidos y productos SCM de demostración para cargar los 38 cursos del catálogo proporcionado. Haz respaldo de la base antes de ejecutarla.
+
+### Madurez SCM
+
+La sección de madurez ahora usa una barra de progreso de 0 a 100 %. El nivel se interpreta así:
+
+- 0–33: Inicial
+- 34–66: En desarrollo
+- 67–100: Optimizado
+
+El checklist no es decorativo: consulta datos reales de productos, proveedores, movimientos, estrategias PUSH/PULL y pedidos/reportes. También calcula una sugerencia automática de avance.
+
+### Reportes
+
+La sección de reportes permite alternar entre `Gráficas` y `Tablas`. Se usan los mismos datos de backend en ambas vistas.
+
+### Sesión y navegación
+
+CRM y SCM validan nuevamente la sesión al mostrarse mediante el evento `pageshow`. Después de cerrar sesión se usa `window.location.replace('../pagPrin.html')` para regresar al inicio y reducir ciclos provocados por el historial del navegador.

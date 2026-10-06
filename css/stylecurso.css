@@ -221,3 +221,10 @@ h1 {
 .legal-links a:hover {
   color: #0d57bd;
 }
+
+.catalog-status{max-width:1200px;margin:16px auto 4px;padding:10px 14px;border-radius:8px;background:#eef6ff;color:#234;box-sizing:border-box}.catalog-status.error{background:#fff1f0;color:#a61b1b}.empty-catalog{padding:24px;text-align:center;width:100%}
+
+/* Estado público de disponibilidad sincronizado con el inventario SCM */
+.catalog-availability{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.85em;font-weight:700;background:#e9f8ef;color:#167247}
+.catalog-availability.pocas-licencias{background:#fff4dc;color:#9a6500}
+.catalog-availability.no-disponible{background:#feeceb;color:#b42318}
