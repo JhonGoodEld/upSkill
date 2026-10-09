@@ -1,0 +1,9 @@
+Options -MultiViews
+RewriteEngine On
+RewriteBase /upSkillNue/api/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^clientes/([0-9]+)/?$ cliente.php?id=$1 [QSA,L]
+RewriteRule ^clientes/([0-9]+)/interacciones/?$ interacciones.php?cliente_id=$1 [QSA,L]
+RewriteRule ^clientes/([0-9]+)/etapa/?$ etapa.php [QSA,L]

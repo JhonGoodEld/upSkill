@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/flotante.css">
 
     </head>
-    <body>
+    <body data-required-role="alumno" data-api-base="../api" data-login-url="logalumno.html">
     <!--barra de la navegacion pa-->
     <header class="navbar">
     <h1>Upskill Academy</h1>
@@ -187,5 +187,6 @@ document.getElementById("donacionSticker").addEventListener("click", () => {
 </script>
     <script src="../js/script.js"></script>
     <script src="../js/alumno.js"></script>
-    </body>
+    <script src="../js/role-guard.js"></script>
+</body>
     </html>

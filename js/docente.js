@@ -3,12 +3,13 @@
     // 🎓 Panel Docente - Lógica principal
     // ===============================
 
-    fetch("../data/productos.json")
+    fetch("../../../database/productos.json")
         .then((res) => res.json())
         .then((data) => {
         // === CURSOS ADMINISTRADOS ===
         const cursosContainer = document.getElementById("cursosDocente");
         const cursosAleatorios = obtenerCursosAleatorios(data, 2);
+        if (cursosAleatorios.length < 2) throw new Error("No hay suficientes cursos disponibles para el panel docente");
 
         cursosAleatorios.forEach((curso) => {
             const card = document.createElement("div");
@@ -85,11 +86,18 @@
             mensajesContainer?.appendChild(msg);
         });
         })
-        .catch((err) => console.error("Error al cargar productos:", err));
+        .catch((err) => {
+        console.error("Error al cargar productos:", err);
+        const ids = ["cursosDocente", "tareasPorRevisar", "asignaciones", "mensajesDocente"];
+        ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = "<p>No fue posible cargar esta sección en este momento.</p>";
+        });
+    });
 
     // === Funciones auxiliares ===
     function obtenerCursosAleatorios(lista, cantidad) {
-        const copia = [...lista];
+        const copia = Array.isArray(lista) ? [...lista] : [];
         const seleccionados = [];
         for (let i = 0; i < cantidad; i++) {
         const index = Math.floor(Math.random() * copia.length);

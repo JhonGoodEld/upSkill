@@ -498,3 +498,27 @@ width: 250px;
 .legal-links a:hover {
   color: #0d57bd;
 }
+
+
+/* ===== VALIDACIÓN DE FORMULARIOS ===== */
+.validation-message {
+  display: none;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 0 0 4px;
+  border-left: 4px solid #c0392b;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #8a1c1c;
+  font-size: 0.92rem;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.input-error {
+  border-color: #c0392b !important;
+  outline: 2px solid rgba(192, 57, 43, 0.15) !important;
+}
+
+/* ===== Controles compartidos añadidos para vistas CRM/registro ===== */
+.platform-page-tools{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#f7f9fc;border-bottom:1px solid #dbe4ef;position:relative;z-index:5}.back-button,.tool-button{border:1px solid #c9d5e3;background:#fff;color:#174f8f;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}.back-button:hover,.tool-button:hover{background:#edf5ff}.standalone-back{margin:12px 16px}.account-help{font-size:14px;line-height:1.5}.account-help a{color:#1356a2;font-weight:700}.dark-mode{background:#101827!important;color:#eef4ff!important}.dark-mode .platform-page-tools,.dark-mode .navbar,.dark-mode .loggin-section,.dark-mode .form-section,.dark-mode .footer{background:#182235!important;color:#eef4ff!important}.dark-mode input,.dark-mode select,.dark-mode textarea{background:#101827!important;color:#eef4ff!important;border-color:#34445c!important}.dark-mode .back-button,.dark-mode .tool-button{background:#182235;color:#dceaff;border-color:#34445c}
