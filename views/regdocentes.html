@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     </head>
     <body>
+<button class="back-button standalone-back" type="button" onclick="history.length>1?history.back():location.href='pagPrin.html'">← Regresar</button>
     <!-- NAVBAR -->
     <header class="navbar">
         <h1>Upskill Academy</h1>
@@ -17,13 +18,16 @@
     <!-- FORMULARIO DE REGISTRO -->
     <section class="form-section">
         <h2>Postulate para formar parte de nuestro equipo de instructores</h2>
-        <form class="register-form">
-        <input type="text" placeholder="Nombre completo" required>
-        <input type="email" placeholder="Correo electrónico" required>
-        <input type="password" not required placeholder="Contraseña"  required>
-        <input type="password" placeholder="Confirmar contraseña" required>
-        <input type="rol" placeholder="Area de expertis" required>
-        <button type="submit" class="form-btn" formnovalidate>Suscribirme</button>
+        <form class="register-form" data-registration-role="docente" data-registration-api="../api">
+        <input type="text" name="nombre" placeholder="Nombre completo" autocomplete="name" required>
+        <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="email" required>
+      <input type="tel" name="telefono" placeholder="Teléfono (4492255316 o 449 225 5316)" autocomplete="tel" inputmode="numeric" required>
+      <input type="text" name="empresa" placeholder="Empresa o institución (opcional)" autocomplete="organization">
+        <input type="password" name="password" placeholder="Contraseña" autocomplete="new-password" required>
+        <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" autocomplete="new-password" required>
+        <input type="text" name="especialidad" placeholder="Área de expertise" autocomplete="organization-title" required>
+        <input type="text" name="curso_solicitado" placeholder="Curso de interés (opcional)" autocomplete="off">
+        <button type="submit" class="form-btn">Suscribirme</button>
 
 
         </form>
@@ -34,7 +38,7 @@
         <div class="modal-content">
         <h2>🎉 ¡FELICIDADES!</h2>
         <p>Acabas de postularte como instructor de <strong>Upskill Academy</strong>.</p>
-        <p>En un par de dias uno de nuestros colaboradores se pondra en contacto contigo <strong>vigila el buzon de tu Correo</strong></p>
+        <p><span class="registration-status">Tu solicitud quedará pendiente hasta que un administrador la revise. Vigila el buzón de tu correo.</span></p>
         <div class="promo-code">Nos veremos pronto!</div>
         <a href="../views/pagPrin.html" id="closeModalBtn" class="form-btn">Cerrar</a>
 

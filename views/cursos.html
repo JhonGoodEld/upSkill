@@ -34,24 +34,16 @@
         <a href="#" onclick="toggleLanguage()">Idioma</a>
       </div>
     </div>
-
-
-        <!-- Usuarios -->
-    <div class="menu-container">
-      <button class="menu-btn">Loggin <span class="icon">▼</span></button>
-      <div class="menu-content">
-        <a href="../views/logalumno.html">Alumno</a>
-        <a href="../views/logdocentes.html">Docentes</a>
-        <a href="../views/loggin.html">Administrador</a>
-        
-      </div>
-    </div>
+    <!-- Usuarios: mismo comportamiento que pagPrin.html -->
+    <a href="logalumno.html" class="nav-link">
+    Loggin</a>
 
   </nav>
 </header>
 
 <h1>Catálogo de Cursos</h1>
 
+  <div id="catalogStatus" class="catalog-status" aria-live="polite">Cargando cursos...</div>
   <div class="cards-container" id="cardsContainer">
     <!-- Aquí se insertarán las tarjetas dinámicamente -->
   </div>
@@ -178,8 +170,6 @@
     </div>
   </div>
 
-    <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-  </footer>
   <script>
 document.getElementById("donacionSticker").addEventListener("click", () => {
     window.location.href = "micropagos.html";

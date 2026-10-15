@@ -1,34 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ========== Cargar cursos al azar ==========
-  fetch("../data/productos.json")
+  fetch("../database/productos.json")
     .then((res) => res.json())
     .then((data) => {
       const cursosContainer = document.querySelector("#cursosContainer");
-      const cursosAleatorios = data.sort(() => 0.5 - Math.random()).slice(0, 4);
+      if (!cursosContainer) throw new Error("No se encontró #cursosContainer");
+      const cursosAleatorios = [...data].sort(() => 0.5 - Math.random()).slice(0, 4);
 
       cursosAleatorios.forEach((curso) => {
         const card = document.createElement("div");
         card.classList.add("curso-card");
+        const progreso = Math.floor(Math.random() * 101);
         card.innerHTML = `
           <img src="${curso.imagen}" alt="${curso.nombre}">
           <h3>${curso.nombre}</h3>
           <p><strong>Duración:</strong> ${curso.duracion}</p>
           <p><strong>Precio:</strong> $${curso.precio} MXN</p>
           <div class="progreso-container">
-            <div class="progreso-barra" style="width: ${Math.floor(Math.random() * 100)}%;"></div>
+            <div class="progreso-barra" style="width: ${progreso}%;"></div>
           </div>
-          <p class="porcentaje">${Math.floor(Math.random() * 100)}% completado</p>
+          <p class="porcentaje">${progreso}% completado</p>
         `;
         cursosContainer.appendChild(card);
       });
 
-      generarTareas(cursosAleatorios);
+      if (cursosAleatorios.length === 0) {
+        cursosContainer.innerHTML = "<p>No hay cursos disponibles para mostrar.</p>";
+      } else {
+        generarTareas(cursosAleatorios);
+      }
     })
-    .catch((err) => console.error("Error al cargar los cursos:", err));
+    .catch((err) => {
+      console.error("Error al cargar los cursos:", err);
+      const cont = document.querySelector("#cursosContainer");
+      if (cont) cont.innerHTML = "<p>No fue posible cargar tus cursos en este momento.</p>";
+      const tareas = document.querySelector("#listaTareas");
+      if (tareas) tareas.innerHTML = '<li class="tarea">No fue posible cargar las tareas.</li>';
+    });
 
   // ========== Tareas Pendientes ==========
   function generarTareas(cursos) {
     const listaTareas = document.querySelector("#listaTareas");
+    if (!listaTareas || !cursos.length) return;
     const estados = ["pendiente", "entregada", "vencida"];
     const ejemplos = [
       "Investigación sobre fundamentos",
@@ -74,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const mensajesContainer = document.querySelector("#mensajesContainer");
+  if (!mensajesContainer) return;
   mensajes.forEach((msg) => {
     const div = document.createElement("div");
     div.classList.add("mensaje");
