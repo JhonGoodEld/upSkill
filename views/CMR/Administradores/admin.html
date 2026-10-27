@@ -32,6 +32,10 @@
                     <div><h2>SCM — Cadena de suministros</h2><p>Gestiona cursos, proveedores, licencias, movimientos, logística PUSH/PULL y pedidos.</p></div>
                     <a class="admin-crm-link" href="../../SCM/scm.html">Abrir SCM →</a>
                 </div>
+                <div class="admin-quick-grid" style="margin-top:12px">
+                    <div><h2>ERP — Recursos empresariales</h2><p>Integra clientes del CRM, cursos e inventario del SCM y órdenes de clientes.</p></div>
+                    <a class="admin-crm-link" href="../../ERP/erp.html">Abrir ERP →</a>
+                </div>
             </section>
 
             <section class="admin-section admin-priority">
@@ -82,6 +86,24 @@
                         <table id="tablaLogistica" class="approval-table">
                             <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
                             <tbody><tr><td colspan="7">Cargando usuarios de logística...</td></tr></tbody>
+                        </table>
+                    </div>
+
+                    <hr class="admin-divider">
+                    <button type="button" id="toggleVentasForm" class="logistica-create-toggle">+ Crear usuario de ventas</button>
+                    <p class="admin-help">Los usuarios de ventas pueden utilizar el ERP y únicamente los datos de clientes, cursos e inventario necesarios para procesar órdenes. No pueden entrar al CRM, SCM ni al panel administrativo.</p>
+                    <form id="formVentas" class="admin-create-form" hidden novalidate>
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="email" name="correo" placeholder="Correo electrónico" required>
+                        <input type="password" name="password" placeholder="Contraseña (mínimo 8 caracteres)" required>
+                        <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" required>
+                        <button type="submit">Guardar usuario de ventas</button>
+                    </form>
+                    <div id="ventasNotice"></div>
+                    <div class="admin-table-wrap">
+                        <table id="tablaVentas" class="approval-table">
+                            <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+                            <tbody><tr><td colspan="7">Cargando usuarios de ventas...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -499,6 +521,24 @@
         <script src="../../../js/admin-backend.js"></script>
         <script src="../../../js/script.js"></script>
         <script src="../../../js/admin.js"></script>
-    </body>
+    
+<div id="editarVentasModal" class="admin-modal">
+  <div class="admin-modal-content">
+    <h2>Editar usuario de ventas</h2>
+    <div id="editarVentasNotice"></div>
+    <form id="editarVentasForm" novalidate>
+      <input type="hidden" id="editarVentasId">
+      <label>Nombre</label><input type="text" id="editarVentasNombre" required>
+      <label>Correo</label><input type="email" id="editarVentasCorreo" required>
+      <label>Nueva contraseña</label><input type="password" id="editarVentasPassword" placeholder="Déjala vacía para conservar la actual">
+      <label>Confirmar nueva contraseña</label><input type="password" id="editarVentasConfirmPassword">
+      <div class="admin-modal-actions">
+        <button type="submit" class="approval-btn approve-btn">Guardar cambios</button>
+        <button type="button" id="cancelarEditarVentas" class="approval-btn reject-btn">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
     </html>
 

@@ -20,7 +20,7 @@ if (!$u || !password_verify($password, $u['password_hash'])) json_response(['err
 if ($u['estado'] === 'pendiente') json_response(['error' => 'Tu cuenta está pendiente de aprobación por un administrador.'], 403);
 if ($u['estado'] === 'inactivo') json_response(['error' => 'Tu cuenta está desactivada. Contacta al administrador.'], 403);
 if ($rolSolicitado !== '' && $u['rol'] !== $rolSolicitado) json_response(['error' => 'Esta cuenta no tiene el rol requerido para este acceso.'], 403);
-if ($portal === 'gestion' && !in_array($u['rol'], ['admin','logistica'], true)) json_response(['error' => 'Esta cuenta no tiene acceso al portal de administración/logística.'], 403);
+if ($portal === 'gestion' && !in_array($u['rol'], ['admin','logistica','ventas'], true)) json_response(['error' => 'Esta cuenta no tiene acceso al portal de gestión.'], 403);
 
 session_regenerate_id(true);
 $_SESSION['usuario'] = [

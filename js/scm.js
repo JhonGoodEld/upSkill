@@ -22,7 +22,7 @@ async function iniciar(){
     if(!usuario||!['admin','logistica'].includes(usuario.rol)){window.location.replace('../pagPrin.html');return}
     const esLog=usuario.rol==='logistica';
     $('userInfo').textContent=`${usuario.nombre} · ${esLog?'logística':'administrador'}`;$('adminName').textContent=usuario.nombre;$('adminInitials').textContent=initials(usuario.nombre);$('adminRole').textContent=esLog?'Logística':'Admin';$('scmRoleBrand').textContent=esLog?'SCM · Logística':'SCM · Administrador';
-    if(esLog){$('crmBtn').hidden=true;$('adminPanelBtn').hidden=true}
+    if(esLog){$('crmBtn').hidden=true;$('erpBtn').hidden=true;$('adminPanelBtn').hidden=true}
     await Promise.all([cargarProveedores(),cargarProductos()]);
     await Promise.all([cargarInventario(),cargarMovimientos(),cargarPedidos(),cargarReportes(),cargarEstadoScm()]);
   }catch(e){
@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(localStorage.getItem('upskillTheme')==='dark')document.body.classList.add('dark-mode');document.documentElement.dataset.language=localStorage.getItem('upskillLanguage')||'es';$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾';$('languageBtn').textContent=document.documentElement.dataset.language==='es'?'ES':'EN';
   document.querySelectorAll('.scm-nav button[data-section]').forEach(b=>b.onclick=()=>cambiarSeccion(b.dataset.section));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>cambiarSeccion(b.dataset.go));document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>cerrar(b.dataset.close));document.querySelectorAll('.report-mode').forEach(b=>b.onclick=()=>setReportMode(b.dataset.reportMode));document.querySelectorAll('.strategy-mode').forEach(b=>b.onclick=()=>setStrategyMode(b.dataset.strategyMode));
   $('crmBtn').onclick=()=>irSegunRol('../CMR/crm.html');
+  $('erpBtn').onclick=()=>irSegunRol('../ERP/erp.html');
   $('adminPanelBtn').onclick=()=>irSegunRol('../CMR/Administradores/admin.html');
   $('backBtn').onclick=()=>irSegunRol('../CMR/Administradores/admin.html','../pagPrin.html');
   $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=toggleLanguage;$('globalSearch').oninput=globalSearch;$('buscarProducto').oninput=renderProductos;$('filtroCategoria').onchange=renderProductos;$('buscarProveedor').oninput=renderProveedores;$('buscarInventario').oninput=renderInventario;$('filtroMovimientoTipo').onchange=cargarMovimientos;$('filtroMovimientoProducto').onchange=cargarMovimientos;$('filtroPedidoEstado').onchange=cargarPedidos;$('filtroPedidoTipo').onchange=cargarPedidos;

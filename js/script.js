@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             correo: correo.value.trim(),
             password: password.value
           };
-          if (crmRole === 'admin_logistica') payload.portal = 'gestion';
+          if (crmRole === 'admin_logistica' || crmRole === 'admin_logistica_ventas') payload.portal = 'gestion';
           else payload.rol = crmRole;
 
           const response = await fetch(`${apiBase}/login.php`, {
@@ -178,10 +178,13 @@ document.addEventListener('DOMContentLoaded', () => {
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || 'No fue posible iniciar sesión.');
 
-          if (crmRole === 'admin_logistica') {
-            const destino = data.usuario?.rol === 'logistica'
+          if (crmRole === 'admin_logistica' || crmRole === 'admin_logistica_ventas') {
+            const rol = data.usuario?.rol;
+            const destino = rol === 'logistica'
               ? loginForm.dataset.logisticaRedirect
-              : loginForm.dataset.adminRedirect;
+              : rol === 'ventas'
+                ? loginForm.dataset.ventasRedirect
+                : loginForm.dataset.adminRedirect;
             if (!destino) throw new Error('No se configuró el destino para este tipo de usuario.');
             window.location.href = destino;
           } else {

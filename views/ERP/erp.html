@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERP — Upskill Academy</title>
+  <link rel="stylesheet" href="../../css/erp.css">
+</head>
+<body>
+<div id="erpToast" class="erp-toast" role="status" aria-live="polite"></div>
+<div class="erp-layout">
+  <aside class="erp-sidebar">
+    <div class="erp-brand">Upskill Academy<small>ERP</small></div>
+    <nav class="erp-nav">
+      <button class="active" data-section="inicio">⌂ Inicio</button>
+      <button data-section="clientes">👥 Clientes (CRM)</button>
+      <button data-section="productos">▣ Cursos (SCM)</button>
+      <button data-section="inventario">◇ Inventario (SCM)</button>
+      <button data-section="ordenes">▤ Órdenes</button>
+      <button data-section="reportes">▥ Reportes</button>
+      <button data-section="nivel">◈ Nivel ERP</button>
+      <button id="crmBtn">CRM</button>
+      <button id="scmBtn">SCM</button>
+      <button id="adminBtn">⚙ Panel administrador</button>
+      <button id="logoutBtn">↪ Cerrar sesión</button>
+    </nav>
+  </aside>
+
+  <main class="erp-main">
+    <header class="erp-topbar">
+      <button class="icon-btn" id="backBtn">←</button>
+      <div><h1 id="pageTitle">Dashboard ERP</h1><small id="userInfo">Cargando sesión...</small></div>
+      <div class="erp-user"><span id="userName">Usuario</span><b id="userRole">ERP</b></div>
+    </header>
+
+    <section id="inicio" class="section active">
+      <div class="kpi-grid">
+        <article><span>Clientes activos</span><strong id="kpiClientes">0</strong></article>
+        <article><span>Órdenes</span><strong id="kpiOrdenes">0</strong></article>
+        <article><span>Ventas totales</span><strong id="kpiVentas">$0</strong></article>
+        <article><span>Productos vendidos</span><strong id="kpiVendidos">0</strong></article>
+        <article><span>Inventario disponible</span><strong id="kpiInventario">0</strong></article>
+      </div>
+      <div class="grid-2">
+        <div class="panel"><h2>Ventas recientes</h2><div id="homeVentasChart" class="bars"></div></div>
+        <div class="panel"><h2>Productos más vendidos</h2><div id="homeTopChart" class="bars"></div></div>
+      </div>
+    </section>
+
+    <section id="clientes" class="section">
+      <div class="toolbar"><input id="buscarCliente" placeholder="Buscar cliente..."><button class="btn primary" id="nuevoClienteBtn">+ Nuevo cliente</button></div>
+      <div class="panel"><p class="muted">Datos integrados directamente desde CRM. Ventas puede consultar clientes activos y dar de alta uno nuevo, sin acceso al CRM completo.</p><div class="table-wrap"><table><thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Empresa</th><th>Etapa CRM</th></tr></thead><tbody id="clientesBody"></tbody></table></div></div>
+    </section>
+
+    <section id="productos" class="section">
+      <div class="toolbar"><input id="buscarProducto" placeholder="Buscar curso..."></div>
+      <div class="panel"><p class="muted">Consulta limitada de cursos del SCM para ventas.</p><div class="table-wrap"><table><thead><tr><th>Curso</th><th>Categoría</th><th>Precio</th><th>Licencias</th><th>Proveedor</th><th>Estrategia</th></tr></thead><tbody id="productosBody"></tbody></table></div></div>
+    </section>
+
+    <section id="inventario" class="section">
+      <div class="panel"><h2>Inventario disponible</h2><div class="table-wrap"><table><thead><tr><th>Curso</th><th>Disponibles</th><th>Mínimo</th><th>Estado</th></tr></thead><tbody id="inventarioBody"></tbody></table></div></div>
+    </section>
+
+    <section id="ordenes" class="section">
+      <div class="toolbar"><input id="buscarOrden" placeholder="Buscar folio o cliente..."><select id="filtroOrdenEstado"><option value="">Todos los estados</option><option>pendiente</option><option>procesando</option><option>procesada</option><option>cancelada</option></select><button class="btn primary" id="nuevaOrdenBtn">+ Nueva orden</button></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Responsable</th><th>Acciones</th></tr></thead><tbody id="ordenesBody"></tbody></table></div></div>
+    </section>
+
+    <section id="reportes" class="section">
+      <div class="report-head"><div><h2>Reportes ERP</h2><p class="muted">Indicadores integrados de CRM + SCM + ERP.</p></div><div><button class="btn primary report-mode active" data-mode="table">Tablas</button><button class="btn secondary report-mode" data-mode="chart">Gráficas</button></div></div>
+      <div id="reportTable" class="report-view active">
+        <div class="grid-2"><div class="panel"><h3>Productos más vendidos</h3><table><thead><tr><th>Curso</th><th>Unidades</th></tr></thead><tbody id="reporteTopBody"></tbody></table></div><div class="panel"><h3>Órdenes por estado</h3><table><thead><tr><th>Estado</th><th>Total</th></tr></thead><tbody id="reporteEstadosBody"></tbody></table></div></div>
+        <div class="panel"><h3>Ventas por mes</h3><table><thead><tr><th>Mes</th><th>Órdenes</th><th>Ventas</th></tr></thead><tbody id="reporteMesBody"></tbody></table></div>
+      </div>
+      <div id="reportChart" class="report-view">
+        <div class="grid-3"><div class="panel"><h3>Productos vendidos</h3><div id="topChart" class="bars"></div></div><div class="panel"><h3>Ventas mensuales</h3><div id="salesChart" class="columns"></div></div><div class="panel"><h3>Estados de orden</h3><div id="stateDonut" class="donut-wrap"></div></div></div>
+      </div>
+    </section>
+
+    <section id="nivel" class="section">
+      <div class="panel maturity">
+        <div class="maturity-head"><div><h2>Nivel de implementación ERP</h2><p class="muted">Registro manual de avance para exposición y revisión.</p></div><button class="btn primary" id="guardarNivelBtn">Guardar progreso</button></div>
+        <div class="current-level">Nivel actual: <strong id="nivelLabel">Básico</strong> <span id="nivelPercent">0%</span></div>
+        <input id="nivelRange" type="range" min="0" max="100" value="0">
+        <div class="level-grid"><article data-level="Básico"><b>Básico</b><span>Módulos base.</span></article><article data-level="Integrado"><b>Integrado</b><span>CRM, SCM y ERP conectados.</span></article><article data-level="Automatizado"><b>Automatizado</b><span>Operaciones y movimientos automáticos.</span></article><article data-level="Optimizado"><b>Optimizado</b><span>Procesos maduros y métricas completas.</span></article></div>
+        <h3>Checklist de avance</h3>
+        <div class="checklist" id="erpChecklist">
+          <label><input type="checkbox" value="clientes"> Clientes integrados (CRM)</label>
+          <label><input type="checkbox" value="productos"> Productos e inventario (SCM)</label>
+          <label><input type="checkbox" value="ordenes"> Órdenes de clientes funcionando</label>
+          <label><input type="checkbox" value="movimientos"> Movimientos de inventario automáticos</label>
+          <label><input type="checkbox" value="reportes"> Reportes empresariales completos</label>
+          <label><input type="checkbox" value="optimizados"> Procesos optimizados</label>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="clienteModal"><div class="modal-card"><button class="modal-x" data-close="clienteModal">×</button><h2>Nuevo cliente</h2><div id="clienteNotice" class="notice"></div><form id="clienteForm"><label>Nombre<input id="clienteNombre" required></label><label>Correo<input id="clienteCorreo" type="email" required></label><label>Teléfono<input id="clienteTelefono" required placeholder="4492255316"></label><label>Empresa<input id="clienteEmpresa" required></label><button class="btn primary" type="submit">Guardar cliente</button></form></div></div>
+
+<div class="modal wide" id="ordenModal"><div class="modal-card"><button class="modal-x" data-close="ordenModal">×</button><h2>Nueva orden</h2><div class="steps"><span class="active" data-step-dot="1">1 Cliente</span><span data-step-dot="2">2 Productos</span><span data-step-dot="3">3 Confirmar</span></div><div id="ordenNotice" class="notice"></div>
+  <div class="order-step active" data-step="1"><div class="toolbar"><input id="ordenBuscarCliente" placeholder="Buscar cliente..."><button class="btn secondary" id="quickNewClientBtn" type="button">+ Nuevo cliente (CRM)</button></div><div id="ordenClientes" class="selection-list"></div><button class="btn primary" id="step1Next" type="button">Siguiente</button></div>
+  <div class="order-step" data-step="2"><input id="ordenBuscarProducto" placeholder="Buscar curso..."><div id="ordenProductos" class="selection-list products"></div><div class="order-actions"><button class="btn secondary" data-back-step="1" type="button">Anterior</button><button class="btn primary" id="step2Next" type="button">Siguiente</button></div></div>
+  <div class="order-step" data-step="3"><div id="ordenResumen"></div><div class="order-actions"><button class="btn secondary" data-back-step="2" type="button">Anterior</button><button class="btn primary" id="confirmarOrdenBtn" type="button">Confirmar y procesar</button></div></div>
+  <div class="order-step" data-step="4"><h3>Procesando orden...</h3><div class="process-bar"><span id="processBar"></span></div><ul class="process-list"><li id="procCreate">Crear orden</li><li id="procStock">Validar y reducir stock</li><li id="procMove">Registrar movimientos SCM</li><li id="procHistory">Guardar historial</li><li id="procDone">Finalizar operación</li></ul></div>
+  <div class="order-step" data-step="5"><div class="success-icon">✓</div><h2>¡Orden registrada con éxito!</h2><div id="ordenSuccess"></div><div class="order-actions"><button class="btn primary" id="verOrdenProcesadaBtn">Ver orden</button><button class="btn secondary" id="irOrdenesBtn">Ir a órdenes</button></div></div>
+</div></div>
+
+<div class="modal wide" id="detalleOrdenModal"><div class="modal-card"><button class="modal-x" data-close="detalleOrdenModal">×</button><h2 id="detalleOrdenTitle">Detalle de orden</h2><div id="detalleOrdenContent"></div></div></div>
+
+<script src="../../js/erp.js"></script>
+</body>
+</html>

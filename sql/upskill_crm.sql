@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
  nombre VARCHAR(120) NOT NULL,
  correo VARCHAR(150) NOT NULL UNIQUE,
  password_hash VARCHAR(255) NOT NULL,
- rol ENUM('admin','logistica','docente','alumno') NOT NULL,
+ rol ENUM('admin','logistica','ventas','docente','alumno') NOT NULL,
  es_superadmin TINYINT(1) NOT NULL DEFAULT 0,
  estado ENUM('pendiente','activo','inactivo') NOT NULL DEFAULT 'pendiente',
  especialidad VARCHAR(150) NULL,

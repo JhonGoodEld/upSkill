@@ -1,0 +1,5 @@
+<?php
+require_once __DIR__ . '/erp_helpers.php';$user=require_erp_user();$pdo=db();$method=$_SERVER['REQUEST_METHOD'];
+if($method==='GET'){$st=$pdo->query("SELECT id,nivel,porcentaje,checklist_json,actualizado_en FROM erp_configuracion WHERE id=1");$r=$st->fetch();$r['checklist']=$r&&$r['checklist_json']?json_decode($r['checklist_json'],true):[];unset($r['checklist_json']);json_response(['estado'=>$r]);}
+if($method==='PUT'){$d=body_json();$p=max(0,min(100,(int)($d['porcentaje']??0)));$nivel=$p<25?'Básico':($p<50?'Integrado':($p<75?'Automatizado':'Optimizado'));$checks=$d['checklist']??[];if(!is_array($checks))$checks=[];$json=json_encode(array_values(array_unique(array_map('strval',$checks))),JSON_UNESCAPED_UNICODE);$pdo->prepare("UPDATE erp_configuracion SET nivel=?,porcentaje=?,checklist_json=?,actualizado_por=?,actualizado_en=NOW() WHERE id=1")->execute([$nivel,$p,$json,$user['id']]);json_response(['ok'=>true,'nivel'=>$nivel,'porcentaje'=>$p,'mensaje'=>'Nivel de implementación ERP guardado.']);}
+json_response(['error'=>'Método no permitido.'],405);

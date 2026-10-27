@@ -939,7 +939,7 @@ USE upskill_crm;
 
 -- 1) Nuevo rol restringido al SCM.
 ALTER TABLE usuarios
-  MODIFY rol ENUM('admin','logistica','docente','alumno') NOT NULL;
+  MODIFY rol ENUM('admin','logistica','ventas','docente','alumno') NOT NULL;
 
 ALTER TABLE usuarios
   ADD COLUMN IF NOT EXISTS actualizado_en DATETIME NULL AFTER fecha_registro;

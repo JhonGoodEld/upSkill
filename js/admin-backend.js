@@ -122,6 +122,8 @@
     const adminForm = document.getElementById('formAdministrador');
     const logisticsTable = document.querySelector('#tablaLogistica tbody');
     const logisticsForm = document.getElementById('formLogistica');
+    const ventasTable = document.querySelector('#tablaVentas tbody');
+    const ventasForm = document.getElementById('formVentas');
     if (!section || !adminTable || !adminForm) return;
 
     try {
@@ -166,6 +168,21 @@
         </tr>`).join('') : '<tr><td colspan="7">No hay usuarios de logística registrados.</td></tr>';
     }
 
+    async function loadVentas() {
+      if (!ventasTable) return;
+      const data = await request('usuarios_ventas.php');
+      const rows = Array.isArray(data.usuarios_ventas) ? data.usuarios_ventas : [];
+      ventasTable.innerHTML = rows.length ? rows.map(u => `
+        <tr>
+          <td>${esc(u.id)}</td><td>${esc(u.nombre)}</td><td>${esc(u.correo)}</td><td>Ventas</td>
+          <td>${esc(u.estado)}</td><td>${esc(u.fecha_registro)}</td>
+          <td>
+            <button type="button" class="approval-btn edit-ventas-btn" data-id="${esc(u.id)}" data-nombre="${esc(u.nombre)}" data-correo="${esc(u.correo)}">Editar</button>
+            <button type="button" class="approval-btn ${u.estado === 'activo' ? 'reject-btn' : 'approve-btn'} ventas-state-btn" data-id="${esc(u.id)}" data-state="${u.estado === 'activo' ? 'inactivo' : 'activo'}">${u.estado === 'activo' ? 'Desactivar' : 'Activar'}</button>
+          </td>
+        </tr>`).join('') : '<tr><td colspan="7">No hay usuarios de ventas registrados.</td></tr>';
+    }
+
     adminForm.addEventListener('submit', async e => {
       e.preventDefault();
       const fd = new FormData(adminForm);
@@ -194,6 +211,16 @@
         const d=await request('usuarios_logistica.php',{method:'POST',body:JSON.stringify({nombre,correo,password})});
         logisticsForm.reset(); logisticsForm.hidden=true; showNotice('logisticaNotice',d.mensaje||'Usuario de logística creado correctamente.'); await loadLogistics();
       }catch(error){showNotice('logisticaNotice',error.message,true);}
+    });
+
+    const toggleVentas = document.getElementById('toggleVentasForm');
+    if (toggleVentas && ventasForm) toggleVentas.onclick = () => { ventasForm.hidden = !ventasForm.hidden; if (!ventasForm.hidden) ventasForm.querySelector('input')?.focus(); };
+    if (ventasForm) ventasForm.addEventListener('submit', async e => {
+      e.preventDefault(); const fd = new FormData(ventasForm);
+      const nombre=String(fd.get('nombre')||'').trim(), correo=String(fd.get('correo')||'').trim(), password=String(fd.get('password')||''), confirmPassword=String(fd.get('confirmPassword')||'');
+      if(!nombre||!correo||!password||!confirmPassword) return showNotice('ventasNotice','Completa todos los campos.',true);
+      if(password!==confirmPassword) return showNotice('ventasNotice','Las contraseñas no coinciden.',true);
+      try{const d=await request('usuarios_ventas.php',{method:'POST',body:JSON.stringify({nombre,correo,password})});ventasForm.reset();ventasForm.hidden=true;showNotice('ventasNotice',d.mensaje||'Usuario de ventas creado correctamente.');await loadVentas();}catch(error){showNotice('ventasNotice',error.message,true);}
     });
 
     const editarAdminModal=document.getElementById('editarAdminModal'), editarAdminForm=document.getElementById('editarAdminForm');
@@ -240,7 +267,29 @@
       try{const payload={id,nombre,correo};if(password)payload.password=password;const d=await request('usuarios_logistica.php',{method:'PUT',body:JSON.stringify(payload)});editarLogModal?.classList.remove('open');showNotice('logisticaNotice',d.mensaje||'Usuario de logística actualizado.');await loadLogistics();}catch(error){showNotice('editarLogisticaNotice',error.message,true);}
     });
 
-    await Promise.all([loadAdmins(), loadLogistics()]);
+    const editarVentasModal=document.getElementById('editarVentasModal'), editarVentasForm=document.getElementById('editarVentasForm');
+    ventasTable?.closest('table')?.addEventListener('click', async e=>{
+      const edit=e.target.closest('.edit-ventas-btn');
+      if(edit){
+        document.getElementById('editarVentasId').value=edit.dataset.id;
+        document.getElementById('editarVentasNombre').value=edit.dataset.nombre;
+        document.getElementById('editarVentasCorreo').value=edit.dataset.correo;
+        document.getElementById('editarVentasPassword').value='';document.getElementById('editarVentasConfirmPassword').value='';
+        editarVentasModal?.classList.add('open');return;
+      }
+      const btn=e.target.closest('.ventas-state-btn');if(!btn)return;
+      const ok=await confirmacionVisual(btn.dataset.state==='activo'?'Activar usuario de ventas':'Desactivar usuario de ventas',btn.dataset.state==='activo'?'¿Deseas permitir nuevamente el acceso al ERP?':'¿Deseas desactivar esta cuenta? Ya no podrá iniciar sesión en el ERP.');
+      if(!ok)return;
+      try{const d=await request('usuarios_ventas.php',{method:'PUT',body:JSON.stringify({id:Number(btn.dataset.id),estado:btn.dataset.state})});showNotice('ventasNotice',d.mensaje||'Estado actualizado.');await loadVentas();}catch(error){showNotice('ventasNotice',error.message,true);}
+    });
+    document.getElementById('cancelarEditarVentas')?.addEventListener('click',()=>editarVentasModal?.classList.remove('open'));
+    editarVentasForm?.addEventListener('submit',async e=>{
+      e.preventDefault();const id=Number(document.getElementById('editarVentasId').value),nombre=document.getElementById('editarVentasNombre').value.trim(),correo=document.getElementById('editarVentasCorreo').value.trim(),password=document.getElementById('editarVentasPassword').value,confirmPassword=document.getElementById('editarVentasConfirmPassword').value;
+      if(!nombre||!correo)return showNotice('editarVentasNotice','Nombre y correo son obligatorios.',true);if(password!==confirmPassword)return showNotice('editarVentasNotice','Las contraseñas no coinciden.',true);
+      try{const payload={id,nombre,correo};if(password)payload.password=password;const d=await request('usuarios_ventas.php',{method:'PUT',body:JSON.stringify(payload)});editarVentasModal?.classList.remove('open');showNotice('ventasNotice',d.mensaje||'Usuario de ventas actualizado.');await loadVentas();}catch(error){showNotice('editarVentasNotice',error.message,true);}
+    });
+
+    await Promise.all([loadAdmins(), loadLogistics(), loadVentas()]);
   }
 
   function start(){initSolicitudes();initSuperAdmin();}
