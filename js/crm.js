@@ -233,6 +233,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
         });
+ // Eventos de clientes, interacciones y filtros (se habían perdido al agregar "Mi perfil").
+ $('nuevoClienteBtn').onclick = () => abrirCliente();
+ $('clienteForm').onsubmit = guardarCliente;
+ $('cerrarCliente').onclick = () => cerrar('clienteModal');
+ $('interaccionForm').onsubmit = guardarInteraccion;
+ $('cerrarInteraccion').onclick = () => cerrar('interaccionModal');
+ $('buscarCliente').oninput = renderClientes;
+ $('filtroEstado').onchange = renderClientes;
+ $('filtroEtapa').onchange = renderClientes;
+ $('actividadMes').onchange = cargarActividad;
  $('clientesBody').onclick = e => { const id = e.target.dataset.id; if (!id) return; if (e.target.classList.contains('ver-cliente')) mostrarHistorial(id); if (e.target.classList.contains('editar-cliente')) mostrarDetalle(id); if (e.target.classList.contains('eliminar-cliente')) eliminarCliente(id) }; $('interaccionesClientesBody').onclick = e => { if (e.target.classList.contains('ver-cliente')) mostrarHistorial(e.target.dataset.id) }; $('riskList').onclick = e => { const el = e.target.closest('.risk-open'); if (el) mostrarDetalle(el.dataset.id) }; $('toggleRiskBtn').onclick = () => { riesgosExpandidos = !riesgosExpandidos; renderRiesgos(metricasActuales?.clientes_en_riesgo || []) };
  $('volverDetalle').onclick=$('cerrarDetalle').onclick=()=>cerrar('detalleClienteModal');$('volverHistorial').onclick=$('cerrarHistorial').onclick=()=>cerrar('historialModal');$('editarDesdeDetalle').onclick=()=>{const id=clienteSeleccionado?.id;cerrar('detalleClienteModal');if(id)abrirCliente(id)};$('cambiarEtapaDesdeDetalle').onclick=()=>{if(!clienteSeleccionado)return;$('etapaSelect').value=clienteSeleccionado.etapa_crm;abrir('etapaModal')};$('guardarEtapaBtn').onclick=()=>clienteSeleccionado&&cambiarEtapa(clienteSeleccionado.id,$('etapaSelect').value);$('cancelarEtapaBtn').onclick=()=>cerrar('etapaModal');$('nuevaInteraccionBtn').onclick=prepararInteraccion;
  $('clienteTelefono').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^0-9 ]/g,'').replace(/ {2,}/g,' ').slice(0,12)});

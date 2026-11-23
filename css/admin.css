@@ -214,6 +214,12 @@ button[type="submit"]:hover,
    ProyectoE1: accesos a módulos, solicitudes y cuentas internas
    ============================================================ */
 
+/* El panel tiene tablas de 7 a 10 columnas: se amplía el contenedor para que
+   los botones de Aprobar / Rechazar / Editar no queden fuera de la vista. */
+.admin-container { max-width: 1280px; }
+.admin-container ~ .platform-page-tools,
+body:has(.admin-container) .platform-page-tools { max-width: 1280px; }
+
 /* Encabezado del panel dentro del navbar */
 .navbar .navbar-sub {
   color: #eaf0ff;

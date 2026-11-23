@@ -16,6 +16,16 @@ $st = db()->prepare('SELECT id,nombre,correo,password_hash,rol,estado,es_superad
 $st->execute([$correo]);
 $u = $st->fetch();
 
+if (!$u) {
+    // Las cuentas nuevas viven en solicitudes_registro hasta que un administrador las aprueba.
+    $st = db()->prepare("SELECT password_hash, estado FROM solicitudes_registro WHERE correo=? AND estado IN ('pendiente','rechazada') ORDER BY id DESC LIMIT 1");
+    $st->execute([$correo]);
+    $solicitud = $st->fetch();
+    if ($solicitud && password_verify($password, $solicitud['password_hash'])) {
+        if ($solicitud['estado'] === 'pendiente') json_response(['error' => 'Tu solicitud de registro está pendiente de aprobación por un administrador.'], 403);
+        json_response(['error' => 'Tu solicitud de registro fue rechazada. Contacta al administrador.'], 403);
+    }
+}
 if (!$u || !password_verify($password, $u['password_hash'])) json_response(['error' => 'Correo o contraseña incorrectos.'], 401);
 if ($u['estado'] === 'pendiente') json_response(['error' => 'Tu cuenta está pendiente de aprobación por un administrador.'], 403);
 if ($u['estado'] === 'inactivo') json_response(['error' => 'Tu cuenta está desactivada. Contacta al administrador.'], 403);
