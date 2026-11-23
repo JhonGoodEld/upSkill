@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 USE upskill_crm;
 
 -- MIGRACION SCM PARA UPSKILL ACADEMY: cursos como productos y licencias como inventario.

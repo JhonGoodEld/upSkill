@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 USE upskill_crm;
 
 -- Reparación de invariantes de seguridad: cualquier superadministrador debe ser admin.

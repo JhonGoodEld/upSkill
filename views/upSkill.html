@@ -4,14 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upskill Academy</title>
+  <link rel="stylesheet" href="../css/stylePrin.css">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
   <!-- NAVBAR -->
-  <header class="navbar">
+<header class="navbar">
+  <div class="navbar-brand">
     <h1>Upskill Academy</h1>
-    <a href="../views/loggin.html" class="login-btn">Login</a>
-  </header>
+  </div>
+  <nav class="nav-links">
+    <a href="pagPrin.html" class="menu-link">Inicio</a>
+    <a href="cursos.html" class="menu-link">Cursos</a>
+    <a href="planes.html" class="menu-link">Planes de carrera</a>
+    <div class="menu-container">
+      <button class="menu-btn">Iniciar sesión <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="logalumno.html">Alumno</a>
+        <a href="CMR/logdocentes.html">Docentes</a>
+        <a href="CMR/Administradores/loggin.html">Administración</a>
+      </div>
+    </div>
+  </nav>
+</header>
 
 <section class="hero">
   <img src="../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
@@ -28,14 +43,23 @@
   <section class="carousel">
     <h3>Certificaciones destacadas</h3>
     <div class="carousel-container" id="carousel">
-      <div class="slide"><img src= "../src/4-Best-Python-Certifications.jpg" alt="Certificación 1"></div>
-      <div class="slide"><img src= "../src/cisco_ccie_datacenter3128722680530508651.jpg" alt="Certificación 2"></div>
-      <div class="slide"><img src="../src/mysql2-300x300.jpg" alt="Certificación 3"></div>
-      <div class="slide"><img src= "../src/aws.jpg" alt="Certificación 4 "></div>
-      <div class="slide"><img src= "../src/azure.jpg" alt="Certificación 5"></div>
-      <div class="slide"><img src= "../src/js.jpg" alt="Certificación 6"></div>
-      <div class="slide"><img src= "../src/mongo.jpg" alt="Certificación 7"></div>
-      <div class="slide"><img src= "../src/html.jpg" alt="Certificación 8"></div>
+      <div class="slide"><img src="../src/4-Best-Python-Certifications.jpg" alt="Certificación Python"></div>
+      <div class="slide"><img src="../src/cisco_ccie_datacenter3128722680530508651.jpg" alt="Certificación Cisco CCIE"></div>
+      <div class="slide"><img src="../src/mysql2-300x300.jpg" alt="Certificación MySQL"></div>
+      <div class="slide"><img src="../src/aws.jpg" alt="Certificación AWS"></div>
+      <div class="slide"><img src="../src/azure.jpg" alt="Certificación Azure"></div>
+      <div class="slide"><img src="../src/js.jpg" alt="Certificación JavaScript"></div>
+      <div class="slide"><img src="../src/mongo.jpg" alt="Certificación MongoDB"></div>
+      <div class="slide"><img src="../src/html.jpg" alt="Certificación HTML"></div>
+      <!-- Copia para el bucle continuo -->
+      <div class="slide" aria-hidden="true"><img src="../src/4-Best-Python-Certifications.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/cisco_ccie_datacenter3128722680530508651.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/mysql2-300x300.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/aws.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/azure.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/js.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/mongo.jpg" alt=""></div>
+      <div class="slide" aria-hidden="true"><img src="../src/html.jpg" alt=""></div>
     </div>
   </section>
 
@@ -50,7 +74,7 @@
       <h4>Descubre tu primer curso</h4>
     </div>
     <div class="option-card">
-      <img src="../src/enseñanza.jpg" alt="Nueva enseñanza">
+      <img src="../src/ensenanza.jpg" alt="Nueva enseñanza">
       <h4>Experimenta la nueva forma de enseñanza</h4>
     </div>
   </section>
@@ -171,8 +195,6 @@
     </div>
   </div>
 
-    <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-  </footer>
 
   <!-- BOTÓN FIJO -->
   <a href="../views/registro.html" class="subscribe-btn">Suscribirme</a>

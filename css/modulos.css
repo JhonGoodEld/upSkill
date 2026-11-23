@@ -1,0 +1,415 @@
+/* ============================================================
+   upSkill — Capa del sistema de diseño para los módulos internos
+   (CRM, SCM y ERP). Se carga DESPUÉS de crm.css / scm.css / erp.css
+   y reutiliza los mismos tokens que stylePrin.css: azul #1d4ed8,
+   navbar en degradado azul marino -> azul, tarjetas redondeadas,
+   botones tipo píldora y sombras suaves.
+   ============================================================ */
+
+:root {
+  /* Tokens del sistema de diseño (idénticos a stylePrin.css) */
+  --ds-bg:         #f4f7fd;
+  --ds-surface:    #ffffff;
+  --ds-surface-2:  #eef3fb;
+  --ds-text:       #1d1d1f;
+  --ds-text-soft:  #5b6472;
+  --ds-border:     #d8e0ee;
+  --ds-accent:     #1d4ed8;
+  --ds-accent-600: #1e40af;
+  --ds-accent-050: #e6efff;
+  --ds-navy:       #12245c;
+  --ds-ok:         #1d8f3b;
+  --ds-danger:     #d93025;
+  --ds-radio:      18px;
+  --ds-radio-sm:   10px;
+  --ds-pill:       980px;
+  --ds-sombra:       0 4px 24px rgba(0, 0, 0, .06);
+  --ds-sombra-hover: 0 14px 44px rgba(0, 0, 0, .12);
+  --ds-ease:       cubic-bezier(.4, 0, .2, 1);
+  --ds-fuente: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ds-degradado-lateral: linear-gradient(180deg, #12245c 0%, #1a3a9c 55%, #1d4ed8 100%);
+
+  /* Variables propias de cada módulo apuntando a los tokens */
+  --bg:         var(--ds-bg);
+  --card:       var(--ds-surface);
+  --panel:      var(--ds-surface);
+  --text:       var(--ds-text);
+  --muted:      var(--ds-text-soft);
+  --border:     var(--ds-border);
+  --line:       var(--ds-border);
+  --blue:       var(--ds-accent);
+  --blue-dark:  var(--ds-navy);
+  --blue-2:     #2563eb;
+  --blue-3:     #7ea2ef;
+  --blue-pale:  var(--ds-accent-050);
+  --primary:    var(--ds-accent);
+  --nav:        var(--ds-navy);
+  --nav2:       rgba(255, 255, 255, .16);
+  --sidebar:    var(--ds-navy);
+  --danger:     var(--ds-danger);
+  --shadow:     var(--ds-sombra);
+
+  /* Encabezados de tabla */
+  --th-bg:   var(--ds-accent-050);
+  --th-text: var(--ds-accent-600);
+}
+
+/* Modo oscuro (los módulos alternan .dark-mode en <body>) */
+body.dark-mode {
+  --bg: #0b1020;
+  --card: #161c2e;
+  --panel: #161c2e;
+  --text: #f5f5f7;
+  --muted: #a1a1a6;
+  --border: #2c3550;
+  --line: #2c3550;
+  --th-bg: #1c2540;
+  --th-text: #c7d6ff;
+  --shadow: none;
+}
+
+/* ---------- Base ---------- */
+body.crm-body,
+body.scm-body,
+body.erp-body {
+  font-family: var(--ds-fuente);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.crm-body h1, .crm-body h2, .crm-body h3,
+.scm-body h1, .scm-body h2, .scm-body h3,
+.erp-body h1, .erp-body h2, .erp-body h3 {
+  letter-spacing: -.02em;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+/* ---------- Barra lateral (mismo degradado que el navbar público) ---------- */
+.crm-sidebar,
+.scm-sidebar,
+.erp-sidebar {
+  background: var(--ds-degradado-lateral);
+  color: #fff;
+  border-right: 1px solid rgba(255, 255, 255, .08);
+}
+.scm-sidebar,
+.erp-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.crm-brand,
+.scm-brand,
+.erp-brand {
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: #fff;
+}
+.crm-brand small,
+.scm-brand small,
+.erp-brand small {
+  color: #c7d6ff;
+  opacity: 1;
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+
+.crm-nav button,
+.scm-nav button,
+.erp-nav button {
+  color: #eaf0ff;
+  font-family: inherit;
+  font-size: .9rem;
+  border-radius: var(--ds-radio-sm);
+  opacity: .88;
+  transition: background .2s var(--ds-ease), opacity .2s var(--ds-ease);
+}
+.crm-nav button:hover,
+.scm-nav button:hover,
+.erp-nav button:hover {
+  background: rgba(255, 255, 255, .12);
+  opacity: 1;
+}
+.crm-nav button.active,
+.scm-nav button.active,
+.erp-nav button.active {
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+  opacity: 1;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #9db8ff;
+}
+
+/* ---------- Contenido principal ---------- */
+/* Corrige el centrado vertical accidental del CRM (margin:auto en un flex) */
+.crm-main { margin: 0 auto; }
+
+.crm-topbar,
+.erp-topbar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--ds-radio);
+  box-shadow: var(--shadow);
+}
+.scm-topbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(180%) blur(12px);
+}
+.top-search-wrap {
+  border-radius: var(--ds-pill);
+  border-color: var(--border);
+  background: var(--bg);
+}
+.top-search-wrap:focus-within {
+  border-color: var(--ds-accent);
+  box-shadow: 0 0 0 3px var(--ds-accent-050);
+}
+.top-search-wrap input { background: transparent; color: var(--text); }
+
+.icon-btn {
+  border-radius: var(--ds-pill);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  transition: border-color .2s var(--ds-ease), color .2s var(--ds-ease);
+}
+.icon-btn:hover { border-color: var(--ds-accent); color: var(--ds-accent); }
+
+.avatar-mini {
+  background: linear-gradient(135deg, var(--ds-navy), var(--ds-accent));
+}
+
+.erp-user b {
+  background: var(--ds-accent-050);
+  color: var(--ds-accent-600);
+  font-weight: 600;
+}
+
+/* ---------- Tarjetas y paneles ---------- */
+.crm-body .card,
+.crm-body .panel-card,
+.scm-body .panel,
+.scm-body .module-card,
+.scm-body .metric,
+.erp-body .panel,
+.erp-body .kpi-grid article {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--ds-radio);
+  box-shadow: var(--shadow);
+}
+.scm-body .module-card {
+  transition: transform .3s var(--ds-ease), box-shadow .3s var(--ds-ease), border-color .3s var(--ds-ease);
+}
+.scm-body .module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ds-sombra-hover);
+  border-color: var(--ds-accent);
+}
+.scm-body .module-card b,
+.scm-body .metric b { color: var(--ds-accent); }
+.scm-body .metric.warning b { color: #b45309; }
+
+.crm-body .metric-value.blue,
+.erp-body .kpi-grid strong { color: var(--ds-accent-600); }
+body.dark-mode .metric-value.blue,
+body.dark-mode .kpi-grid strong { color: #9db8ff; }
+
+/* ---------- Botones (píldora) ---------- */
+.crm-body .btn,
+.scm-body .btn,
+.erp-body .btn {
+  border-radius: var(--ds-pill);
+  font-family: inherit;
+  font-weight: 500;
+  padding: 10px 18px;
+  transition: background .2s var(--ds-ease), border-color .2s var(--ds-ease), transform .1s var(--ds-ease);
+}
+.crm-body .btn:active,
+.scm-body .btn:active,
+.erp-body .btn:active { transform: scale(.98); }
+
+.crm-body .btn-primary,
+.scm-body .btn.primary,
+.erp-body .btn.primary {
+  background: var(--ds-accent);
+  border: 1px solid transparent;
+  color: #fff;
+}
+.crm-body .btn-primary:hover,
+.scm-body .btn.primary:hover,
+.erp-body .btn.primary:hover { background: var(--ds-accent-600); }
+
+.crm-body .btn-deep { background: var(--ds-navy); }
+
+.crm-body .btn-secondary,
+.crm-body .btn-cancel,
+.scm-body .btn.secondary,
+.erp-body .btn.secondary,
+.erp-body .btn:not(.primary) {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.crm-body .btn-secondary:hover,
+.crm-body .btn-cancel:hover,
+.scm-body .btn.secondary:hover,
+.erp-body .btn.secondary:hover,
+.erp-body .btn:not(.primary):hover { border-color: var(--ds-accent); color: var(--ds-accent); }
+
+.crm-body .btn-danger,
+.scm-body .btn.danger {
+  background: #fdecea;
+  color: var(--ds-danger);
+  border: 1px solid #f5c2bd;
+}
+
+.link-btn { color: var(--ds-accent); font-weight: 600; }
+
+/* Botones de acción en tablas */
+.action-btn,
+.scm-body .action,
+.erp-body .table-btn {
+  border-radius: var(--ds-pill);
+  font-family: inherit;
+}
+.scm-body .action.edit,
+.scm-body .action.view,
+.erp-body .table-btn { background: var(--ds-accent-050); color: var(--ds-accent-600); }
+
+/* ---------- Formularios ---------- */
+.crm-body input, .crm-body select, .crm-body textarea,
+.scm-body input, .scm-body select, .scm-body textarea,
+.erp-body input, .erp-body select, .erp-body textarea {
+  font-family: inherit;
+  border-radius: var(--ds-radio-sm);
+}
+.crm-body input:focus, .crm-body select:focus, .crm-body textarea:focus,
+.scm-body input:focus, .scm-body select:focus, .scm-body textarea:focus,
+.erp-body input:focus, .erp-body select:focus, .erp-body textarea:focus {
+  outline: none;
+  border-color: var(--ds-accent);
+  box-shadow: 0 0 0 3px var(--ds-accent-050);
+}
+.top-search-wrap input:focus { box-shadow: none; }
+.erp-body .toolbar input,
+.erp-body .toolbar select,
+.erp-body input,
+.erp-body select { background: var(--card); color: var(--text); }
+
+/* ---------- Tablas ---------- */
+.crm-body .table-wrap,
+.scm-body .table-wrap,
+.erp-body .table-wrap {
+  border-radius: var(--ds-radio-sm);
+}
+.crm-body .table th,
+.scm-body th,
+.erp-body th {
+  background: var(--th-bg);
+  color: var(--th-text);
+  font-weight: 600;
+}
+.crm-body .table td,
+.scm-body td,
+.erp-body td { border-bottom-color: var(--border); }
+
+/* ---------- Gráficas y barras ---------- */
+.crm-body .bar.active span,
+.scm-body .bar-fill,
+.erp-body .bar-track i { background: var(--ds-accent); }
+.crm-body .bar.inactive span { background: #93b4f5; }
+body.dark-mode .bar,
+body.dark-mode .bar-track,
+body.dark-mode .strategy-chart-track,
+body.dark-mode .process-bar { background: #22304f; }
+.scm-body .vbar-fill { background: linear-gradient(180deg, #5b8def, var(--ds-accent)); }
+.erp-body .column i { background: var(--ds-accent); }
+.erp-body .process-bar span { background: linear-gradient(90deg, #5b8def, var(--ds-accent)); }
+.erp-body .steps span.active { background: var(--ds-accent); }
+.erp-body .history { border-left-color: var(--ds-accent); }
+.erp-body .selection-item.selected { border-color: var(--ds-accent); background: var(--ds-accent-050); }
+
+/* Niveles de madurez en escala azul (SCM y ERP) */
+.scm-body .maturity-slider-wrap { background: linear-gradient(90deg, #eef3fb, #cfdcf8, #9db8ff); }
+.scm-body .maturity-range,
+.erp-body .maturity input[type=range] { accent-color: var(--ds-accent); }
+.scm-body .maturity-level-card.active.initial    { background: var(--ds-accent-050); border-color: #9db8ff; color: var(--ds-accent-600); }
+.scm-body .maturity-level-card.active.initial span { color: var(--ds-accent-600); }
+.scm-body .maturity-level-card.active.developing { background: #9db8ff; border-color: #5b8def; color: var(--ds-navy); }
+.scm-body .maturity-level-card.active.developing span { color: var(--ds-navy); }
+.scm-body .maturity-level-card.active.optimized  { background: var(--ds-accent); border-color: var(--ds-accent-600); color: #fff; }
+.scm-body .maturity-level-card.active.optimized span { color: #e6efff; }
+.scm-body .check-progress { background: var(--ds-accent-050); color: var(--ds-accent-600); }
+.scm-body .checkitem.manual.checked { background: var(--ds-accent-050); border-color: #9db8ff; }
+
+.erp-body .level-grid article { border-radius: var(--ds-radio-sm); background: var(--bg); border-color: var(--border); }
+.erp-body .level-grid article.active:nth-child(1) { background: var(--ds-accent-050); }
+.erp-body .level-grid article.active:nth-child(2) { background: #cfdcf8; }
+.erp-body .level-grid article.active:nth-child(3) { background: #7ea2ef; color: var(--ds-navy); }
+.erp-body .level-grid article.active:nth-child(4) { background: var(--ds-accent); color: #fff; }
+
+body.dark-mode .maturity-slider-wrap { background: linear-gradient(90deg, #141c33, #1a2a55, #1d3a8a); }
+body.dark-mode .maturity-level-card.active.initial { background: #1a2a55; color: #dbe5ff; }
+body.dark-mode .maturity-level-card.active.developing { background: #2847a8; color: #fff; }
+body.dark-mode .check-progress { background: #1a2a55; color: #c7d6ff; }
+
+/* ---------- Modales ---------- */
+.crm-body .modal,
+.scm-body .modal,
+.erp-body .modal {
+  background: rgba(0, 0, 0, .4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.crm-body .modal-content,
+.scm-body .modal-card,
+.erp-body .modal-card {
+  background: var(--card);
+  color: var(--text);
+  border-radius: var(--ds-radio);
+  box-shadow: var(--ds-sombra-hover);
+  animation: dsFadeIn .3s var(--ds-ease);
+}
+@keyframes dsFadeIn {
+  from { opacity: 0; transform: scale(.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Avisos y toasts ---------- */
+.crm-body .notice { background: var(--ds-accent-050); color: var(--ds-accent-600); border-radius: var(--ds-radio-sm); }
+.scm-toast,
+.erp-toast { border-radius: var(--ds-radio-sm); }
+/* El toast del ERP asomaba en la esquina: se oculta por completo hasta mostrarse */
+.erp-toast {
+  visibility: hidden;
+  transform: translateY(calc(-100% - 40px));
+  border-left-color: var(--ds-accent);
+  background: var(--card);
+  color: var(--text);
+}
+.erp-toast.show { visibility: visible; transform: none; }
+
+/* ---------- Tarjeta de perfil / historial (CRM) ---------- */
+.crm-body .client-profile {
+  background: linear-gradient(135deg, var(--ds-accent-050), var(--card));
+  border-radius: var(--ds-radio);
+}
+.crm-body .client-data-grid { border-radius: var(--ds-radio-sm); }
+.crm-body .timeline { border-left-color: #c7d6ff; }
+.crm-body .timeline-item:before { background: var(--ds-accent); }
+.crm-body .risk-item { border-radius: var(--ds-radio-sm); border-color: var(--border); background: var(--bg); }
+.crm-body .risk-item:hover { border-color: var(--ds-accent); }
+body.dark-mode .client-profile { background: linear-gradient(135deg, #1a2a55, var(--card)); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .scm-sidebar,
+  .erp-sidebar { position: static; height: auto; }
+}

@@ -1,524 +1,216 @@
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
-}
+/* ============================================================
+   upSkill — Estilos de contenido del sitio público
+   La base (reset, navbar, footer, modales, botones, tokens)
+   vive en stylePrin.css. Aquí solo lo propio de estas páginas.
+   ============================================================ */
 
-body {
-  background: url("../src/teclado-manual-y-persona-de-negocios-tecleando-en-oficina-para-reportes-investigación-periodismo-internet-escribiendo-equipo-377001062.jpg") no-repeat center center fixed;
-  background-size: cover;
-  color: #1a1a1a;
-  line-height: 1.6;
-}
-
-
-/* Navbar */
-.navbar {
-   background: rgba(0, 86, 214, 0.9);
-  color: white;
-  padding: 15px 20px;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-/* Hero */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-  background: rgba(0, 123, 255, 0.8);
-  color: white;
-  border-radius: 0 0 30px 30px;
-  margin-bottom: 40px;
-}
-.hero h2 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-}
-.hero p {
-  font-size: 1.1rem;
-}
+/* ---------- Hero ---------- */
 .hero {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px; /* espacio entre los elementos */
+  gap: 24px;
   text-align: center;
+  padding: 72px 22px;
+  margin-bottom: 8px;
 }
+.hero h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 12px; }
+.hero p  { font-size: 1.05rem; }
+.hero img { width: 120px; height: auto; }
 
-.hero img {
-  width: 120px;   /* ajusta el tamaño */
-  height: auto;   /* mantiene proporción */
-}
-
-/* Carrusel */
+/* ---------- Carrusel de certificaciones ---------- */
 .carousel {
-  padding: 40px 20px;
+  position: relative;
+  padding: 72px 22px 48px;
   text-align: center;
+  overflow: hidden;
+  max-width: none;          /* banda azul a todo el ancho */
+  background:
+    radial-gradient(1200px 340px at 50% -60px, rgba(29, 78, 216, .16), transparent 70%),
+    linear-gradient(180deg, #e7eefc 0%, var(--bg) 78%);
+  border-bottom: 1px solid var(--border);
 }
 .carousel h3 {
-  margin-bottom: 20px;
-  font-size: 2rem;
-  color: #070e19;
+  max-width: var(--ancho-max);
+  margin: 0 auto 32px;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--accent-600);
 }
 .carousel-container {
-    display: flex;
-  gap: 20px;
-  animation: scroll 30s linear infinite;
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  animation: scroll 40s linear infinite;
 }
+.carousel-container:hover { animation-play-state: paused; }
 .slide img {
-width: 250px;
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: var(--radio);
+  border: 1px solid var(--border);
+  box-shadow: var(--sombra);
 }
 @keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-/* Opciones */
+/* ---------- Tres opciones ---------- */
 .options {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  padding: 40px 20px;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 48px 22px;
 }
 .option-card {
-  background: white;
-  border-radius: 15px;
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
   overflow: hidden;
-  text-align: center;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  width: 300px;
-  transition: transform 0.3s ease;
+  text-align: left;
+  box-shadow: var(--sombra);
+  flex: 1 1 280px;
+  max-width: 340px;
+  color: var(--text);
+  text-decoration: none;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .option-card:hover {
-  transform: translateY(-8px);
-}
-.option-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.option-card h4 {
-  padding: 15px;
-  color: #0056d6;
-}
-
-/* Footer */
-.footer {
-  background: rgba(28, 28, 29, 0.9);
-  color: white;
-  text-align: center;
-  padding: 20px;
-  margin-top: 50px;
-  border-radius: 30px 30px 0 0;
-}
-.footer .socials {
-  margin: 10px 0;
-}
-.footer .socials a {
-  color: white;
-  margin: 0 10px;
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-hover);
   text-decoration: none;
-  transition: color 0.3s;
 }
-.footer .socials a:hover {
-  color: #ffdd57;
+.option-card img { width: 100%; height: 190px; object-fit: cover; }
+.option-card h4 {
+  padding: 18px 20px 22px;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
-/* Botón fijo */
+/* ---------- Botón fijo de suscripción ---------- */
 .subscribe-btn {
   position: fixed;
   bottom: 25px;
   right: 25px;
-  background: #e1ee28;
-  color: rgb(1, 1, 1);
+  background: var(--accent);
+  color: #fff;
   border: none;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  border-radius: 150px;
-  cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-  transition: background 0.3s;
-}
-.subscribe-btn:hover {
-  background: #0056d6;
-}
-/* Sección de formulario */
-.form-section {
-  background: rgba(255,255,255,0.9);
-  margin: 50px auto;
-  padding: 40px;
-  max-width: 400px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}
-
-.form-section h2 {
-  color: #0056d6;
-  margin-bottom: 20px;
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.register-form input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  padding: 12px 22px;
   font-size: 1rem;
-}
-
-.register-form input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.form-btn {
-  background: #f2ff00;
-  color: rgb(8, 8, 8);
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
+  font-weight: 500;
+  border-radius: var(--radio-pill);
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
+  box-shadow: var(--sombra);
+  transition: background .2s var(--ease);
+  z-index: 800;
 }
+.subscribe-btn:hover { background: var(--accent-600); }
 
-.form-btn:hover {
-  background: #0056d6;
-}
-
-/* Modal */
-.modal {
-  display: none; /* Oculto por defecto */
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  text-align: center;
-  max-width: 400px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  animation: fadeIn 0.5s ease;
-}
-
-.modal-content h2 {
-  color: #007bff;
-  margin-bottom: 15px;
-}
-
-.modal-content p {
-  margin: 10px 0;
-}
-.modal[aria-hidden="false"] {
-  display: flex;
-}
-
-
-.promo-code {
-  margin: 15px 0;
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #0056d6;
-  background: #eaf2ff;
-  padding: 10px;
-  border-radius: 10px;
-  letter-spacing: 2px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-}
-
-/* Animación */
-@keyframes fadeIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.map-box {
-  margin: 20px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  border-radius: 12px;
-  overflow: hidden;
-  width: fit-content;
-}
-/* PAGINA DE LOGGIN*/
-
+/* ---------- Formulario de registro ---------- */
+.form-section,
 .loggin-section {
-  background: rgba(255,255,255,0.9);
-  margin: 50px auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin: 56px auto;
   padding: 40px;
-  max-width: 800px;
-  border-radius: 20px;
+  max-width: 440px;
+  border-radius: var(--radio);
   text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  box-shadow: var(--sombra);
 }
+.loggin-section { max-width: 760px; }
+
+.form-section h2,
+.loggin-section h2 { margin-bottom: 22px; }
+
+.register-form,
 .loggin-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
+  text-align: left;
 }
 
+.register-form input,
 .loggin-form input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
   font-size: 1rem;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
 }
-
+.register-form input:focus,
 .loggin-form input:focus {
-  border-color: #007bff;
+  border-color: var(--accent);
   outline: none;
+  box-shadow: 0 0 0 3px var(--accent-050);
 }
-.loggin-btn {
-  background: #139725;
-  color: rgb(8, 8, 8);
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
-}
-
-.loggin-btn:hover {
-  background: #0056d6;
-}
-
 
 .loggin-section img {
-  width: 150px;        /* ajusta el tamaño */
-  height: auto;        /* mantiene proporción */
-  border-radius: 12px; /* bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* sombra ligera */
-  display: block;      /* evita que queden en línea con otros elementos */
-  margin: 0 auto 15px; /* centra la imagen y separa del contenido */
-}
-
-/* boton para el login*/
-/* NAVBAR */
-.navbar {
-  display: flex;
-  justify-content: space-between; /* separa el título a la izquierda y el botón a la derecha */
-  align-items: center;
-  background-color: #222; /* fondo oscuro */
-  padding: 15px 30px;
-  color: white;
-}
-
-/* Botón Login */
-.login-btn {
-  background-color: #ff5722; /* naranja brillante */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.login-btn:hover {
-  background-color: #e64a19; /* tono más oscuro en hover */
-  transform: scale(1.05); /* efecto de agrandado */
-}
-/* Panel detrás del texto */
-.panel {
-  background: rgba(255, 255, 255, 0.9); /* blanco semitransparente */
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  max-width: 800px;   /* que no se extienda mucho */
-  margin: 20px auto;  /* centrado */
-  text-align: justify; /* texto alineado mejor */
-}
-
-/* Imagen dentro del panel */
-.panel img {
-  width: 100%;
+  width: 150px;
   height: auto;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  border-radius: var(--radio-sm);
+  box-shadow: var(--sombra);
+  display: block;
+  margin: 0 auto 16px;
 }
 
-/* Texto */
-.panel h1 {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #222;
-}
-.options {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 40px 20px;
-  flex-wrap: wrap;
+/* ---------- Código promocional ---------- */
+.promo-code {
+  margin: 16px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-050);
+  padding: 12px;
+  border-radius: var(--radio-sm);
+  letter-spacing: 2px;
 }
 
-.option-card {
-  display: block;           /* necesario para <a> */
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  width: 300px;
-  transition: transform 0.3s ease;
-  text-decoration: none;    /* quita subrayado */
-  color: #0056d6;           /* texto visible */
+/* ---------- Panel de texto sobre imagen ---------- */
+.panel { text-align: left; }
+.panel img { width: 100%; height: auto; border-radius: var(--radio-sm); margin-bottom: 15px; }
+
+@media (max-width: 720px) {
+  .form-section, .loggin-section { margin: 32px auto; padding: 28px; }
+  .hero { padding: 48px 22px; }
 }
 
-.option-card:hover {
-  transform: translateY(-8px);
+/* ---------- Hero seguido de formulario (login / registro) ---------- */
+.hero img { border-radius: var(--radio-sm); box-shadow: var(--sombra); }
+.hero + .form-section,
+.hero + .loggin-section { margin-top: 0; }
+.loggin-section { max-width: 520px; }
+@media (max-width: 720px) {
+  .hero img { display: none; }
 }
 
-.option-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+/* ---------- Modo oscuro: campos y controles ---------- */
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
 }
-
-.option-card h4 {
-  padding: 15px;
+.dark-mode .option-card,
+.dark-mode .form-section,
+.dark-mode .loggin-section { background: var(--surface); }
+.dark-mode .carousel {
+  background: linear-gradient(180deg, #0d1733 0%, var(--bg) 78%);
 }
+.dark-mode .carousel h3 { color: #9db8ff; }
 
-
-/* === Modal Políticas === */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.6);
-  z-index: 10000;
+/* ---------- Documentos: tarjeta de estado del servicio ---------- */
+.status-card {
+  max-width: calc(var(--ancho-max) - 44px);
+  margin: 26px auto 0;
 }
-
-.modal-content.politicas {
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  max-width: 700px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  animation: fadeIn 0.3s ease;
-}
-
-.modal-scroll h3 {
-  color: #1a73e8;
-  margin-top: 15px;
-}
-
-.modal-scroll p, .modal-scroll ul {
-  color: #333;
-  text-align: justify;
-}
-
-.modal-scroll ul {
-  margin-left: 20px;
-}
-
-.btn-cerrar {
-  margin-top: 15px;
-  background-color: #1a73e8;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  cursor: pointer;
-}
-
-.btn-cerrar:hover {
-  background-color: #1666c4;
-}
-
-/* Enlace bajo el botón de pago */
-.politica-link {
-  margin-top: 10px;
-  text-align: center;
-}
-
-.politica-link a {
-  color: #1a73e8;
-  text-decoration: underline;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #666;
-  cursor: pointer;
-}
-
-.close:hover {
-  color: #000;
-}
-
-.legal-links {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 0.9rem;
-}
-
-.legal-links a {
-  color: #1a73e8;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.legal-links a:hover {
-  color: #0d57bd;
-}
-
-
-/* ===== VALIDACIÓN DE FORMULARIOS ===== */
-.validation-message {
-  display: none;
-  width: 100%;
-  padding: 10px 12px;
-  margin: 0 0 4px;
-  border-left: 4px solid #c0392b;
-  border-radius: 6px;
-  background: #fdecea;
-  color: #8a1c1c;
-  font-size: 0.92rem;
-  text-align: left;
-  line-height: 1.4;
-}
-
-.input-error {
-  border-color: #c0392b !important;
-  outline: 2px solid rgba(192, 57, 43, 0.15) !important;
-}
-
-/* ===== Controles compartidos añadidos para vistas CRM/registro ===== */
-.platform-page-tools{display:flex;gap:8px;align-items:center;padding:10px 16px;background:#f7f9fc;border-bottom:1px solid #dbe4ef;position:relative;z-index:5}.back-button,.tool-button{border:1px solid #c9d5e3;background:#fff;color:#174f8f;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}.back-button:hover,.tool-button:hover{background:#edf5ff}.standalone-back{margin:12px 16px}.account-help{font-size:14px;line-height:1.5}.account-help a{color:#1356a2;font-weight:700}.dark-mode{background:#101827!important;color:#eef4ff!important}.dark-mode .platform-page-tools,.dark-mode .navbar,.dark-mode .loggin-section,.dark-mode .form-section,.dark-mode .footer{background:#182235!important;color:#eef4ff!important}.dark-mode input,.dark-mode select,.dark-mode textarea{background:#101827!important;color:#eef4ff!important;border-color:#34445c!important}.dark-mode .back-button,.dark-mode .tool-button{background:#182235;color:#dceaff;border-color:#34445c}
+.status-card h1 { margin-bottom: 10px; }

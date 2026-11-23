@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 USE upskill_crm;
 
 -- 1) Eliminar el dato de inscritos históricos, ya no forma parte del modelo actual.

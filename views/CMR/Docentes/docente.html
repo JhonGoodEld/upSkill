@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="../../../css/docente.css">
     </head>
     <body data-required-role="docente" data-api-base="../../../api" data-login-url="../logdocentes.html">
-<div class="platform-page-tools"><button class="back-button" type="button" onclick="history.length>1?history.back():location.href='../logdocentes.html'">← Regresar</button><button class="tool-button" type="button" onclick="toggleLanguage()">ES/EN</button><button class="tool-button" type="button" onclick="toggleTheme()">☾</button></div>
         <!--barra de la navegacion pa-->
         <header class="navbar">
             <h1>Upskill Academy</h1>
@@ -17,9 +16,10 @@
             <!-- MENÚ SUPERIOR -->
             <nav class="nav-links">
 
-                <a href="../logdocentes.html" class="menu-link">Cerrar sesión</a>
+                <a href="../logdocentes.html" class="menu-link" data-logout="../../../api">Cerrar sesión</a>
             </nav>
         </header>
+        <div class="platform-page-tools"><button class="back-button" type="button" onclick="history.length>1?history.back():location.href='../logdocentes.html'">← Regresar</button><button class="tool-button" type="button" onclick="toggleLanguage()">ES/EN</button><button class="tool-button" type="button" onclick="toggleTheme()">☾</button></div>
 
         <main class="docente-container">
 
@@ -170,8 +170,6 @@
             </div>
         </div>
 
-        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-        </footer>
 
         <script src="../../../js/script.js"></script>
         <script src="../../../js/docente.js"></script>

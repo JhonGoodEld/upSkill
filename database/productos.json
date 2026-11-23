@@ -191,7 +191,7 @@
     "tags": ["Android", "iOS", "Flutter"],
     "descuento": 20,
     "fechaPublicacion": "2025-09-18",
-    "imagen": "../src/apps.jpg",
+    "imagen": "../src/android.jpg",
     "descripcion": "Aprende a desarrollar aplicaciones móviles multiplataforma con Flutter y Dart."
   },
   {
@@ -341,7 +341,7 @@
     "tags": ["HTML", "CSS", "Frontend"],
     "descuento": 5,
     "fechaPublicacion": "2025-02-15",
-    "imagen": "../src/htmlcss.jpg",
+    "imagen": "../src/html.jpg",
     "descripcion": "Aprende a estructurar y dar estilo a páginas web profesionales con HTML5 y CSS3."
   },
   {

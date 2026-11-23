@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 USE upskill_crm;
 -- Migración acumulativa para una base upskill_crm creada con versiones anteriores.
 

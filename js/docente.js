@@ -3,6 +3,9 @@
     // 🎓 Panel Docente - Lógica principal
     // ===============================
 
+    // Las rutas del JSON son relativas a /views/; esta vista vive en /views/CMR/Docentes/.
+    const rutaImagen = (ruta = "") => ruta.startsWith("../src/") ? "../../../src/" + ruta.slice("../src/".length) : ruta;
+
     fetch("../../../database/productos.json")
         .then((res) => res.json())
         .then((data) => {
@@ -14,17 +17,19 @@
         cursosAleatorios.forEach((curso) => {
             const card = document.createElement("div");
             card.className = "card-docente";
+            // Un solo valor para que la barra y el texto coincidan.
+            const avance = Math.floor(Math.random() * 100);
             card.innerHTML = `
-            <img src="${curso.imagen}" alt="${curso.nombre}">
+            <img src="${rutaImagen(curso.imagen)}" alt="${curso.nombre}">
             <div class="card-info">
                 <h3>${curso.nombre}</h3>
                 <p><strong>Categoría:</strong> ${curso.categoria}</p>
                 <p><strong>Nivel:</strong> ${curso.nivel}</p>
             </div>
             <div class="progreso-container">
-                <div class="progreso-barra" style="width: ${Math.floor(Math.random() * 100)}%;"></div>
+                <div class="progreso-barra" style="width: ${avance}%;"></div>
             </div>
-            <p class="porcentaje">${Math.floor(Math.random() * 100)}% completado</p>
+            <p class="porcentaje">${avance}% completado</p>
             `;
             cursosContainer?.appendChild(card);
         });

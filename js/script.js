@@ -1,11 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Botón de regreso compartido para las vistas de la plataforma.
-  if (window.location.pathname.includes('/views/') && !document.querySelector('.back-button')) {
+  // Se coloca debajo del navbar para no romper la barra fija del sistema de diseño.
+  const esInicio = /\/views\/pagPrin\.html$/.test(window.location.pathname);
+  if (window.location.pathname.includes('/views/') && !esInicio && !document.querySelector('.back-button')) {
     const back = document.createElement('button');
     back.type = 'button'; back.className = 'back-button standalone-back'; back.textContent = '← Regresar';
     back.addEventListener('click', () => { if (history.length > 1) history.back(); else location.href = 'pagPrin.html'; });
-    document.body.prepend(back);
+    const barra = document.querySelector('body > header.navbar, body > .navbar');
+    if (barra) barra.after(back); else document.body.prepend(back);
   }
+
+  // ===== CIERRE DE SESIÓN =====
+  // Los enlaces con data-logout="<ruta a /api>" destruyen la sesión PHP antes de salir.
+  document.querySelectorAll('[data-logout]').forEach(link => {
+    link.addEventListener('click', async e => {
+      e.preventDefault();
+      const destino = link.getAttribute('href') || '../index.html';
+      try {
+        await fetch(`${link.dataset.logout}/logout.php`, { method: 'POST', credentials: 'same-origin' });
+      } catch (error) {
+        console.error('No se pudo cerrar la sesión en el servidor:', error);
+      }
+      window.location.replace(destino);
+    });
+  });
   // ===== FORMULARIO DE REGISTRO =====
   const form = document.querySelector('.register-form');
   const modal = document.getElementById('successModal');
@@ -246,7 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.style.display = 'flex';
     });
 
-    const closeSuccessModal = () => modal.setAttribute('aria-hidden', 'true');
+    const closeSuccessModal = () => {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.style.display = 'none';
+    };
     window.closeSuccessModal = closeSuccessModal;
     if (closeBtn) closeBtn.addEventListener('click', closeSuccessModal);
 
@@ -278,7 +299,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== MENÚ HAMBURGUESA / DESPLEGABLE =====
+  // ===== NAV RESPONSIVA (hamburguesa) =====
+  const navbar = document.querySelector('.navbar');
+  const navLinks = navbar && navbar.querySelector('.nav-links');
+  if (navbar && navLinks && !navbar.querySelector('.nav-toggle')) {
+    const toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', 'Abrir menú');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '☰';
+    navLinks.parentElement.insertBefore(toggle, navLinks);
+    toggle.addEventListener('click', () => {
+      const abierto = navbar.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', String(abierto));
+    });
+    document.addEventListener('click', e => {
+      if (navbar.classList.contains('nav-open') && !navbar.contains(e.target)) {
+        navbar.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // ===== MENÚ DESPLEGABLE =====
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       const container = btn.parentElement;
@@ -299,8 +343,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== CAMBIO DE IDIOMA =====
   const translations = {
-    es: { courses: 'Cursos', career: 'Planes de carrera', certificate: 'Certificaciones', cart: 'Carrito', settings: 'Configuración', theme: 'Tema', language: 'Idioma', documents: 'Documentos', proposedTech: 'Tecnología Propuesta', status: 'Estado del Servicio', login: 'Iniciar sesión', serviceStatus: 'Estado del Servicio: 🟢 ON' },
-    en: { courses: 'Courses', career: 'Career Paths', certificate: 'Certificates', cart: 'Cart', settings: 'Settings', theme: 'Theme', language: 'Language', documents: 'Documents', proposedTech: 'Proposed Technology', status: 'Service Status', login: 'Login', serviceStatus: 'Service Status: 🟢 ON' }
+    es: { courses: 'Cursos', career: 'Planes de carrera', certificate: 'Certificaciones', cart: 'Carrito', settings: 'Configuración', theme: 'Tema', language: 'Idioma', documents: 'Documentos', proposedTech: 'Tecnología Propuesta', status: 'Estado del Servicio', login: 'Iniciar sesión', serviceStatus: '🟢 Estado del Servicio: ON' },
+    en: { courses: 'Courses', career: 'Career Paths', certificate: 'Certificates', cart: 'Cart', settings: 'Settings', theme: 'Theme', language: 'Language', documents: 'Documents', proposedTech: 'Proposed Technology', status: 'Service Status', login: 'Login', serviceStatus: '🟢 Service Status: ON' }
   };
 
   window.toggleLanguage = () => {
