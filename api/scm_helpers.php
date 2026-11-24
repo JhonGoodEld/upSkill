@@ -20,7 +20,7 @@ function scm_folio(PDO $pdo): string {
     return $prefix . str_pad((string)$n, 4, '0', STR_PAD_LEFT);
 }
 
-function scm_maybe_generate_push_order(PDO $pdo, int $productoId, int $usuarioId): ?int {
+function scm_maybe_generate_push_order(PDO $pdo, int $productoId, int $usuarioId, ?int $ordenErpId = null): ?int {
     $st = $pdo->prepare("SELECT id,nombre,stock_actual,stock_minimo,proveedor_id,estrategia_logistica FROM productos WHERE id=? AND estado='activo' FOR UPDATE");
     $st->execute([$productoId]);
     $p = $st->fetch();
@@ -58,13 +58,14 @@ function scm_maybe_generate_push_order(PDO $pdo, int $productoId, int $usuarioId
     $pdo->prepare("UPDATE productos SET stock_actual=?,actualizado_en=NOW() WHERE id=?")
         ->execute([$nuevoStock,$productoId]);
 
-    $pdo->prepare("INSERT INTO movimientos_inventario(producto_id,tipo,cantidad,motivo,detalle,fecha,usuario_id,pedido_id) VALUES(?,'entrada',?,'reposición',?,NOW(),?,?)")
+    $pdo->prepare("INSERT INTO movimientos_inventario(producto_id,tipo,cantidad,motivo,detalle,fecha,usuario_id,pedido_id,orden_erp_id) VALUES(?,'entrada',?,'reposición',?,NOW(),?,?,?)")
         ->execute([
             $productoId,
             $cantidad,
-            'Entrada automática de licencias por reposición PUSH. Pedido '.$folio.' surtido automáticamente.',
+            'Entrada automática de licencias por reposición PUSH. Pedido '.$folio.' surtido automáticamente.'.($ordenErpId ? ' Reposición activada por la orden ERP #'.$ordenErpId.'.' : ''),
             $usuarioId,
-            $pedidoId
+            $pedidoId,
+            $ordenErpId
         ]);
 
     return $pedidoId;

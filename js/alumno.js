@@ -1,41 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ========== Cargar cursos al azar ==========
-  fetch("../database/productos.json")
-    .then((res) => res.json())
-    .then((data) => {
+  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#039;"}[c]));
+  const resolveCourseImage = value => {
+    const raw = String(value || "").trim();
+    if (/^https?:\/\//i.test(raw)) return raw;
+    const clean = raw.replace(/^\.\.\/src\//, "").replace(/^src\//, "").replace(/^\.\.\//, "");
+    return `../src/${clean || "primer.jpg"}`;
+  };
+  // ========== Mis cursos adquiridos desde ERP/SCM ==========
+  fetch("../api/tienda_mis_cursos.php", { credentials: "same-origin", cache: "no-store" })
+    .then(async response => { const data = await response.json(); if (!response.ok) throw new Error(data.error || "No fue posible consultar tus cursos."); return data.cursos || []; })
+    .then(cursos => {
       const cursosContainer = document.querySelector("#cursosContainer");
-      if (!cursosContainer) throw new Error("No se encontró #cursosContainer");
-      const cursosAleatorios = [...data].sort(() => 0.5 - Math.random()).slice(0, 4);
-
-      cursosAleatorios.forEach((curso) => {
+      if (!cursosContainer) return;
+      cursosContainer.innerHTML = "";
+      cursos.forEach(curso => {
         const card = document.createElement("div");
         card.classList.add("curso-card");
-        const progreso = Math.floor(Math.random() * 101);
+        const image = resolveCourseImage(curso.imagen);
         card.innerHTML = `
-          <img src="${curso.imagen}" alt="${curso.nombre}">
-          <h3>${curso.nombre}</h3>
-          <p><strong>Duración:</strong> ${curso.duracion}</p>
-          <p><strong>Precio:</strong> $${curso.precio} MXN</p>
-          <div class="progreso-container">
-            <div class="progreso-barra" style="width: ${progreso}%;"></div>
-          </div>
-          <p class="porcentaje">${progreso}% completado</p>
+          <img src="${escapeHtml(image)}" alt="${escapeHtml(curso.nombre)}">
+          <h3>${escapeHtml(curso.nombre)}</h3>
+          <p><strong>Duración:</strong> ${escapeHtml(curso.duracion || "No especificada")}</p>
+          <p><strong>Licencias adquiridas:</strong> ${Number(curso.licencias || 0)}</p>
+          <p><strong>Última compra:</strong> ${escapeHtml(new Date(String(curso.ultima_compra).replace(" ", "T")).toLocaleDateString())}</p>
+          <a href="cursos.html">Ver catálogo</a>
         `;
         cursosContainer.appendChild(card);
       });
-
-      if (cursosAleatorios.length === 0) {
-        cursosContainer.innerHTML = "<p>No hay cursos disponibles para mostrar.</p>";
-      } else {
-        generarTareas(cursosAleatorios);
-      }
+      if (cursos.length === 0) cursosContainer.innerHTML = '<p>Aún no has adquirido cursos. <a href="cursos.html">Explora el catálogo</a> para comenzar.</p>';
+      else generarTareas(cursos);
     })
-    .catch((err) => {
-      console.error("Error al cargar los cursos:", err);
+    .catch(err => {
+      console.error("Error al cargar cursos adquiridos:", err);
       const cont = document.querySelector("#cursosContainer");
       if (cont) cont.innerHTML = "<p>No fue posible cargar tus cursos en este momento.</p>";
-      const tareas = document.querySelector("#listaTareas");
-      if (tareas) tareas.innerHTML = '<li class="tarea">No fue posible cargar las tareas.</li>';
     });
 
   // ========== Tareas Pendientes ==========
@@ -60,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       tarea.classList.add("tarea", estado);
       tarea.innerHTML = `
-        <h4>${nombreTarea} — <em>${curso.nombre}</em></h4>
+        <h4>${escapeHtml(nombreTarea)} — <em>${escapeHtml(curso.nombre)}</em></h4>
         <p>Estado: <strong>${estado.toUpperCase()}</strong></p>
       `;
       listaTareas.appendChild(tarea);

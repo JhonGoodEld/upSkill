@@ -3,14 +3,14 @@ require_once __DIR__ . '/erp_helpers.php';
 $user=require_erp_user();$pdo=db();$method=$_SERVER['REQUEST_METHOD'];
 
 function orden_detalle(PDO $pdo,int $id): array {
-  $st=$pdo->prepare("SELECT o.*,c.nombre cliente,c.correo cliente_correo,c.telefono cliente_telefono,c.empresa,u.nombre usuario FROM erp_ordenes o JOIN clientes c ON c.id=o.cliente_id JOIN usuarios u ON u.id=o.usuario_id WHERE o.id=? LIMIT 1");$st->execute([$id]);$o=$st->fetch();if(!$o)return [];
+  $st=$pdo->prepare("SELECT o.*,c.nombre cliente,c.correo cliente_correo,c.telefono cliente_telefono,c.empresa,CASE WHEN o.origen='tienda' THEN 'Compra en línea' ELSE u.nombre END usuario FROM erp_ordenes o JOIN clientes c ON c.id=o.cliente_id JOIN usuarios u ON u.id=o.usuario_id WHERE o.id=? LIMIT 1");$st->execute([$id]);$o=$st->fetch();if(!$o)return [];
   $st=$pdo->prepare("SELECT d.*,p.nombre producto,p.imagen FROM erp_orden_detalle d JOIN productos p ON p.id=d.producto_id WHERE d.orden_id=? ORDER BY d.id");$st->execute([$id]);$o['productos']=$st->fetchAll();
   $st=$pdo->prepare("SELECT h.*,u.nombre usuario FROM erp_orden_historial h LEFT JOIN usuarios u ON u.id=h.usuario_id WHERE h.orden_id=? ORDER BY h.fecha DESC,h.id DESC");$st->execute([$id]);$o['historial']=$st->fetchAll();return $o;
 }
 
 if($method==='GET'){
   $id=(int)($_GET['id']??0);if($id){$o=orden_detalle($pdo,$id);if(!$o)json_response(['error'=>'Orden no encontrada.'],404);json_response(['orden'=>$o]);}
-  $q=clean_string($_GET['q']??'');$estado=clean_string($_GET['estado']??'');$sql="SELECT o.id,o.folio,o.fecha,o.total,o.estado,c.nombre cliente,u.nombre usuario FROM erp_ordenes o JOIN clientes c ON c.id=o.cliente_id JOIN usuarios u ON u.id=o.usuario_id WHERE 1=1";$params=[];
+  $q=clean_string($_GET['q']??'');$estado=clean_string($_GET['estado']??'');$sql="SELECT o.id,o.folio,o.fecha,o.total,o.estado,o.origen,o.metodo_pago,o.pago_estado,c.nombre cliente,CASE WHEN o.origen='tienda' THEN 'Compra en línea' ELSE u.nombre END usuario FROM erp_ordenes o JOIN clientes c ON c.id=o.cliente_id JOIN usuarios u ON u.id=o.usuario_id WHERE 1=1";$params=[];
   if($q!==''){$sql.=" AND (o.folio LIKE ? OR c.nombre LIKE ?)";$like='%'.$q.'%';$params=[$like,$like];}
   if($estado!==''){$sql.=' AND o.estado=?';$params[]=$estado;}
   $sql.=' ORDER BY o.fecha DESC,o.id DESC';$st=$pdo->prepare($sql);$st->execute($params);json_response(['ordenes'=>$st->fetchAll()]);

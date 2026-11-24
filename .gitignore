@@ -4,3 +4,7 @@ bin/
 obj/
 *.user
 *.suo
+config.local.php
+vendor/
+.env
+/logs/

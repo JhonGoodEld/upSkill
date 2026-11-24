@@ -37,6 +37,10 @@
                     <a class="admin-crm-link" href="../../SCM/scm.html">Abrir SCM →</a>
                 </div>
                 <div class="admin-quick-grid">
+                    <div><h2>Atención a clientes</h2><p>Consulta tickets, responde solicitudes y gestiona el seguimiento de compras.</p></div>
+                    <a class="admin-crm-link" href="../../ERP/soporte.html">Abrir soporte →</a>
+                </div>
+                <div class="admin-quick-grid">
                     <div><h2>ERP — Recursos empresariales</h2><p>Integra clientes del CRM, cursos e inventario del SCM y órdenes de clientes.</p></div>
                     <a class="admin-crm-link" href="../../ERP/erp.html">Abrir ERP →</a>
                 </div>
@@ -113,6 +117,22 @@
                 </div>
             </section>
 
+
+            <section class="admin-section" id="supportAdminSection" hidden>
+                <button class="accordion">🎧 Usuarios de soporte técnico</button>
+                <div class="panel" style="display:block">
+                    <p>El administrador principal puede crear cuentas que atienden tickets de clientes. El personal de soporte no obtiene acceso al CRM, SCM ni a la administración.</p>
+                    <div id="supportUserNotice" class="admin-notice"></div>
+                    <form id="supportUserForm" class="admin-create-form" novalidate>
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="email" name="correo" placeholder="Correo electrónico" required>
+                        <input type="password" name="password" placeholder="Contraseña (mínimo 8 caracteres)" required>
+                        <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" required>
+                        <button type="submit">Crear cuenta de soporte</button>
+                    </form>
+                    <div class="admin-table-wrap"><table class="approval-table"><thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Estado</th><th>Fecha</th></tr></thead><tbody id="supportUsersBody"><tr><td colspan="5">Cargando...</td></tr></tbody></table></div>
+                </div>
+            </section>
 
             <!-- Inventario de cursos -->
             <section class="admin-section">
@@ -516,6 +536,7 @@
         <!-- Protección de rol y backend administrativo -->
         <script src="../../../js/role-guard.js"></script>
         <script src="../../../js/admin-backend.js"></script>
+        <script src="../../../js/soporte-admin.js"></script>
         <script src="../../../js/script.js"></script>
         <script src="../../../js/admin.js"></script>
     

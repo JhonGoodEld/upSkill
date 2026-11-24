@@ -49,12 +49,16 @@ try {
     ];
 
     if (isset($cols['stock_actual'], $cols['stock_minimo'])) {
+        $select[] = 'p.stock_actual AS stock_actual';
+        $select[] = 'p.stock_minimo AS stock_minimo';
         $select[] = "CASE
             WHEN p.stock_actual <= 0 THEN 'No disponible'
             WHEN p.stock_actual <= p.stock_minimo THEN 'Pocas licencias'
             ELSE 'Disponible'
         END AS disponibilidad";
     } else {
+        $select[] = '0 AS stock_actual';
+        $select[] = '0 AS stock_minimo';
         $select[] = "'Disponible' AS disponibilidad";
     }
 

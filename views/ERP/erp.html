@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="upskill-build" content="activity-fix-20261104-2">
   <title>ERP — Upskill Academy</title>
-  <link rel="stylesheet" href="../../css/erp.css">
+  <link rel="stylesheet" href="../../css/erp.css?v=20261104-2">
   <link rel="stylesheet" href="../../css/modulos.css">
 </head>
 <body class="erp-body">
@@ -18,8 +19,11 @@
       <button data-section="productos">▣ Cursos (SCM)</button>
       <button data-section="inventario">◇ Inventario (SCM)</button>
       <button data-section="ordenes">▤ Órdenes</button>
+      <button id="miActividadBtn" class="activity-nav-button" data-section="actividad" type="button">✓ Mi actividad</button>
       <button data-section="reportes">▥ Reportes</button>
       <button data-section="nivel">◈ Nivel ERP</button>
+      <button id="configTiendaBtn" hidden>⚙ Configuración comercial</button>
+      <button id="soporteBtn" hidden>🎧 Atención a clientes</button>
       <button id="crmBtn">▦ CRM</button>
       <button id="scmBtn">◇ SCM</button>
       <button id="adminBtn">⚙ Panel administrador</button>
@@ -63,8 +67,15 @@
     </section>
 
     <section id="ordenes" class="section">
-      <div class="toolbar"><input id="buscarOrden" placeholder="Buscar folio o cliente..."><select id="filtroOrdenEstado"><option value="">Todos los estados</option><option>pendiente</option><option>procesando</option><option>procesada</option><option>cancelada</option></select><button class="btn primary" id="nuevaOrdenBtn">+ Nueva orden</button></div>
+      <div class="toolbar"><input id="buscarOrden" placeholder="Buscar folio o cliente..."><select id="filtroOrdenEstado"><option value="">Todos los estados</option><option>pendiente</option><option>procesando</option><option>procesada</option><option>cancelada</option><option>en_revision</option><option>entregada</option><option>reembolsada</option></select><button class="btn primary" id="nuevaOrdenBtn">+ Nueva orden</button></div>
       <div class="panel"><div class="table-wrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Responsable</th><th>Acciones</th></tr></thead><tbody id="ordenesBody"></tbody></table></div></div>
+    </section>
+
+    <section id="actividad" class="section">
+      <div class="panel">
+        <div class="activity-heading"><div><h2>Mi actividad</h2><p class="muted">Aquí solo aparecen las interacciones y operaciones ERP/SCM realizadas con tu propia cuenta.</p></div><label>Mes <input type="month" id="actividadMes"></label></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha y hora</th><th>Módulo / acción</th><th>Cliente</th><th>Contacto</th><th>Folio ERP</th><th>Responsable (usuario)</th><th>Rol</th><th>Descripción</th></tr></thead><tbody id="actividadBody"></tbody></table></div>
+      </div>
     </section>
 
     <section id="reportes" class="section">
@@ -72,6 +83,7 @@
       <div id="reportTable" class="report-view active">
         <div class="grid-2"><div class="panel"><h3>Productos más vendidos</h3><table><thead><tr><th>Curso</th><th>Unidades</th></tr></thead><tbody id="reporteTopBody"></tbody></table></div><div class="panel"><h3>Órdenes por estado</h3><table><thead><tr><th>Estado</th><th>Total</th></tr></thead><tbody id="reporteEstadosBody"></tbody></table></div></div>
         <div class="panel"><h3>Ventas por mes</h3><table><thead><tr><th>Mes</th><th>Órdenes</th><th>Ventas</th></tr></thead><tbody id="reporteMesBody"></tbody></table></div>
+        <div class="panel"><h3>Uso del monedero de clientes</h3><div id="walletReportSummary" class="grid-3"></div><h4>Saldo por cliente</h4><table><thead><tr><th>Cliente</th><th>Correo</th><th>Saldo</th></tr></thead><tbody id="walletReportBody"></tbody></table><h4>Recargas y consumos por mes</h4><table><thead><tr><th>Mes</th><th>Recargas</th><th>Consumos</th><th>Reembolsos</th></tr></thead><tbody id="walletMonthlyBody"></tbody></table></div>
       </div>
       <div id="reportChart" class="report-view">
         <div class="grid-3"><div class="panel"><h3>Productos vendidos</h3><div id="topChart" class="bars"></div></div><div class="panel"><h3>Ventas mensuales</h3><div id="salesChart" class="columns"></div></div><div class="panel"><h3>Estados de orden</h3><div id="stateDonut" class="donut-wrap"></div></div></div>
@@ -110,6 +122,6 @@
 
 <div class="modal wide" id="detalleOrdenModal"><div class="modal-card"><button class="modal-x" data-close="detalleOrdenModal">×</button><h2 id="detalleOrdenTitle">Detalle de orden</h2><div id="detalleOrdenContent"></div></div></div>
 
-<script src="../../js/erp.js"></script>
+<script src="../../js/erp.js?v=20261104-2"></script>
 </body>
 </html>

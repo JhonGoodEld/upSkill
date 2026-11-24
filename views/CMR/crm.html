@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="upskill-build" content="activity-fix-20261104-2">
   <title>CRM — Upskill Academy</title>
-  <link rel="stylesheet" href="../../css/crm.css">
+  <link rel="stylesheet" href="../../css/crm.css?v=20261104-2">
   <link rel="stylesheet" href="../../css/modulos.css">
 </head>
 <body class="crm-body">
@@ -69,7 +70,16 @@
       </section>
 
       <section id="actividad" class="section">
-          <div class="panel-card"><div class="panel-title-row"><h2>Mi actividad</h2><label class="month-filter">Mes <input type="month" id="actividadMes"></label></div><div class="table-wrap"><table class="table"><thead><tr><th>Fecha y hora</th><th>Cliente</th><th>Tipo</th><th>Responsable/contacto</th><th>Descripción</th></tr></thead><tbody id="actividadBody"></tbody></table></div></div>
+          <div class="panel-card">
+              <div class="panel-title-row activity-title-row">
+                  <div><h2>Actividad del sistema</h2><p class="small">Consulta las interacciones CRM y los movimientos de órdenes ERP realizados por administradores y usuarios de Ventas.</p></div>
+                  <div class="activity-filters">
+                      <label>Mes <input type="month" id="actividadMes"></label>
+                      <label>Usuario <select id="actividadUsuario"><option value="">Todos los administradores y Ventas</option></select></label>
+                  </div>
+              </div>
+              <div class="table-wrap"><table class="table"><thead><tr><th>Fecha y hora</th><th>Módulo / acción</th><th>Cliente</th><th>Contacto</th><th>Folio ERP</th><th>Responsable (usuario)</th><th>Rol</th><th>Descripción</th></tr></thead><tbody id="actividadBody"></tbody></table></div>
+          </div>
       </section>
 
       <section id="reportes" class="section">
@@ -217,6 +227,6 @@
 
 <!-- Nueva interacción -->
 <div id="interaccionModal" class="modal"><div class="modal-content"><h2>Nueva interacción</h2><div id="interaccionNotice"></div><form id="interaccionForm" class="form-grid"><input type="hidden" id="interaccionClienteId"><div><label>Tipo</label><select id="interaccionTipo"><option value="llamada">Llamada</option><option value="correo">Correo</option><option value="reunión">Reunión</option></select></div><div><label>Fecha y hora</label><input id="interaccionFecha" type="datetime-local" required></div><div class="full"><label>Responsable / contacto con quien se tuvo la interacción</label><input id="interaccionResponsable" maxlength="150" required></div><div class="full"><label>Descripción</label><textarea id="interaccionDescripcion" rows="4" required></textarea></div><div class="full modal-actions"><button class="btn btn-primary" type="submit">Guardar</button><button class="btn btn-cancel" type="button" id="cerrarInteraccion">Cancelar</button></div></form></div></div>
-<script src="../../js/crm.js"></script>
+<script src="../../js/crm.js?v=20261104-2"></script>
 </body>
 </html>

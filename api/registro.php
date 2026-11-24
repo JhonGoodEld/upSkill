@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/helpers.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_response(['error' => 'Método no permitido.'], 405);
+require_csrf();
 
 $d = body_json();
 $nombre = clean_string($d['nombre'] ?? '');

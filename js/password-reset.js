@@ -1,0 +1,9 @@
+document.addEventListener('DOMContentLoaded',()=>{
+ const $=id=>document.getElementById(id),modal=$('passwordRecoveryModal');if(!modal)return;
+ const open=()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false');};
+ const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');};
+ $('openPasswordRecovery')?.addEventListener('click',e=>{e.preventDefault();open();});$('closePasswordRecovery')?.addEventListener('click',close);modal.addEventListener('click',e=>{if(e.target===modal)close();});
+ const request=async body=>{const csrf=await TiendaAPI.token('../api');const r=await fetch('../api/recuperar_password.php',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw new Error(d.error||'No fue posible procesar la solicitud.');return d;};
+ $('requestResetForm').addEventListener('submit',async e=>{e.preventDefault();const email=$('resetEmail').value.trim();try{const d=await request({accion:'solicitar',correo:email});$('resetCodeNotice').textContent=d.mensaje+(d.codigo_demo?` Código simulado: ${d.codigo_demo}`:'');$('confirmResetForm').hidden=!d.codigo_demo;if(d.codigo_demo)$('resetCode').focus();}catch(err){$('resetCodeNotice').textContent=err.message;}});
+ $('confirmResetForm').addEventListener('submit',async e=>{e.preventDefault();const pass=$('resetPassword').value;if(pass!==$('resetPasswordConfirm').value){$('resetCodeNotice').textContent='Las contraseñas no coinciden.';return;}try{const d=await request({accion:'restablecer',correo:$('resetEmail').value.trim(),codigo:$('resetCode').value.trim(),password_nueva:pass});$('resetCodeNotice').textContent=d.mensaje;$('confirmResetForm').hidden=true;$('requestResetForm').reset();$('confirmResetForm').reset();}catch(err){$('resetCodeNotice').textContent=err.message;}});
+});

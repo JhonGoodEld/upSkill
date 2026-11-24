@@ -17,7 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const destino = link.getAttribute('href') || '../index.html';
       try {
-        await fetch(`${link.dataset.logout}/logout.php`, { method: 'POST', credentials: 'same-origin' });
+        // Toda petición POST necesita el token CSRF de la sesión.
+        const r = await fetch(`${link.dataset.logout}/csrf.php`, { credentials: 'same-origin', cache: 'no-store' });
+        const { csrf_token } = await r.json();
+        await fetch(`${link.dataset.logout}/logout.php`, { method: 'POST', credentials: 'same-origin', headers: { 'X-CSRF-Token': csrf_token } });
       } catch (error) {
         console.error('No se pudo cerrar la sesión en el servidor:', error);
       }
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const contieneEspacios = value => /\s/.test(value);
   const nombreValido = value => /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü]+(?:[ ]+[A-Za-zÁÉÍÓÚáéíóúÑñÜü]+)*$/u.test(value);
   const correoValido = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const csrfFor = async apiBase => { const r=await fetch(`${apiBase}/csrf.php`,{credentials:'same-origin',cache:'no-store'}); const d=await r.json(); if(!r.ok)throw new Error(d.error||'No fue posible iniciar sesión segura.'); return d.csrf_token; };
 
   const validarRegistro = formulario => {
     const nombre = formulario.querySelector('[name="nombre"]');
@@ -187,10 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (crmRole === 'admin_logistica' || crmRole === 'admin_logistica_ventas') payload.portal = 'gestion';
           else payload.rol = crmRole;
 
+          const csrfToken = await csrfFor(apiBase);
           const response = await fetch(`${apiBase}/login.php`, {
             method: 'POST',
             credentials: 'same-origin',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
             body: JSON.stringify(payload)
           });
           const data = await response.json();
@@ -202,11 +207,15 @@ document.addEventListener('DOMContentLoaded', () => {
               ? loginForm.dataset.logisticaRedirect
               : rol === 'ventas'
                 ? loginForm.dataset.ventasRedirect
-                : loginForm.dataset.adminRedirect;
+                : rol === 'soporte'
+                  ? loginForm.dataset.soporteRedirect
+                  : loginForm.dataset.adminRedirect;
             if (!destino) throw new Error('No se configuró el destino para este tipo de usuario.');
             window.location.href = destino;
           } else {
-            window.location.href = loginForm.dataset.crmRedirect;
+            const requested = new URLSearchParams(window.location.search).get('redirect') || '';
+            const safe = /^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\.html$/.test(requested) && !requested.includes('..');
+            window.location.href = safe ? requested : loginForm.dataset.crmRedirect;
           }
         } catch (error) {
           mostrarError(loginForm, error.message || 'Error al conectar con el servidor.');
@@ -244,9 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
           curso_solicitado: form.querySelector('[name="curso_solicitado"]')?.value.trim() || ''
         };
         try {
+          const csrfToken = await csrfFor(apiBase);
           const response = await fetch(`${apiBase}/registro.php`, {
             method: 'POST', credentials: 'same-origin',
-            headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
+            headers: {'Content-Type':'application/json','X-CSRF-Token':csrfToken}, body: JSON.stringify(payload)
           });
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || 'No fue posible registrar la solicitud.');

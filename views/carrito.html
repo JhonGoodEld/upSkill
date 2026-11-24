@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../css/stylePrin.css">
   <link rel="stylesheet" href="../css/carrito.css"> 
   <link rel="stylesheet" href="../css/flotante.css">
+  <link rel="stylesheet" href="../css/tienda.css">
 </head>
 
 <body>
@@ -51,18 +52,17 @@
 <main class="carrito-page">
     <!--  Cursos seleccionados -->
     <section id="carrito" class="carrito-lista"></section>
+    <p id="cartNotice" class="store-notice" role="alert" aria-live="polite"></p>
 
     <!--  Resumen de pago -->
     <aside class="resumen">
       <h2>Resumen de compra</h2>
       <p><strong>Subtotal:</strong> <span id="subtotal">$0.00 MXN</span></p>
-      <p><strong>IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
+      <p><strong id="ivaLabel">IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
       <p><strong>Total:</strong> <span id="total">$0.00 MXN</span></p>
 
-      <!--<button id="btnPagar" class="btn-pagar">Realizar pago</button> -->
-      <button id="btnPagar" class="btn-pagar" onclick="window.location.href='pago.html'">
-  Realizar pago
-</button>
+      <button id="btnVaciarCarrito" class="btn-secundario" type="button">Vaciar carrito</button>
+      <button id="btnPagar" class="btn-pagar" type="button" disabled>Continuar al checkout</button>
 
     <!-- Enlace a las políticas -->
     <p class="politica-link">
@@ -245,6 +245,7 @@ document.getElementById("donacionSticker").addEventListener("click", () => {
 });
 </script>
   <script src="../js/script.js"></script>
+  <script src="../js/tienda-api.js"></script>
   <script src="../js/carrito.js"></script>
       
 </body>

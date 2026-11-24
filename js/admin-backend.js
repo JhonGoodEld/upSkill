@@ -4,11 +4,16 @@
   const API = '../../../api';
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 
+  let csrfPromise = null;
+  async function getCsrf() { if (!csrfPromise) csrfPromise = fetch(`${API}/csrf.php`, {credentials:'same-origin',cache:'no-store'}).then(r=>r.json()).then(d=>d.csrf_token).catch(e=>{csrfPromise=null;throw e;}); return csrfPromise; }
   async function request(path, options = {}) {
+    const method = String(options.method || 'GET').toUpperCase();
+    const headers = {'Content-Type':'application/json', ...(options.headers || {})};
+    if (!['GET','HEAD','OPTIONS'].includes(method)) headers['X-CSRF-Token'] = await getCsrf();
     const response = await fetch(`${API}/${path}`, {
+      ...options,
       credentials: 'same-origin',
-      headers: {'Content-Type':'application/json', ...(options.headers || {})},
-      ...options
+      headers
     });
     const raw = await response.text();
     let data;

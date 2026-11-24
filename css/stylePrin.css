@@ -156,6 +156,15 @@ p  { color: var(--text-soft); }
   transition: opacity .2s var(--ease);
 }
 .menu-link:hover { opacity: 1; text-decoration: none; }
+/* Enlaces del navbar sin clase (páginas de la tienda) */
+.navbar .nav-links > a:not(.menu-link):not(.login-btn) {
+  color: #f5f5f7;
+  font-size: .85rem;
+  padding: 6px 4px;
+  opacity: .82;
+  white-space: nowrap;
+}
+.navbar .nav-links > a:not(.menu-link):not(.login-btn):hover { opacity: 1; text-decoration: none; }
 
 /* Badge de estado dentro del navbar */
 .badge-estado {

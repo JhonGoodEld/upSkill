@@ -4,7 +4,15 @@ $user=require_scm_admin();$pdo=db();$method=$_SERVER['REQUEST_METHOD'];
 
 if($method==='GET'){
  $producto=filter_var($_GET['producto_id']??null,FILTER_VALIDATE_INT);$tipo=clean_string($_GET['tipo']??'');
- $sql="SELECT m.*,p.nombre producto,u.nombre usuario FROM movimientos_inventario m JOIN productos p ON p.id=m.producto_id JOIN usuarios u ON u.id=m.usuario_id WHERE 1=1";$params=[];
+ $sql="SELECT m.*,p.nombre producto,u.nombre usuario,u.rol usuario_rol,o.folio orden_erp_folio,
+   CASE WHEN m.orden_erp_id IS NOT NULL THEN 'ERP'
+        WHEN m.pedido_id IS NOT NULL THEN 'Pedido SCM'
+        ELSE 'Manual SCM' END AS origen
+   FROM movimientos_inventario m
+   JOIN productos p ON p.id=m.producto_id
+   JOIN usuarios u ON u.id=m.usuario_id
+   LEFT JOIN erp_ordenes o ON o.id=m.orden_erp_id
+   WHERE 1=1";$params=[];
  if($producto){$sql.=" AND m.producto_id=?";$params[]=$producto;}
  if($tipo!==''){if(!in_array($tipo,['entrada','salida'],true))json_response(['error'=>'Tipo inválido.'],422);$sql.=" AND m.tipo=?";$params[]=$tipo;}
  $sql.=" ORDER BY m.fecha DESC,m.id DESC";$st=$pdo->prepare($sql);$st->execute($params);json_response(['movimientos'=>$st->fetchAll()]);

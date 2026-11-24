@@ -1,11 +1,12 @@
 <?php
 // Configuración de conexión para XAMPP / MariaDB.
 // Cambia estos valores si tu instalación utiliza otro usuario, contraseña o puerto.
-const DB_HOST = '127.0.0.1';
-const DB_NAME = 'upskill_crm';
-const DB_USER = 'root';
-const DB_PASS = '';
-const DB_CHARSET = 'utf8mb4';
+define('DB_HOST', getenv('UPSKILL_DB_HOST') ?: '127.0.0.1');
+define('DB_NAME', getenv('UPSKILL_DB_NAME') ?: 'upskill_crm');
+define('DB_USER', getenv('UPSKILL_DB_USER') ?: 'root');
+define('DB_PASS', getenv('UPSKILL_DB_PASS') !== false ? getenv('UPSKILL_DB_PASS') : '');
+define('DB_CHARSET', 'utf8mb4');
+define('APP_ENV', getenv('APP_ENV') ?: 'development');
 
 function db(): PDO {
     static $pdo = null;

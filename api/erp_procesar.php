@@ -12,7 +12,7 @@ try{
  foreach($items as $it){$nuevo=(int)$it['stock_actual']-(int)$it['cantidad'];$pdo->prepare("UPDATE productos SET stock_actual=?,actualizado_en=NOW() WHERE id=?")->execute([$nuevo,$it['producto_id']]);
    $detalle='Venta ERP '.$orden['folio'].': salida automática de '.(int)$it['cantidad'].' licencia(s) por orden de cliente.';
    $pdo->prepare("INSERT INTO movimientos_inventario(producto_id,tipo,cantidad,motivo,detalle,fecha,usuario_id,orden_erp_id) VALUES(?,'salida',?,'venta',?,NOW(),?,?)")->execute([$it['producto_id'],$it['cantidad'],$detalle,$user['id'],$id]);
-   scm_maybe_generate_push_order($pdo,(int)$it['producto_id'],(int)$user['id']);
+   scm_maybe_generate_push_order($pdo,(int)$it['producto_id'],(int)$user['id'],$id);
  }
  $pdo->prepare("UPDATE erp_ordenes SET estado='procesada',actualizado_en=NOW() WHERE id=?")->execute([$id]);
  $pdo->prepare("INSERT INTO erp_orden_historial(orden_id,estado,descripcion,usuario_id) VALUES(?,'procesada','Inventario actualizado y movimientos de venta registrados automáticamente en SCM.',?)")->execute([$id,$user['id']]);

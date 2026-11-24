@@ -44,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
         $cliente = $pdo->prepare("INSERT INTO clientes(nombre,correo,telefono,empresa,fecha_registro,estado,etapa_crm) VALUES(?,?,?,?,CURRENT_DATE,'activo','Prospecto') ON DUPLICATE KEY UPDATE nombre=VALUES(nombre),telefono=VALUES(telefono),empresa=VALUES(empresa),estado='activo'");
         $cliente->execute([$sol['nombre'],$sol['correo'],$sol['telefono'],$sol['empresa']]);
+        $clienteLookup = $pdo->prepare('SELECT id FROM clientes WHERE correo=? LIMIT 1');
+        $clienteLookup->execute([$sol['correo']]);
+        $clienteId = (int)$clienteLookup->fetchColumn();
+        if ($clienteId > 0) $pdo->prepare('UPDATE usuarios SET cliente_id=? WHERE id=?')->execute([$clienteId,$usuarioId]);
+        if ($sol['rol'] === 'alumno' && $clienteId > 0) $pdo->prepare('INSERT INTO monederos(cliente_id,saldo) VALUES(?,0.00) ON DUPLICATE KEY UPDATE cliente_id=VALUES(cliente_id)')->execute([$clienteId]);
 
         $up = $pdo->prepare("UPDATE solicitudes_registro SET estado='aprobada',fecha_resolucion=NOW(),resuelto_por=? WHERE id=?");
         $up->execute([$admin['id'], $id]);

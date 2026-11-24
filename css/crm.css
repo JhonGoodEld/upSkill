@@ -34,3 +34,9 @@
 input[readonly] {
     background: #202d42;
 }
+
+/* Actividad global CRM: filtros y columnas de trazabilidad */
+.activity-title-row{align-items:flex-start;gap:16px;flex-wrap:wrap}
+.activity-filters{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.activity-filters label{display:grid;gap:5px;font-size:13px;font-weight:600;color:var(--muted)}
+.activity-filters input,.activity-filters select{min-height:38px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font:inherit}

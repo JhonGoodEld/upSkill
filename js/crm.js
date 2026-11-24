@@ -2,7 +2,9 @@ const API='../../api';
 let usuario=null, clientes=[], clienteSeleccionado=null, metricasActuales=null, riesgosExpandidos=false;
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const api=async(path,options={})=>{const res=await fetch(`${API}/${path}`,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});const data=await res.json().catch(()=>({error:'Respuesta no válida del servidor.'}));if(!res.ok){const e=new Error(data.error||`Error HTTP ${res.status}`);e.status=res.status;throw e}return data};
+let csrfTokenPromise=null;
+const csrfToken=async()=>{if(!csrfTokenPromise)csrfTokenPromise=fetch(`${API}/csrf.php`,{credentials:'same-origin',cache:'no-store'}).then(r=>r.json()).then(d=>d.csrf_token).catch(e=>{csrfTokenPromise=null;throw e});return csrfTokenPromise};
+const api=async(path,options={})=>{const method=String(options.method||'GET').toUpperCase(),headers={'Content-Type':'application/json',...(options.headers||{})};if(!['GET','HEAD','OPTIONS'].includes(method))headers['X-CSRF-Token']=await csrfToken();const res=await fetch(`${API}/${path}`,{...options,cache:'no-store',credentials:'same-origin',headers});const data=await res.json().catch(()=>({error:'Respuesta no válida del servidor.'}));if(!res.ok){if(res.status===419)csrfTokenPromise=null;const e=new Error(data.error||`Error HTTP ${res.status}`);e.status=res.status;throw e}return data};
 function aviso(id,msg,error=false){const el=$(id);el.className=`notice${error?' error':''}`;el.textContent=msg}
 function abrir(id){$(id).classList.add('open')} function cerrar(id){$(id).classList.remove('open')}
 function initials(nombre=''){return nombre.split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'CL'}
@@ -46,7 +48,15 @@ async function cambiarEtapa(id,etapa){await api('etapa.php',{method:'PUT',body:J
 async function eliminarCliente(id){if(!confirm('¿Eliminar definitivamente este cliente y su historial? Esta acción no se puede deshacer.'))return;try{await api(`cliente.php?id=${id}`,{method:'DELETE'});await cargarClientes();await cargarMetricas()}catch(e){alert(e.message)}}
 function prepararInteraccion(){if(!clienteSeleccionado)return;$('interaccionClienteId').value=clienteSeleccionado.id;$('interaccionFecha').value=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);$('interaccionDescripcion').value='';$('interaccionResponsable').value=clienteSeleccionado.nombre;abrir('interaccionModal')}
 async function guardarInteraccion(e){e.preventDefault();const p={cliente_id:Number($('interaccionClienteId').value),tipo:$('interaccionTipo').value,descripcion:$('interaccionDescripcion').value.trim(),fecha:$('interaccionFecha').value,responsable:$('interaccionResponsable').value.trim()};if(!p.responsable){aviso('interaccionNotice','Indica el responsable o contacto con quien se tuvo la interacción.',true);return}try{await api('interacciones.php',{method:'POST',body:JSON.stringify(p)});cerrar('interaccionModal');await mostrarHistorial(p.cliente_id);await cargarMetricas();await cargarActividad()}catch(e){aviso('interaccionNotice',e.message,true)}}
-async function cargarActividad(){const mes=$('actividadMes').value;const d=await api(`actividad.php${mes?`?mes=${encodeURIComponent(mes)}`:''}`);$('actividadBody').innerHTML=d.actividad.length?d.actividad.map(x=>`<tr><td>${esc(fmtFecha(x.fecha))}</td><td>${esc(x.cliente)}</td><td>${esc(x.tipo)}</td><td>${esc(x.responsable||'')}</td><td>${esc(x.descripcion)}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">No hay actividades en este periodo.</td></tr>'}
+async function cargarActividad(){
+ const mes=$('actividadMes')?.value||'',usuarioId=$('actividadUsuario')?.value||'';const qs=new URLSearchParams();if(mes)qs.set('mes',mes);if(usuarioId)qs.set('usuario_id',usuarioId);
+ try {
+  const d=await api(`actividad.php${qs.toString()?`?${qs}`:''}`);const filtro=$('actividadUsuario'),seleccionado=usuarioId;
+  if(filtro&&Array.isArray(d.usuarios)){filtro.innerHTML='<option value="">Todos los administradores y Ventas</option>'+d.usuarios.map(u=>`<option value="${Number(u.id)}">${esc(u.nombre)} · ${esc(u.rol)}${u.estado==='inactivo'?' (inactivo)':''}</option>`).join('');if([...filtro.options].some(o=>o.value===seleccionado))filtro.value=seleccionado;}
+  const rows=Array.isArray(d.actividad)?d.actividad:[];
+  $('actividadBody').innerHTML=rows.length?rows.map(x=>`<tr><td>${esc(fmtFecha(x.fecha))}</td><td>${esc(x.modulo)} · ${esc(x.tipo)}</td><td>${esc(x.cliente||'—')}</td><td>${esc(x.contacto||'—')}</td><td>${esc(x.folio||((x.modulo==='ERP'||x.modulo==='SCM')?x.referencia:'—')||'—')}</td><td>${esc(x.responsable_nombre||x.usuario_nombre||'Usuario no disponible')}</td><td>${esc(x.responsable_rol||x.rol||'—')}</td><td>${esc(x.descripcion||'')}</td></tr>`).join(''):'<tr><td colspan="8" class="empty">No hay actividades en este periodo.</td></tr>';
+ } catch(e) { $('actividadBody').innerHTML=`<tr><td colspan="8" class="empty">No fue posible cargar la actividad: ${esc(e.message)}</td></tr>`; }
+}
 
 function cambiarSeccion(id) { document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === id)); document.querySelectorAll('.crm-nav button[data-section]').forEach(b => b.classList.toggle('active', b.dataset.section === id)); const t = { dashboard: 'Resumen CRM', clientes: 'Clientes', interacciones: 'Interacciones', actividad: 'Mi actividad', reportes: 'Reportes', perfil: 'Mi perfil'};$('pageTitle').textContent=t[id]||'CRM';if(id==='reportes'&&metricasActuales)renderReportes(metricasActuales)}
 function globalSearch(){const q=$('globalSearch').value.trim();const active=document.querySelector('.section.active')?.id;if(active==='clientes'){$('buscarCliente').value=q;renderClientes()}else if(active==='interacciones')renderInteraccionesClientes();else if(q){cambiarSeccion('clientes');$('buscarCliente').value=q;renderClientes()}}
@@ -189,6 +199,8 @@ async function guardarPerfil(e) {
 document.addEventListener('DOMContentLoaded', () => {
     $('perfilForm').onsubmit =
         guardarPerfil;
+    $('actividadMes').onchange = cargarActividad;
+    $('actividadUsuario').onchange = cargarActividad;
  if(localStorage.getItem('upskillTheme')==='dark')document.body.classList.add('dark-mode');applyLanguage(localStorage.getItem('upskillLanguage')||'es');$('themeBtn').textContent=document.body.classList.contains('dark-mode')?'☀':'☾';
  $('themeBtn').onclick=toggleTheme;$('languageBtn').onclick=()=>applyLanguage(document.documentElement.dataset.language==='es'?'en':'es');$('backBtn').onclick=()=>location.href='Administradores/admin.html';$('adminPanelBtn').onclick=()=>location.href='Administradores/admin.html';$('scmBtn').onclick=()=>location.href='../SCM/scm.html';$('erpBtn').onclick=()=>location.href='../ERP/erp.html';$('globalSearch').addEventListener('input',globalSearch);
     document
@@ -242,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
  $('buscarCliente').oninput = renderClientes;
  $('filtroEstado').onchange = renderClientes;
  $('filtroEtapa').onchange = renderClientes;
- $('actividadMes').onchange = cargarActividad;
  $('clientesBody').onclick = e => { const id = e.target.dataset.id; if (!id) return; if (e.target.classList.contains('ver-cliente')) mostrarHistorial(id); if (e.target.classList.contains('editar-cliente')) mostrarDetalle(id); if (e.target.classList.contains('eliminar-cliente')) eliminarCliente(id) }; $('interaccionesClientesBody').onclick = e => { if (e.target.classList.contains('ver-cliente')) mostrarHistorial(e.target.dataset.id) }; $('riskList').onclick = e => { const el = e.target.closest('.risk-open'); if (el) mostrarDetalle(el.dataset.id) }; $('toggleRiskBtn').onclick = () => { riesgosExpandidos = !riesgosExpandidos; renderRiesgos(metricasActuales?.clientes_en_riesgo || []) };
  $('volverDetalle').onclick=$('cerrarDetalle').onclick=()=>cerrar('detalleClienteModal');$('volverHistorial').onclick=$('cerrarHistorial').onclick=()=>cerrar('historialModal');$('editarDesdeDetalle').onclick=()=>{const id=clienteSeleccionado?.id;cerrar('detalleClienteModal');if(id)abrirCliente(id)};$('cambiarEtapaDesdeDetalle').onclick=()=>{if(!clienteSeleccionado)return;$('etapaSelect').value=clienteSeleccionado.etapa_crm;abrir('etapaModal')};$('guardarEtapaBtn').onclick=()=>clienteSeleccionado&&cambiarEtapa(clienteSeleccionado.id,$('etapaSelect').value);$('cancelarEtapaBtn').onclick=()=>cerrar('etapaModal');$('nuevaInteraccionBtn').onclick=prepararInteraccion;
  $('clienteTelefono').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^0-9 ]/g,'').replace(/ {2,}/g,' ').slice(0,12)});

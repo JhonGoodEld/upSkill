@@ -6,6 +6,7 @@
     <title>Acceso alumnos — Upskill Academy</title>
     <link rel="stylesheet" href="../css/stylePrin.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tienda.css">
     </head>
     <body>
 <header class="navbar">
@@ -46,6 +47,7 @@
             <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="username" required>
             <input type="password" name="password" placeholder="Contraseña" autocomplete="current-password" required>
             <button type="submit" class="loggin-btn">Ingresar</button>
+            <p class="account-help"><a href="#" id="openPasswordRecovery">¿Olvidaste tu contraseña?</a></p>
             <p class="account-help">
                 En caso de quererte unir a nuestro equipo de docentes entonces acceda al siguiente link para empezar a administrar su curso: 
                 <a href="regdocentes.html">Registro para Docentes</a>. En caso de ya contar con una cuenta registrada utilice el siguiente link: 
@@ -174,6 +176,23 @@
 
 
     
-    <script src="../js/script.js"></script>
+    <div id="passwordRecoveryModal" class="password-recovery-modal" aria-hidden="true">
+    <div class="password-recovery-card">
+      <button type="button" id="closePasswordRecovery" class="password-recovery-close">×</button>
+      <h2>Recuperar contraseña</h2>
+      <p>Este proceso es una simulación local. Ingresa el correo de tu cuenta para generar un código temporal.</p>
+      <form id="requestResetForm"><label>Correo electrónico</label><input type="email" id="resetEmail" required><button type="submit">Generar código</button></form>
+      <div id="resetCodeNotice" role="status"></div>
+      <form id="confirmResetForm" hidden>
+        <label>Código de recuperación</label><input id="resetCode" inputmode="numeric" maxlength="6" required>
+        <label>Nueva contraseña</label><input type="password" id="resetPassword" required minlength="8">
+        <label>Confirmar contraseña</label><input type="password" id="resetPasswordConfirm" required minlength="8">
+        <button type="submit">Cambiar contraseña</button>
+      </form>
+    </div>
+  </div>
+  <script src="../js/script.js"></script>
+  <script src="../js/tienda-api.js"></script>
+  <script src="../js/password-reset.js"></script>
     </body>
     </html>

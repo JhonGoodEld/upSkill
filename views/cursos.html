@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/stylecurso.css">
   <link rel="stylesheet" href="../css/flotante.css">
+  <link rel="stylesheet" href="../css/tienda.css">
 </head>
 <body>
 <!--barra de la navegacion pa-->
@@ -41,10 +42,19 @@
 </header>
 
 <h1>Catálogo de Cursos</h1>
-
+  <div id="promotionsBanner" class="promotions-banner" aria-live="polite"></div>
+  <div class="catalog-controls">
+    <input type="search" id="courseSearch" placeholder="Buscar curso por nombre o descripción..." aria-label="Buscar cursos">
+    <select id="courseCategory"><option value="">Todas las categorías</option></select>
+    <select id="courseSort" aria-label="Ordenar cursos"><option value="recent">Más recientes</option><option value="name">Nombre A-Z</option><option value="priceAsc">Precio: menor a mayor</option><option value="priceDesc">Precio: mayor a menor</option></select>
+  </div>
   <div id="catalogStatus" class="catalog-status" aria-live="polite">Cargando cursos...</div>
   <div class="cards-container" id="cardsContainer">
     <!-- Aquí se insertarán las tarjetas dinámicamente -->
+  </div>
+
+  <div id="courseDetailModal" class="course-detail-modal" aria-hidden="true">
+    <div class="course-detail-card"><button type="button" id="closeCourseDetail" class="course-detail-close">×</button><div id="courseDetailContent"></div></div>
   </div>
     <!-- Sticker flotante de donaciones -->
 <div id="donacionSticker" class="sticker-donacion">
@@ -175,6 +185,7 @@ document.getElementById("donacionSticker").addEventListener("click", () => {
 });
 </script>
   <script src="../js/script.js"></script>
+  <script src="../js/tienda-api.js"></script>
   <script src="../js/cursos.js"></script>
   
 </body>

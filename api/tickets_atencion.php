@@ -1,0 +1,18 @@
+<?php
+require_once __DIR__ . '/tienda_helpers.php';
+$pdo=db();$method=$_SERVER['REQUEST_METHOD'];
+$staff=null;
+if(!empty($_SESSION['usuario']['id'])){
+  $sessionUser=require_login();
+  if(in_array($sessionUser['rol'],['admin','soporte'],true)) $staff=$sessionUser;
+}
+if($staff){
+ if($method==='GET'){$q=clean_string($_GET['q']??'');$estado=clean_string($_GET['estado']??'');$sql="SELECT t.id,t.folio,t.cliente_id,t.orden_id,t.asunto,t.mensaje,t.estado,t.respuesta,t.fecha,t.actualizado_en,c.nombre cliente,c.correo,u.nombre responsable,o.folio pedido_folio FROM tickets_atencion t JOIN clientes c ON c.id=t.cliente_id LEFT JOIN usuarios u ON u.id=t.respondido_por LEFT JOIN erp_ordenes o ON o.id=t.orden_id WHERE 1=1";$params=[];if($q!==''){$sql.=' AND (t.folio LIKE ? OR c.nombre LIKE ? OR c.correo LIKE ? OR o.folio LIKE ?)';$l='%'.$q.'%';array_push($params,$l,$l,$l,$l);}if($estado!==''){$sql.=' AND t.estado=?';$params[]=$estado;}$sql.=' ORDER BY t.fecha DESC,t.id DESC';$st=$pdo->prepare($sql);$st->execute($params);json_response(['ok'=>true,'tickets'=>$st->fetchAll()]);}
+ if($method==='PUT'){require_csrf();if(!in_array($staff['rol'],['admin','soporte'],true))json_response(['error'=>'Solo administración y soporte pueden responder tickets.'],403);$d=body_json();$id=(int)($d['id']??0);$status=clean_string($d['estado']??'');$response=clean_string($d['respuesta']??'');if(!$id||!in_array($status,['en_proceso','respondido','cerrado'],true))json_response(['error'=>'Datos del ticket inválidos.'],422);if($status==='respondido'&&$response==='')json_response(['error'=>'Escribe una respuesta antes de marcar el ticket como respondido.'],422);$st=$pdo->prepare('UPDATE tickets_atencion SET estado=?,respuesta=IF(?<>\'\',?,respuesta),respondido_por=?,actualizado_en=NOW() WHERE id=?');$st->execute([$status,$response,$response,$staff['id'],$id]);if(!$st->rowCount())json_response(['error'=>'Ticket no encontrado o sin cambios.'],404);json_response(['ok'=>true,'mensaje'=>'Ticket actualizado.']);}
+ if($method==='POST')json_response(['error'=>'El personal no puede crear tickets en nombre del cliente.'],403);
+ json_response(['error'=>'Método no permitido.'],405);
+}
+$ctx=require_customer();$clienteId=$ctx['cliente_id'];
+if($method==='GET'){$st=$pdo->prepare('SELECT t.id,t.folio,t.orden_id,o.folio AS pedido_folio,t.asunto,t.mensaje,t.estado,t.respuesta,t.fecha,t.actualizado_en FROM tickets_atencion t LEFT JOIN erp_ordenes o ON o.id=t.orden_id WHERE t.cliente_id=? ORDER BY t.fecha DESC,t.id DESC');$st->execute([$clienteId]);json_response(['ok'=>true,'tickets'=>$st->fetchAll()]);}
+if($method==='POST'){require_csrf();$d=body_json();$subject=clean_string($d['asunto']??'');$message=clean_string($d['mensaje']??'');$orderId=(int)($d['orden_id']??0);if($subject===''||mb_strlen($subject)>160||mb_strlen($message)<10||mb_strlen($message)>5000)json_response(['error'=>'Indica un asunto y un mensaje de entre 10 y 5,000 caracteres.'],422);if($orderId){$st=$pdo->prepare("SELECT id FROM erp_ordenes WHERE id=? AND cliente_id=? AND origen='tienda'");$st->execute([$orderId,$clienteId]);if(!$st->fetch())json_response(['error'=>'El pedido seleccionado no pertenece a tu cuenta.'],403);}$folio='T-'.str_pad((string)random_int(1,999999),6,'0',STR_PAD_LEFT);$st=$pdo->prepare('INSERT INTO tickets_atencion(folio,cliente_id,orden_id,asunto,mensaje) VALUES(?,?,?,?,?)');$st->execute([$folio,$clienteId,$orderId?:null,$subject,$message]);json_response(['ok'=>true,'folio'=>$folio,'mensaje'=>'Tu solicitud quedó registrada. Puedes consultar su respuesta en Mis tickets.'],201);}
+json_response(['error'=>'Método no permitido.'],405);

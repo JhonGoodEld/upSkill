@@ -1,0 +1,41 @@
+HOTFIX: Mi actividad CRM + Mi actividad ERP + responsables/folios
+Build: activity-fix-20261104-2
+
+CAUSA IDENTIFICADA
+Las capturas corresponden a HTML anterior: CRM muestra la tabla antigua de 5 columnas y no muestra los filtros; ERP no muestra el botón ni la sección Mi actividad. En la versión corregida, ambos elementos ya están en el HTML. Esto no se corrige importando otra vez la migración SQL.
+
+ARCHIVOS QUE SE DEBEN SOBRESCRIBIR (manteniendo las rutas relativas desde la carpeta upSkillNue):
+- api/actividad.php
+- api/actividad_feed.php
+- api/erp_actividad.php
+- js/crm.js
+- js/erp.js
+- views/CMR/crm.html
+- views/ERP/erp.html
+- css/erp.css
+
+INSTALACIÓN DEL HOTFIX
+1. Haz una copia de seguridad de esos ocho archivos.
+2. Extrae el ZIP del hotfix directamente dentro de C:\\xampp\\htdocs\\, aceptando sobrescribir los archivos.
+   El resultado debe quedar, por ejemplo, en C:\\xampp\\htdocs\\upSkillNue\\views\\ERP\\erp.html.
+3. No importes de nuevo la migración SQL: esta corrección no requiere cambios adicionales en la base de datos.
+4. Cierra las pestañas de CRM y ERP.
+5. Abre de nuevo las páginas y fuerza la recarga con Ctrl+F5.
+6. En el código fuente de ambas páginas busca: activity-fix-20261104-2.
+   Si no aparece, el navegador/Apache sigue sirviendo otra carpeta o no se sobrescribió el HTML.
+
+RESULTADO ESPERADO
+CRM > Mi actividad:
+- Filtros por mes y por usuario (administradores y Ventas).
+- Columnas separadas para Contacto, Folio ERP, Responsable (usuario que realizó la acción), Rol y Descripción.
+- Las actividades CRM muestran el contacto registrado; las de ERP/SCM muestran el folio correspondiente.
+
+ERP > Mi actividad:
+- El menú incluye Mi actividad para Administrador y Ventas.
+- Ventas consulta exclusivamente los registros asociados al ID de su sesión.
+- La tabla muestra Contacto, Folio ERP, Responsable y Rol.
+
+SEGURIDAD
+- api/actividad.php continúa limitado a rol admin.
+- api/erp_actividad.php continúa limitado a admin/ventas y obtiene el ID de usuario desde la sesión, no desde un parámetro del navegador.
+- El feed solo presenta acciones CRM/ERP y movimientos SCM asociados a órdenes ERP de usuarios admin/ventas.
