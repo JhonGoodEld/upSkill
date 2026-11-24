@@ -73,3 +73,16 @@
 /* Código personal de bienvenida (un solo uso) en el catálogo */
 .promotion-chip.personal { background: var(--accent-050, #e6efff); border: 1px dashed var(--accent, #1d4ed8); color: var(--accent-600, #1e40af); }
 .promotion-chip.personal strong { color: var(--accent-600, #1e40af); }
+/* Avisos de la tienda: rojo = error o validación; verde (.store-notice--ok) = acción realizada */
+.store-notice:not(:empty) {
+  padding: 10px 14px;
+  margin: 12px 0;
+  border: 1px solid #f5c2bd;
+  border-radius: var(--radio-sm, 10px);
+  background: #fdecea;
+  color: #8a1c1c;
+}
+.store-notice.store-notice--ok { color: #17683a; }
+.store-notice.store-notice--ok:not(:empty) { background: #e8f6ec; border-color: #bde5ca; }
+#promoNotice { display: block; margin-top: 6px; color: var(--danger, #d93025); }
+#promoNotice.store-notice--ok { color: var(--ok, #1d8f3b); }

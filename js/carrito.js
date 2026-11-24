@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const notice=document.getElementById('cartNotice');
   const money=n=>`$${Number(n||0).toFixed(2)} MXN`;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  const show=m=>{if(notice)notice.textContent=m;};
+  const show=(m,ok=false)=>{if(notice){notice.textContent=m;notice.classList.toggle('store-notice--ok',ok);}};
   let cart=null;
   async function load(){
     try{
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   container?.addEventListener('change',async e=>{const input=e.target.closest('.cart-qty');if(!input)return;try{cart=await TiendaAPI.request('tienda_carrito.php',{method:'PUT',body:{item_id:Number(input.dataset.item),cantidad:Number(input.value)}});render();}catch(err){show(err.message);load();}});
   container?.addEventListener('click',async e=>{const b=e.target.closest('[data-remove]');if(!b)return;try{cart=await TiendaAPI.request('tienda_carrito.php',{method:'DELETE',body:{item_id:Number(b.dataset.remove)}});render();}catch(err){show(err.message);}});
-  const empty=document.getElementById('btnVaciarCarrito');empty?.addEventListener('click',async()=>{try{cart=await TiendaAPI.request('tienda_carrito.php',{method:'DELETE',body:{vaciar:true}});render();show('Carrito vaciado.');}catch(e){show(e.message);}});
+  const empty=document.getElementById('btnVaciarCarrito');empty?.addEventListener('click',async()=>{try{cart=await TiendaAPI.request('tienda_carrito.php',{method:'DELETE',body:{vaciar:true}});render();show('Carrito vaciado.',true);}catch(e){show(e.message);}});
   btn?.addEventListener('click',()=>{if(cart?.items?.length)location.href='checkout.html';});
   await load();
   const policy=document.getElementById('politicasModal');
