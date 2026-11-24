@@ -70,10 +70,11 @@ function store_wallet(PDO $pdo, int $clienteId, bool $lock = false): array {
     return $wallet;
 }
 
-function store_promo(PDO $pdo, string $code, bool $lock = false): ?array {
+function store_promo(PDO $pdo, string $code, bool $lock = false, int $clienteId = 0): ?array {
     if ($code === '') return null;
-    $sql = "SELECT * FROM promociones WHERE codigo=? AND estado='activo' AND NOW() BETWEEN fecha_inicio AND fecha_fin AND (usos_maximos IS NULL OR usos_actuales<usos_maximos) LIMIT 1" . ($lock ? ' FOR UPDATE' : '');
+    // Los códigos personales (cliente_id) solo sirven para su dueño.
+    $sql = "SELECT * FROM promociones WHERE codigo=? AND estado='activo' AND NOW() BETWEEN fecha_inicio AND fecha_fin AND (usos_maximos IS NULL OR usos_actuales<usos_maximos) AND (cliente_id IS NULL OR cliente_id=?) LIMIT 1" . ($lock ? ' FOR UPDATE' : '');
     $st = $pdo->prepare($sql);
-    $st->execute([strtoupper($code)]);
+    $st->execute([strtoupper($code), $clienteId]);
     return $st->fetch() ?: null;
 }

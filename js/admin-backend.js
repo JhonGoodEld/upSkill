@@ -111,8 +111,14 @@
       if (!ok) return;
       btn.disabled = true;
       try {
-        await request('solicitudes.php', {method:'PUT', body:JSON.stringify({id, accion:action})});
-        showNotice('solicitudesNotice', `Solicitud ${action === 'aprobar' ? 'aprobada' : 'rechazada'} correctamente.`);
+        const resultado = await request('solicitudes.php', {method:'PUT', body:JSON.stringify({id, accion:action})});
+        let aviso = `Solicitud ${action === 'aprobar' ? 'aprobada' : 'rechazada'} correctamente.`;
+        if (action === 'aprobar' && resultado) {
+          // Informa si salió el correo de aprobación; sin SMTP muestra el código para entregarlo a mano.
+          if (resultado.correo_enviado) aviso += ` Se envió el correo de aprobación a ${resultado.correo}${resultado.codigo ? ' con su código de un solo uso' : ''}.`;
+          else aviso += ` El correo no se envió porque SMTP no está configurado (quedó en logs/correos/).${resultado.codigo ? ` Código de un solo uso del alumno: ${resultado.codigo}` : ''}`;
+        }
+        showNotice('solicitudesNotice', aviso);
         await recargarSolicitudes();
       } catch (error) {
         showNotice('solicitudesNotice', error.message, true);

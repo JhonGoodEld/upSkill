@@ -2,6 +2,8 @@
 // Copia este archivo como config.local.php en la raíz del proyecto.
 // Completa los datos de tu proveedor SMTP. No subas config.local.php a Git.
 return [
+  // URL con la que se abre el proyecto; se usa en los enlaces de los correos.
+  'app_url' => 'http://localhost/upSkillNue',
   'smtp' => [
     'host' => 'smtp.gmail.com',
     'port' => 587,

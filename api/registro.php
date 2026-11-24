@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/email_service.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_response(['error' => 'Método no permitido.'], 405);
 require_csrf();
 
@@ -33,7 +34,14 @@ $hash = password_hash($password, PASSWORD_DEFAULT);
 $st = $pdo->prepare('INSERT INTO solicitudes_registro(nombre,correo,password_hash,rol,telefono,empresa,especialidad,curso_solicitado,estado) VALUES(?,?,?,?,?,?,?,?,\'pendiente\')');
 $st->execute([$nombre,$correo,$hash,$rol,$telefono,$empresaFinal,$especialidad ?: null,$curso ?: null]);
 
+// Correo de bienvenida: avisa que la cuenta espera la aprobación del administrador.
+// Si el correo falla, la solicitud ya quedó guardada y el registro no se revierte.
+$correoBienvenida = correo_solicitud_recibida($correo, $nombre, $rol);
+
 json_response([
     'ok' => true,
-    'mensaje' => 'Tu solicitud fue enviada al administrador. No podrás iniciar sesión hasta que sea aprobada.'
+    'correo_enviado' => $correoBienvenida['sent'],
+    'mensaje' => $correoBienvenida['sent']
+        ? 'Tu solicitud fue enviada al administrador. Te enviamos un correo de confirmación; no podrás iniciar sesión hasta que sea aprobada.'
+        : 'Tu solicitud fue enviada al administrador. No podrás iniciar sesión hasta que sea aprobada.'
 ], 201);

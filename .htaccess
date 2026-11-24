@@ -1,6 +1,6 @@
 Options -Indexes
 RewriteEngine On
-RewriteRule ^(vendor|sql)/ - [F,L]
+RewriteRule ^(vendor|sql|logs)/ - [F,L]
 <FilesMatch "^(\.env|config\.local\.php|composer\.json|composer\.lock|.*\.sql|.*\.md|.*\.log)$">
   Require all denied
 </FilesMatch>

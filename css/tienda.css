@@ -70,3 +70,6 @@
 .store-page, .promotions-banner, .catalog-controls { max-width: var(--ancho-max, 1024px); }
 .course-detail-card img { background: var(--surface-2, #eef3fb); border-radius: var(--radio-sm, 10px); }
 .course-detail-modal, .password-recovery-modal { background: rgba(0, 0, 0, .4); backdrop-filter: blur(4px); }
+/* Código personal de bienvenida (un solo uso) en el catálogo */
+.promotion-chip.personal { background: var(--accent-050, #e6efff); border: 1px dashed var(--accent, #1d4ed8); color: var(--accent-600, #1e40af); }
+.promotion-chip.personal strong { color: var(--accent-600, #1e40af); }
