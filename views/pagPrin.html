@@ -33,68 +33,66 @@
 
 <!--barra de la navegacion pa-->
 <header class="navbar">
-  <div class="navbar-brand">
-    <h1>Upskill Academy</h1>
-    <span class="badge-estado" data-i18n="serviceStatus">🟢 Estado del Servicio: ON</span>
-  </div>
+  <h1>Upskill Academy</h1>
+
+  Estado del Servicio: 🟢 ON<br>
 
   <!-- MENÚ SUPERIOR -->
   <nav class="nav-links">
 
     <!-- Enlaces directos -->
-    <a href="../views/cursos.html" class="menu-link" data-i18n="courses">Cursos</a>
-    <a href="../views/planes.html" class="menu-link" data-i18n="career">Planes de carrera</a>
-    <a href="../views/upSkill.html" class="menu-link" data-i18n="certificate">Certificate</a>
+    <a href="../views/cursos.html" class="menu-link">Cursos</a>
+    <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
+    <a href="#" class="menu-link">Certificate</a>
 
+    
     <!-- Carrito -->
-    <a href="../views/carritoini.html" class="menu-link" data-i18n="cart">Carrito</a>
+    <a href="../views/carritoini.html" class="menu-link">Carrito</a>
 
     <!-- Configuración -->
     <div class="menu-container">
-      <button class="menu-btn" data-i18n="settings">Configuración <span class="icon">▼</span></button>
+      <button class="menu-btn">Configuración <span class="icon">▼</span></button>
       <div class="menu-content">
-        <a href="#" onclick="toggleTheme(); return false;" data-i18n="theme">Tema</a>
-        <a href="#" onclick="toggleLanguage(); return false;" data-i18n="language">Idioma</a>
+        <a href="#" onclick="toggleTheme()">Tema</a>
+        <a href="#" onclick="toggleLanguage()">Idioma</a>
       </div>
     </div>
 
     <!-- Documentos -->
     <div class="menu-container">
-      <button class="menu-btn" data-i18n="documents">Documentos <span class="icon">▼</span></button>
+      <button class="menu-btn">Documentos <span class="icon">▼</span></button>
       <div class="menu-content">
-        <a href="../docs/tecProp.html" data-i18n="proposedTech">Tecnología Propuesta</a>
-        <a href="../docs/Status.html" data-i18n="status">Estado del Servicio</a>
+        <a href="../docs/tecProp.html">Tenologia Propuesta </a>
+        <a href="../docs/Status.html">Status</a>
       </div>
     </div>
 
-    <!-- Usuarios -->
-    <a href="../views/logalumno.html" class="menu-link" data-i18n="login">Iniciar sesión</a>
-
+        <!-- Usuarios -->
+    <div class="menu-container">
+      <button class="menu-btn">Loggin <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="../views/logalumno.html">Alumno</a>
+        <a href="../views/logdocentes.html">Docentes</a>
+        <a href="../views/loggin.html">Administrador</a>
+      </div>
+    </div>
+    
   </nav>
 </header>
 
 
   <!-- CARRUSEL -->
   <section class="carousel">
-    <h3>Aprende de las mejores academias del mundo</h3>
+    <h3>Aprende de las mejores academias del mundo !!!</h3>
     <div class="carousel-container" id="carousel">
-      <div class="slide"><img src="../src/4-Best-Python-Certifications.jpg" alt="Certificación Python"></div>
-      <div class="slide"><img src="../src/cisco_ccie_datacenter3128722680530508651.jpg" alt="Certificación Cisco CCIE"></div>
-      <div class="slide"><img src="../src/mysql2-300x300.jpg" alt="Certificación MySQL"></div>
-      <div class="slide"><img src="../src/aws.jpg" alt="Certificación AWS"></div>
-      <div class="slide"><img src="../src/azure.jpg" alt="Certificación Azure"></div>
-      <div class="slide"><img src="../src/js.jpg" alt="Certificación JavaScript"></div>
-      <div class="slide"><img src="../src/mongo.jpg" alt="Certificación MongoDB"></div>
-      <div class="slide"><img src="../src/html.jpg" alt="Certificación HTML"></div>
-      <!-- Copia para el bucle continuo -->
-      <div class="slide" aria-hidden="true"><img src="../src/4-Best-Python-Certifications.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/cisco_ccie_datacenter3128722680530508651.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/mysql2-300x300.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/aws.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/azure.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/js.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/mongo.jpg" alt=""></div>
-      <div class="slide" aria-hidden="true"><img src="../src/html.jpg" alt=""></div>
+      <div class="slide"><img src= "../src/4-Best-Python-Certifications.jpg" alt="Certificación 1"></div>
+      <div class="slide"><img src= "../src/cisco_ccie_datacenter3128722680530508651.jpg" alt="Certificación 2"></div>
+      <div class="slide"><img src="../src/mysql2-300x300.jpg" alt="Certificación 3"></div>
+      <div class="slide"><img src= "../src/aws.jpg" alt="Certificación 4 "></div>
+      <div class="slide"><img src= "../src/azure.jpg" alt="Certificación 5"></div>
+      <div class="slide"><img src= "../src/js.jpg" alt="Certificación 6"></div>
+      <div class="slide"><img src= "../src/mongo.jpg" alt="Certificación 7"></div>
+      <div class="slide"><img src= "../src/html.jpg" alt="Certificación 8"></div>
     </div>
   </section>
 
@@ -117,18 +115,18 @@
     <h4>Tu primer curso por 0 pesos</h4>
   </a>
 
-  <a href="../views/cursos.html" class="option-card">
-    <img src="../src/ensenanza.jpg" alt="Nueva enseñanza">
+  <a href="#" class="option-card">
+    <img src="../src/enseñanza.jpg" alt="Nueva enseñanza">
     <h4>Experimenta la nueva forma de enseñanza</h4>
   </a>
 </section>
 
   <section class="loggin-form panel">
-    <div class="note">
-        <strong>Nota al cliente:</strong>
-        Trabajamos constantemente para mantener la disponibilidad de nuestros servicios por encima del 99.9%. <br>
-        En caso de incidentes o mantenimientos programados, notificaremos con anticipación en la página de
-        <a href="../docs/Status.html">Estado del Servicio</a>.
+    <div class="note" style="margin-top:auto; background-color:#e1f5e6; border-left:5px solid #44bd32; border-radius:6px;">
+        <strong>Nota al cliente:</strong>  
+        Trabajamos constantemente para mantener la disponibilidad de nuestros servicios por encima del 99.9%. <br> 
+        En caso de incidentes o mantenimientos programados, notificaremos con anticipación en la página de 
+        <a href="../docs/Status.html" style="color:#40739e; text-decoration:underline;">Estado del Servicio</a>.
     </div>
   </section>
 
@@ -251,6 +249,8 @@
     </div>
   </div>
 
+    <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
+  </footer>
   
 <script>
 document.getElementById("donacionSticker").addEventListener("click", () => {

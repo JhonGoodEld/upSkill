@@ -197,13 +197,7 @@
     document.getElementById("redes").textContent = redes.toLocaleString();
 
     // 🔹 Crear gráfico de crecimiento mensual (Chart.js)
-    // Si la CDN de Chart.js no carga, el resto del panel debe seguir funcionando.
-    const canvasCrecimiento = document.getElementById("graficoCrecimiento");
-    if (typeof Chart === "undefined" || !canvasCrecimiento) {
-        console.warn("Chart.js no está disponible; se omite la gráfica de crecimiento.");
-        return;
-    }
-    const ctx = canvasCrecimiento.getContext("2d");
+    const ctx = document.getElementById("graficoCrecimiento").getContext("2d");
 
     const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const datosMensuales = meses.map(() => Math.floor(Math.random() * 9000) + 1000);
@@ -215,8 +209,8 @@
         datasets: [{
             label: "Visitas mensuales",
             data: datosMensuales,
-            borderColor: "#1d4ed8",
-            backgroundColor: "rgba(29, 78, 216, 0.12)",
+            borderColor: "#2196F3",
+            backgroundColor: "rgba(33, 150, 243, 0.2)",
             fill: true,
             tension: 0.3,
         }]

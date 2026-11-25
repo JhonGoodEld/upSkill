@@ -1,30 +1,70 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container=document.getElementById('cardsContainer'),status=document.getElementById('catalogStatus');
-  const search=document.getElementById('courseSearch'),category=document.getElementById('courseCategory'),sort=document.getElementById('courseSort');
-  const detailModal=document.getElementById('courseDetailModal'),detailContent=document.getElementById('courseDetailContent');
-  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  const money=n=>`$${Number(n||0).toFixed(2)} MXN`;
-  const imageUrl=(path='')=>{const v=String(path||'').trim();if(!v)return '../src/primer.jpg';if(/^https?:\/\//i.test(v)||v.startsWith('data:'))return v;const clean=v.replace(/^\.\.\/src\//,'').replace(/^src\//,'').replace(/^\.\.\//,'');return `../src/${clean}`;};
-  let products=[],catalogRequest=0;
-  function render(){
-    let list=[...products];const q=(search?.value||'').trim().toLowerCase(),cat=category?.value||'';
-    if(q)list=list.filter(p=>`${p.nombre} ${p.descripcion||''} ${p.categoria||''} ${p.tags||''}`.toLowerCase().includes(q));
-    if(cat)list=list.filter(p=>p.categoria===cat);
-    const mode=sort?.value||'recent';if(mode==='name')list.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));if(mode==='priceAsc')list.sort((a,b)=>finalPrice(a)-finalPrice(b));if(mode==='priceDesc')list.sort((a,b)=>finalPrice(b)-finalPrice(a));if(mode==='recent')list.sort((a,b)=>String(b.fecha_publicacion||'').localeCompare(String(a.fecha_publicacion||''))||Number(b.id)-Number(a.id));
-    if(status)status.textContent=`${list.length} de ${products.length} cursos disponibles`;
-    if(!list.length){container.innerHTML='<p class="empty-catalog">No hay cursos que coincidan con tu búsqueda.</p>';return;}
-    container.innerHTML=list.map(p=>{const price=Number(p.precio||0),discount=Number(p.descuento||0),final=finalPrice(p);return `<article class="card" data-id="${Number(p.id)}"><img src="${esc(imageUrl(p.imagen))}" alt="${esc(p.nombre)}" onerror="this.src='../src/primer.jpg'"><div class="card-content"><h2>${esc(p.nombre)}</h2><p>${esc(p.descripcion||'')}</p><p><strong>Categoría:</strong> ${esc(p.categoria||'—')} | <strong>Nivel:</strong> ${esc(p.nivel||'—')}</p><p><strong>Duración:</strong> ${esc(p.duracion||'—')} | <strong>Valoración:</strong> ${Number(p.valoracion||0).toFixed(1)} ⭐</p><p><strong>Disponibilidad:</strong> <span class="catalog-availability">${esc(p.disponibilidad||'Disponible')}</span></p>${discount>0?`<p><strong>Precio:</strong> <s>${money(price)}</s> <strong>${money(final)}</strong> (${discount}% desc.)</p>`:`<p><strong>Precio:</strong> ${money(price)}</p>`}<div class="store-actions"><button type="button" class="btn detail-course-btn" data-detail-id="${p.id}">Ver detalles</button><button type="button" class="btn add-cart-btn" data-product-id="${p.id}" ${Number(p.stock_actual)<=0?'disabled':''}>${Number(p.stock_actual)<=0?'Sin licencias':'Agregar al carrito'}</button></div></div></article>`;}).join('');
-  }
-  function finalPrice(p){const price=Number(p.precio||0),discount=Math.max(0,Math.min(100,Number(p.descuento||0)));return Math.round(price*(1-discount/100)*100)/100;}
-  async function cargarCatalogo({silencioso=false}={}){const req=++catalogRequest;if(!silencioso&&status){status.textContent='Actualizando cursos...';status.classList.remove('error');}try{const res=await fetch(`../api/cursos_publicos.php?_=${Date.now()}`,{credentials:'same-origin',cache:'no-store',headers:{'Cache-Control':'no-cache'}});const raw=await res.text();let data;try{data=raw?JSON.parse(raw):{};}catch{throw new Error(`El servidor no devolvió JSON. ${raw.slice(0,140)}`);}if(!res.ok)throw new Error(data.error||`HTTP ${res.status}`);if(req!==catalogRequest)return;products=Array.isArray(data.cursos)?data.cursos:[];const cats=[...new Set(products.map(p=>p.categoria).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));if(category){const selected=category.value;category.innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');category.value=selected;}render();}catch(e){if(req!==catalogRequest)return;if(status){status.textContent='No fue posible cargar los cursos desde la base de datos.';status.classList.add('error');}if(!silencioso)container.innerHTML=`<p class="empty-catalog">${esc(e.message)}</p>`;}}
-  cargarCatalogo();
-  search?.addEventListener('input',render);category?.addEventListener('change',render);sort?.addEventListener('change',render);
-  (async()=>{try{const d=await TiendaAPI.request('promociones_publicas.php');const target=document.getElementById('promotionsBanner');if(target&&d.promociones.length)target.innerHTML=d.promociones.map(p=>`<div class="promotion-chip${Number(p.personal)?' personal':''}"><strong>${Number(p.personal)?'Tu código de bienvenida (un solo uso)':esc(p.nombre)}</strong> · Código <b>${esc(p.codigo)}</b> · ${p.tipo_descuento==='porcentaje'?`${Number(p.valor)}% de descuento`:`${money(p.valor)} de descuento`}</div>`).join('');}catch(_){}})();
-  function openDetail(id){const p=products.find(x=>Number(x.id)===Number(id));if(!p)return;const price=Number(p.precio||0),final=finalPrice(p);detailContent.innerHTML=`<img src="${esc(imageUrl(p.imagen))}" alt="${esc(p.nombre)}"><h2>${esc(p.nombre)}</h2><p>${esc(p.descripcion||'Sin descripción disponible.')}</p><p><strong>Categoría:</strong> ${esc(p.categoria||'—')} · <strong>Nivel:</strong> ${esc(p.nivel||'—')}</p><p><strong>Duración:</strong> ${esc(p.duracion||'—')} · <strong>Valoración:</strong> ${Number(p.valoracion||0).toFixed(1)} ⭐</p><p><strong>Licencias disponibles:</strong> ${Number(p.stock_actual||0)}</p><h2>${money(final)} ${Number(p.descuento||0)>0?`<small><s>${money(price)}</s> · ${Number(p.descuento)}% descuento</small>`:''}</h2><button class="store-btn add-cart-btn" data-product-id="${p.id}">Agregar al carrito</button>`;detailModal.classList.add('open');detailModal.setAttribute('aria-hidden','false');}
-  const closeDetail=()=>{detailModal.classList.remove('open');detailModal.setAttribute('aria-hidden','true');};
-  document.getElementById('closeCourseDetail')?.addEventListener('click',closeDetail);detailModal?.addEventListener('click',e=>{if(e.target===detailModal)closeDetail();});
-  container?.addEventListener('click',async e=>{const detail=e.target.closest('.detail-course-btn');if(detail){openDetail(detail.dataset.detailId);return;}const button=e.target.closest('.add-cart-btn');if(!button)return;const productId=Number(button.dataset.productId);button.disabled=true;try{await TiendaAPI.request('tienda_carrito.php',{method:'POST',body:{producto_id:productId,cantidad:1}});button.textContent='Agregado ✓';setTimeout(()=>{button.textContent='Agregar al carrito';button.disabled=false;},1300);}catch(error){if(/sesión|autenticada|iniciar sesión|permisos/i.test(error.message)){sessionStorage.setItem('upskillPendingCartProduct',String(productId));location.href=`logalumno.html?redirect=${encodeURIComponent('carrito.html')}`;return;}if(status){status.textContent=error.message;status.classList.add('error');}button.disabled=false;}});
-  detailContent?.addEventListener('click',async e=>{const button=e.target.closest('.add-cart-btn');if(!button)return;const id=Number(button.dataset.productId);try{await TiendaAPI.request('tienda_carrito.php',{method:'POST',body:{producto_id:id,cantidad:1}});button.textContent='Agregado ✓';}catch(err){if(/sesión|autenticada|iniciar sesión|permisos/i.test(err.message)){sessionStorage.setItem('upskillPendingCartProduct',String(id));location.href=`logalumno.html?redirect=${encodeURIComponent('carrito.html')}`;return;}button.textContent=err.message;}});
-  const channel=('BroadcastChannel'in window)?new BroadcastChannel('upskill-catalogo-cursos'):null;channel?.addEventListener('message',e=>{if(e.data?.type==='catalogo-actualizado')cargarCatalogo({silencioso:true});});window.addEventListener('storage',e=>{if(e.key==='upskillCatalogoCursosUpdated')cargarCatalogo({silencioso:true});});const poll=setInterval(()=>cargarCatalogo({silencioso:true}),5000);window.addEventListener('beforeunload',()=>clearInterval(poll));
-  const terminosModal=document.getElementById('terminosModal'),privacidadModal=document.getElementById('privacidadModal');document.getElementById('openTerminos')?.addEventListener('click',e=>{e.preventDefault();terminosModal.style.display='flex';});document.getElementById('openPrivacidad')?.addEventListener('click',e=>{e.preventDefault();privacidadModal.style.display='flex';});document.getElementById('cerrarTerminos')?.addEventListener('click',()=>terminosModal.style.display='none');document.getElementById('cerrarPrivacidad')?.addEventListener('click',()=>privacidadModal.style.display='none');document.querySelectorAll('.close').forEach(x=>x.addEventListener('click',()=>{const m=x.closest('.modal');if(m)m.style.display='none';}));window.addEventListener('click',e=>{if(e.target===terminosModal||e.target===privacidadModal)e.target.style.display='none';});
+  // ========== Cargar el JSON y generar tarjetas ==========
+  fetch("../data/productos.json")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("JSON cargado:", data);
+
+      const container = document.getElementById("cardsContainer");
+      data.forEach((product) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <img src="${product.imagen}" alt="${product.nombre}">
+          <div class="card-content">
+            <h2>${product.nombre}</h2>
+            <p>${product.descripcion}</p>
+            <p><strong>Categoría:</strong> ${product.categoria} | <strong>Nivel:</strong> ${product.nivel}</p>
+            <p><strong>Duración:</strong> ${product.duracion} | <strong>Valoración:</strong> ${product.valoracion} ⭐</p>
+            <p><strong>Precio:</strong> $${product.precio} MXN</p>
+            <a href="../views/carrito.html" class="btn">Agregar al carrito</a>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    })
+    .catch((err) => console.error("Error al cargar JSON:", err));
+
+  // ========== MODALES ==========
+  const terminosModal = document.getElementById("terminosModal");
+  const openTerminos = document.getElementById("openTerminos");
+  const cerrarTerminos = document.getElementById("cerrarTerminos");
+
+  const privacidadModal = document.getElementById("privacidadModal");
+  const openPrivacidad = document.getElementById("openPrivacidad");
+  const cerrarPrivacidad = document.getElementById("cerrarPrivacidad");
+
+  const closeIcons = document.querySelectorAll(".close");
+
+  openTerminos?.addEventListener("click", (e) => {
+    e.preventDefault();
+    terminosModal.style.display = "flex";
+  });
+
+  openPrivacidad?.addEventListener("click", (e) => {
+    e.preventDefault();
+    privacidadModal.style.display = "flex";
+  });
+
+  cerrarTerminos?.addEventListener("click", () => {
+    terminosModal.style.display = "none";
+  });
+
+  cerrarPrivacidad?.addEventListener("click", () => {
+    privacidadModal.style.display = "none";
+  });
+
+  closeIcons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      icon.parentElement.parentElement.style.display = "none";
+    });
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === terminosModal || event.target === privacidadModal) {
+      event.target.style.display = "none";
+    }
+  });
 });

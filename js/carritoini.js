@@ -19,7 +19,7 @@
         return seleccionados;
     }
 
-    fetch("../database/productos.json")
+    fetch("../data/productos.json")
         .then(res => res.json())
         .then(data => {
         const seleccionados = obtenerProductosAleatorios(data);

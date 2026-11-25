@@ -3,8 +3,7 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facturación — Upskill Academy</title>
-    <link rel="stylesheet" href="../css/stylePrin.css">
+    <title>Facturacion — Upskill Academy</title>
     <link rel="stylesheet" href="../css/facturacion.css"> 
     <link rel="stylesheet" href="../css/pago.css">
     </head>
@@ -297,8 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const seccionSellos = document.getElementById("sellosCFDI");
 
   btnFirmar.addEventListener("click", () => {
-    // .oculto usa !important en stylePrin.css: hay que quitar la clase.
-    seccionSellos.classList.remove("oculto");
+    seccionSellos.style.display = "block";
     btnFirmar.innerText = "Firmado ✓";
     btnFirmar.disabled = true;
     btnFirmar.style.background = "#1c7c2a";
