@@ -3,38 +3,17 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso alumnos — Upskill Academy</title>
-    <link rel="stylesheet" href="../css/stylePrin.css">
+    <title>Loggin alumno - Upskill Academy</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/tienda.css">
     </head>
     <body>
-<header class="navbar">
-  <div class="navbar-brand">
-    <h1>Upskill Academy</h1>
-  </div>
-  <nav class="nav-links">
-    <a href="pagPrin.html" class="menu-link">Inicio</a>
-    <a href="cursos.html" class="menu-link">Cursos</a>
-    <a href="planes.html" class="menu-link">Planes de carrera</a>
-    <div class="menu-container">
-      <button class="menu-btn">Iniciar sesión <span class="icon">▼</span></button>
-      <div class="menu-content">
-        <a href="logalumno.html">Alumno</a>
-        <a href="CMR/logdocentes.html">Docentes</a>
-        <a href="CMR/Administradores/loggin.html">Administración</a>
-      </div>
-    </div>
-  </nav>
-</header>
-<div class="platform-page-tools"><button class="back-button" type="button" onclick="history.length>1?history.back():location.href='pagPrin.html'">← Regresar</button><button class="tool-button" type="button" onclick="toggleLanguage()">ES/EN</button><button class="tool-button" type="button" onclick="toggleTheme()">☾</button></div>
 
         <section class="hero">
     <img src="../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
     
     <div class="hero-text">
-        <h2>Acceso para alumnos</h2>
-        <p>¡Bienvenido! Ingresa con el correo con el que te registraste.</p>
+        <h2>Upskillacademy</h2>
+        <p>! BIENVENIDO !</p>
     </div>
 
     <img src="../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
@@ -43,16 +22,10 @@
     <!-- FORMULARIO DE REGISTRO -->
     <section class="loggin-section">
         <img src="../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
-        <form class="loggin-form" data-crm-role="alumno" data-crm-api="../api" data-crm-redirect="alumno.html" novalidate>
-            <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="username" required>
-            <input type="password" name="password" placeholder="Contraseña" autocomplete="current-password" required>
-            <button type="submit" class="loggin-btn">Ingresar</button>
-            <p class="account-help"><a href="#" id="openPasswordRecovery">¿Olvidaste tu contraseña?</a></p>
-            <p class="account-help">
-                En caso de quererte unir a nuestro equipo de docentes entonces acceda al siguiente link para empezar a administrar su curso: 
-                <a href="regdocentes.html">Registro para Docentes</a>. En caso de ya contar con una cuenta registrada utilice el siguiente link: 
-                <a href="CMR/logdocentes.html">Sistema para Docentes</a>.
-            </p>
+        <form class="loggin-form">
+        <input type="text" placeholder="Usuario" required>
+        <input type="email" placeholder="Contraseña" required>
+        <a href="../views/alumno.html" class="loggin-btn">Ingresar</a>
         </form>
     </section>
 
@@ -174,25 +147,10 @@
     </div>
   </div>
 
+        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
+    </footer>
 
     
-    <div id="passwordRecoveryModal" class="password-recovery-modal" aria-hidden="true">
-    <div class="password-recovery-card">
-      <button type="button" id="closePasswordRecovery" class="password-recovery-close">×</button>
-      <h2>Recuperar contraseña</h2>
-      <p>Este proceso es una simulación local. Ingresa el correo de tu cuenta para generar un código temporal.</p>
-      <form id="requestResetForm"><label>Correo electrónico</label><input type="email" id="resetEmail" required><button type="submit">Generar código</button></form>
-      <div id="resetCodeNotice" class="store-notice" role="status"></div>
-      <form id="confirmResetForm" hidden>
-        <label>Código de recuperación</label><input id="resetCode" inputmode="numeric" maxlength="6" required>
-        <label>Nueva contraseña</label><input type="password" id="resetPassword" required minlength="8">
-        <label>Confirmar contraseña</label><input type="password" id="resetPasswordConfirm" required minlength="8">
-        <button type="submit">Cambiar contraseña</button>
-      </form>
-    </div>
-  </div>
-  <script src="../js/script.js"></script>
-  <script src="../js/tienda-api.js"></script>
-  <script src="../js/password-reset.js"></script>
+    <script src="../js/script.js"></script>
     </body>
     </html>

@@ -1,1 +1,339 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=checkout.html"><title>Checkout | Upskill Academy</title></head><body><p>Redirigiendo al checkout seguro... <a href="checkout.html">Continuar</a></p><script>location.replace('checkout.html');</script></body></html>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago — Upskill Academy</title>
+    
+    <link rel="stylesheet" href="../css/pago.css">
+    </head>
+    <body>
+    <header class="navbar">
+
+    <div class="nav-left">
+        <h1>Sección de Pago</h1>
+    </div>
+
+    <div class="nav-center">
+        <p>Elige tu forma de pago</p>
+    </div>
+
+    <div class="nav-right">
+        <a href="../views/carrito.html">Cancelar compra</a>
+    </div>
+
+</header>
+
+    <div class="main-container">
+        <h2>Información del Pago de la Compra</h2>
+
+    <form id="formPago" action="pago-metodo.html" method="GET">
+
+        <!-- Datos del cliente -->
+        <label>Nombre:</label>
+        <input type="text" name="nombre" >
+
+        <label>Apellido:</label>
+        <input type="text" name="apellido" >
+
+        <label>Edad:</label>
+        <input type="number" name="edad" min="1" max="99" >
+
+        <label>Sexo:</label>
+        <select name="sexo" >
+            <option value="">Seleccione...</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Otro">Otro</option>
+        </select>
+
+        <label>Ocupación:</label>
+        <input type="text" name="ocupacion" >
+
+        <!-- Métodos de pago -->
+        <label style="margin-top: 20px;">Método de pago:</label>
+        <select name="metodo" id="metodoPago" >
+            <option value="">Seleccione...</option>
+            <option value="Tarjeta">Tarjeta (Crédito/Débito)</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Tienda">Pago en tienda (OXXO)</option>
+            <option value="Monedero">Monedero electrónico</option>
+    <option value="Cheque">Cheque</option>
+    <option value="Transferencia">Transferencia bancaria</option>
+        </select>
+
+        <!-- Tarjeta -->
+        <div id="tarjetaSection" class="section hidden">
+            <h3>Pago con Tarjeta</h3>
+
+            <label>Banco emisor:</label>
+            <select name="banco">
+                <option>BBVA</option>
+                <option>Banorte</option>
+                <option>Santander</option>
+                <option>Scotiabank</option>
+                <option>HSBC</option>
+            </select>
+
+            <label>Número de tarjeta (simulada):</label>
+            <input type="text" value="4111 1111 1111 1111" disabled>
+
+            <label>Fecha de expiración:</label>
+            <input type="text" value="12/29" disabled>
+
+            <label>CVV:</label>
+            <input type="text" value="123" disabled>
+        </div>
+
+        <!-- PayPal -->
+        <div id="paypalSection" class="section hidden">
+            <h3>Pago con PayPal</h3>
+
+            <p>Se generará un ID de transacción simulado.</p>
+
+            <label>ID de pago (simulado):</label>
+            <input type="text" value="PAYPAL-TX-982712" readonly>
+        </div>
+
+        <!-- Pago en tienda -->
+        <div id="tiendaSection" class="section hidden">
+            <h3>Pago en tienda (OXXO)</h3>
+
+            <p>Utiliza la siguiente línea para realizar el depósito simulado:</p>
+
+            <label>CLABE simulada:</label>
+            <input type="text" value="0021 8000 1234 5678 90" readonly>
+
+            <p style="font-size: 14px;">Tu pago se confirmará automáticamente al continuar.</p>
+        </div>
+
+        <!-- Monedero electrónico -->
+<div id="monederoSection" class="section hidden">
+    <h3>Monedero Electrónico</h3>
+
+    <label>ID de monedero:</label>
+    <input type="text" value="WALLET-98271" readonly>
+
+    <label>Saldo disponible (simulado):</label>
+    <input type="text" value="$1,250 MXN" readonly>
+
+    <p style="font-size: 14px;">Tu saldo se verificará automáticamente al continuar.</p>
+    <p style="font-size: 14px;">Para completar este pago debes acudir a un cajero automático. Este proceso se simula en este sitio.</p>
+
+</div>
+
+<!-- Cheque -->
+<div id="chequeSection" class="section hidden">
+    <h3>Pago con Cheque</h3>
+
+    <p>El pago se acreditará una vez que el cheque sea validado (simulado).</p>
+
+    <label>Banco emisor (simulado):</label>
+    <input type="text" value="Banorte" readonly>
+
+    <label>Número de cheque:</label>
+    <input type="text" value="CHQ-00-2198" readonly>
+</div>
+
+<!-- Transferencia bancaria -->
+<div id="transferenciaSection" class="section hidden">
+    <h3>Transferencia Bancaria</h3>
+
+    <label>Banco receptor (simulado):</label>
+    <select>
+        <option>BBVA</option>
+        <option>Santander</option>
+        <option>Banorte</option>
+        <option>HSBC</option>
+    </select>
+
+    <label>CLABE para transferencia:</label>
+    <input type="text" value="0021 9000 4455 6678 01" readonly>
+
+    <p style="font-size: 14px;">Tu pago será confirmado automáticamente después de continuar.</p>
+</div>
+
+        <button type="submit">Continuar</button>
+        <button type="button" id="btnErrorPago" class="btnConfirmarPago">
+  Ir a página de error
+</button>
+
+
+
+
+        <!-- Enlace a las políticas -->
+<p class="politica-link">
+    <a href="#" id="openPoliticas">Política de Devolución y Cancelación — Upskill Academy</a>
+</p>
+
+<!-- Modal de políticas -->
+<div id="politicasModal" class="modal">
+    <div class="modal-content politicas">
+        <span class="close">&times;</span>
+        <h2>Política de Devolución y Cancelación — Upskill Academy</h2>
+
+        <div class="modal-scroll">
+            <h3>1. Alcance</h3>
+            <p>Esta política aplica a todas las compras de cursos, certificaciones y planes de carrera realizadas a través de la plataforma Upskill Academy.</p>
+
+            <h3>2. Naturaleza del servicio</h3>
+            <p>Los cursos ofrecidos en Upskill Academy son productos digitales de acceso inmediato, por lo que al realizar la compra y tener acceso al contenido, se considera consumido el servicio.</p>
+
+            <h3>3. Cancelaciones antes del acceso al curso</h3>
+            <p>El usuario podrá cancelar su compra y solicitar reembolso completo únicamente si aún no ha accedido al contenido del curso. El plazo máximo para solicitarlo es de 5 días naturales posteriores a la compra, mediante el correo <strong>soporte@upskillacademy.com</strong>.</p>
+
+            <h3>4. Devoluciones por problemas técnicos</h3>
+            <p>Si el usuario no puede acceder al curso por un error técnico atribuible a la plataforma, podrá solicitar reembolso total o un cupón equivalente para otro curso.</p>
+
+            <h3>5. Devoluciones no aplicables</h3>
+            <ul>
+                <li>El usuario ya accedió o completó parte del curso.</li>
+                <li>El problema se debe a errores de conexión o software del usuario.</li>
+                <li>La solicitud se hace fuera del plazo establecido.</li>
+                <li>El curso fue adquirido mediante promoción o descuento especial.</li>
+            </ul>
+
+            <h3>6. Planes de suscripción o membresías</h3>
+            <p>El usuario podrá cancelar la renovación automática en cualquier momento. No se realizan reembolsos parciales. El acceso permanecerá activo hasta el fin del periodo pagado.</p>
+
+            <h3>7. Procesamiento de reembolsos</h3>
+            <p>Los reembolsos se procesan mediante el mismo método de pago, en un plazo de 5 a 10 días hábiles según el proveedor.</p>
+
+            <h3>8. Modificación de políticas</h3>
+            <p>Upskill Academy se reserva el derecho de actualizar estas políticas en cualquier momento, con aviso previo en la plataforma.</p>
+
+            <h3>9. Contacto</h3>
+            <p>📧 <strong>soporte@upskillacademy.com</strong><br>
+            🕓 Lunes a viernes, de 9:00 a 18:00 (hora local).</p>
+        </div>
+
+        <button id="cerrarPoliticas" class="btn-cerrar">Cerrar</button>
+    </div>
+</div>
+
+
+    </form>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Contáctanos: info@upskillacademy.com</p>
+        <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="https://www.instagram.com/upsk.ilacademy?igsh=MWdyNmN2M2Z2dHQxZw==">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">X</a>
+        </div>
+
+        <!-- Mini mapa -->
+        <div class="map-box">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7405.016463787836!2d-102.26194134999997!3d21.876496550000013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee06c2b22ec7%3A0x9b6c521bf9a86b1a!2sInstituto%20Tecnol%C3%B3gico%20de%20Aguascalientes%2C%20Aguascalientes%2C%20Ags.!5e0!3m2!1ses-419!2smx!4v1758165144069!5m2!1ses-419!2smx" 
+            width="300" 
+            height="200" 
+            style="border:0; border-radius:12px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        </div>
+
+
+
+                <div class="legal-links">
+        <a href="#" id="openTerminos">Términos y Condiciones</a> |
+        <a href="#" id="openPrivacidad">Aviso de Privacidad</a>
+        </div>
+
+        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
+    </footer>
+
+    <!-- ===== MODAL: Términos y Condiciones ===== -->
+    <div id="terminosModal" class="modal">
+        <div class="modal-content politicas">
+        <span class="close">&times;</span>
+        <h2>Términos y Condiciones — Upskill Academy</h2>
+        <div class="modal-scroll">
+            <p>
+            Bienvenido a <strong>Upskill Academy</strong>. Al acceder a nuestro sitio, aceptas los presentes términos y condiciones.  
+            Nuestro objetivo es ofrecerte acceso a cursos en línea y materiales educativos de calidad.
+            </p>
+            <h3>1. Uso del sitio</h3>
+            <p>El usuario se compromete a utilizar la plataforma de manera lícita, sin afectar la experiencia de otros usuarios ni realizar actividades que perjudiquen el funcionamiento del servicio.</p>
+
+        <h3>2. Propiedad intelectual</h3>
+        <p>Todo el contenido (textos, videos, logotipos, imágenes, código) es propiedad de Upskill Academy o de sus proveedores. Está prohibida su reproducción sin autorización escrita.</p>
+
+        <h3>3. Registro y acceso</h3>
+        <p>El usuario deberá mantener la confidencialidad de sus credenciales y es responsable de todas las actividades realizadas desde su cuenta.</p>
+
+        <h3>4. Pagos y facturación</h3>
+        <p>Los precios se muestran en la moneda correspondiente y pueden cambiar sin previo aviso. Todos los pagos se procesan mediante pasarelas seguras de terceros.</p>
+
+        <h3>5. Limitación de responsabilidad</h3>
+        <p>Upskill Academy no se hace responsable por interrupciones del servicio, pérdida de datos o daños indirectos derivados del uso de la plataforma.</p>
+
+        <h3>6. Modificaciones</h3>
+        <p>Podemos actualizar estos términos en cualquier momento. La fecha de última actualización estará disponible al final del documento.</p>
+
+        <h3>7. Contacto</h3>
+        <p>Para aclaraciones o soporte: <strong>soporte@upskillacademy.com</strong></p>
+
+            <p style="font-size:0.9em; color:#555;">Última actualización: Enero 2025</p>
+        </div>
+        <button id="cerrarTerminos" class="btn-cerrar">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Aviso de Privacidad ===== -->
+    <div id="privacidadModal" class="modal">
+        <div class="modal-content politicas">
+        <span class="close">&times;</span>
+        <h2>Aviso de Privacidad — Upskill Academy</h2>
+        <div class="modal-scroll">
+            <p>
+            En <strong>Upskill Academy</strong> valoramos tu privacidad. Este aviso explica cómo recopilamos, usamos, protegemos y compartimos tu información personal, conforme a la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México)</strong>.
+            </p>
+
+        <h3>1. Datos personales que recolectamos</h3>
+        <p>Recolectamos datos como nombre, correo electrónico, información de pago, y preferencias académicas para procesar tus compras y mejorar nuestros servicios.</p>
+
+            <h3>2. Finalidades del tratamiento</h3>
+            <ul>
+            <li>Gestionar tu registro y acceso a los cursos.</li>
+            <li>Emitir comprobantes de pago y certificaciones.</li>
+            <li>Enviar notificaciones relevantes (por ejemplo, recordatorios o promociones).</li>
+            </ul>
+
+        <h3>3. Derechos ARCO</h3>
+        <p>Tienes derecho a <strong>Acceder, Rectificar, Cancelar u Oponerte</strong> (ARCO) al tratamiento de tus datos personales.  
+        Para ejercerlos, envía una solicitud a: <strong>privacidad@upskillacademy.com</strong></p>
+
+        <h3>4. Procedimiento para ejercer los derechos ARCO</h3>
+        <p>Tu solicitud deberá incluir nombre completo, medio de contacto y una descripción clara del derecho que deseas ejercer.  
+        Recibirás respuesta en un máximo de 20 días hábiles.</p>
+
+        <h3>5. Transferencia de datos</h3>
+        <p>No compartimos tu información con terceros, salvo cuando sea necesario para cumplir obligaciones legales o procesar pagos mediante proveedores certificados.</p>
+
+        <h3>6. Seguridad de la información</h3>
+        <p>Implementamos medidas técnicas y administrativas para proteger tus datos contra acceso no autorizado, pérdida o alteración.</p>
+
+        <h3>7. Contacto</h3>
+        <p>Para dudas sobre este aviso:  
+            📧 <strong>privacidad@upskillacademy.com</strong><br>
+            🌐 <a href="https://www.instagram.com/upsk.ilacademy" target="_blank">@upsk.ilacademy</a><br>
+            📍 Aguascalientes, México.
+            </p>
+
+            <p style="font-size:0.9em; color:#555;">Última actualización: Enero 2025</p>
+        </div>
+        <button id="cerrarPrivacidad" class="btn-cerrar">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/pago.js"></script>
+        <script src="../js/carrito.js"></script>
+    </body>
+    </html>
+

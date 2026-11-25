@@ -1,45 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#039;"}[c]));
-  const resolveCourseImage = value => {
-    const raw = String(value || "").trim();
-    if (/^https?:\/\//i.test(raw)) return raw;
-    const clean = raw.replace(/^\.\.\/src\//, "").replace(/^src\//, "").replace(/^\.\.\//, "");
-    return `../src/${clean || "primer.jpg"}`;
-  };
-  // ========== Mis cursos adquiridos desde ERP/SCM ==========
-  fetch("../api/tienda_mis_cursos.php", { credentials: "same-origin", cache: "no-store" })
-    .then(async response => { const data = await response.json(); if (!response.ok) throw new Error(data.error || "No fue posible consultar tus cursos."); return data.cursos || []; })
-    .then(cursos => {
+  // ========== Cargar cursos al azar ==========
+  fetch("../data/productos.json")
+    .then((res) => res.json())
+    .then((data) => {
       const cursosContainer = document.querySelector("#cursosContainer");
-      if (!cursosContainer) return;
-      cursosContainer.innerHTML = "";
-      cursos.forEach(curso => {
+      const cursosAleatorios = data.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+      cursosAleatorios.forEach((curso) => {
         const card = document.createElement("div");
         card.classList.add("curso-card");
-        const image = resolveCourseImage(curso.imagen);
         card.innerHTML = `
-          <img src="${escapeHtml(image)}" alt="${escapeHtml(curso.nombre)}">
-          <h3>${escapeHtml(curso.nombre)}</h3>
-          <p><strong>Duración:</strong> ${escapeHtml(curso.duracion || "No especificada")}</p>
-          <p><strong>Licencias adquiridas:</strong> ${Number(curso.licencias || 0)}</p>
-          <p><strong>Última compra:</strong> ${escapeHtml(new Date(String(curso.ultima_compra).replace(" ", "T")).toLocaleDateString())}</p>
-          <a href="cursos.html">Ver catálogo</a>
+          <img src="${curso.imagen}" alt="${curso.nombre}">
+          <h3>${curso.nombre}</h3>
+          <p><strong>Duración:</strong> ${curso.duracion}</p>
+          <p><strong>Precio:</strong> $${curso.precio} MXN</p>
+          <div class="progreso-container">
+            <div class="progreso-barra" style="width: ${Math.floor(Math.random() * 100)}%;"></div>
+          </div>
+          <p class="porcentaje">${Math.floor(Math.random() * 100)}% completado</p>
         `;
         cursosContainer.appendChild(card);
       });
-      if (cursos.length === 0) cursosContainer.innerHTML = '<p>Aún no has adquirido cursos. <a href="cursos.html">Explora el catálogo</a> para comenzar.</p>';
-      else generarTareas(cursos);
+
+      generarTareas(cursosAleatorios);
     })
-    .catch(err => {
-      console.error("Error al cargar cursos adquiridos:", err);
-      const cont = document.querySelector("#cursosContainer");
-      if (cont) cont.innerHTML = "<p>No fue posible cargar tus cursos en este momento.</p>";
-    });
+    .catch((err) => console.error("Error al cargar los cursos:", err));
 
   // ========== Tareas Pendientes ==========
   function generarTareas(cursos) {
     const listaTareas = document.querySelector("#listaTareas");
-    if (!listaTareas || !cursos.length) return;
     const estados = ["pendiente", "entregada", "vencida"];
     const ejemplos = [
       "Investigación sobre fundamentos",
@@ -58,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       tarea.classList.add("tarea", estado);
       tarea.innerHTML = `
-        <h4>${escapeHtml(nombreTarea)} — <em>${escapeHtml(curso.nombre)}</em></h4>
+        <h4>${nombreTarea} — <em>${curso.nombre}</em></h4>
         <p>Estado: <strong>${estado.toUpperCase()}</strong></p>
       `;
       listaTareas.appendChild(tarea);
@@ -85,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const mensajesContainer = document.querySelector("#mensajesContainer");
-  if (!mensajesContainer) return;
   mensajes.forEach((msg) => {
     const div = document.createElement("div");
     div.classList.add("mensaje");
