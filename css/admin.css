@@ -1,397 +1,395 @@
-    /* ===========================
-    ADMIN PANEL — Upskill
-    =========================== */
-    body {
-    font-family: "Segoe UI", sans-serif;
-    background: #f8fafc;
-    color: #0f172a;
-    margin: 0;
-    padding: 0;
-    }
+/* ============================================================
+   Panel de Administración — usa el sistema de diseño (stylePrin.css)
+   ============================================================ */
 
-    .admin-header {
-    background: #1d4ed8;
-    color: white;
-    text-align: center;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .admin-container {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-    }
-
-    /* Acordeón */
-    .accordion {
-    background: #2563eb;
-    color: white;
-    cursor: pointer;
-    padding: 14px 20px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    transition: 0.3s;
-    margin-bottom: 10px;
-    }
-
-    .accordion:hover {
-    background: #1e40af;
-    }
-
-    .panel {
-    background-color: white;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    padding: 20px;
-    display: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    /* Tablas */
-    table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    }
-
-    th, td {
-    border-bottom: 1px solid #e2e8f0;
-    padding: 10px;
-    text-align: left;
-    }
-
-    th {
-    background-color: #eff6ff;
-    color: #1e3a8a;
-    }
-
-    /* Formularios */
-    form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    }
-
-    input, textarea {
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    }
-
-    button[type="submit"] {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-    }
-
-    button[type="submit"]:hover {
-    background: #1e3a8a;
-    }
-
-        /* ===== Botones de acción ===== */
-    .btn-toggle {
-    padding: 6px 12px;
-    background: #1e3a8a;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-    }
-
-    .btn-toggle:hover {
-    background: #2563eb;
-    }
-
-    /* ===== Modal ===== */
-    .modal {
-    display: none;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    }
-
-    .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 30px;
-    border-radius: 12px;
-    width: 300px;
-    text-align: center;
-    }
-
-    .modal-content h3 {
-    color: #16a34a;
-    }
-
-    .modal-content button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    }
-
-    .modal-content button:hover {
-    background: #1e3a8a;
-    }
-
-
-
-            /* --- Crear plan de carrera --- */
-    #formPlan {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-    }
-
-    #formPlan input,
-    #formPlan textarea {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    }
-
-    #formPlan button {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    }
-
-    #formPlan button:hover {
-    background-color: #1e40af;
-    }
-
-    /* --- Toast --- */
-    .toast {
-    visibility: hidden;
-    min-width: 280px;
-    background-color: #16a34a;
-    color: white;
-    text-align: center;
-    border-radius: 8px;
-    padding: 12px;
-    position: fixed;
-    z-index: 100;
-    right: 20px;
-    bottom: 20px;
-    font-size: 15px;
-    opacity: 0;
-    transition: opacity 0.5s, bottom 0.5s;
-    }
-
-    .toast.show {
-    visibility: visible;
-    opacity: 1;
-    bottom: 30px;
-    }
-
-
-
-        /* ======== Sección de docentes ======== */
-    .admin-section {
-    background: #f9f9f9;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    max-width: 700px;
-    }
-
-    .admin-section h3 {
-    margin-top: 20px;
-    font-weight: 600;
-    color: #333;
-    }
-
-    #formDocente {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 15px;
-    }
-
-    #formDocente input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    }
-
-    #formDocente button {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-    }
-
-    #formDocente button:hover {
-    background-color: #1d4ed8;
-    }
-
-    #listaDocentes {
-    list-style: none;
-    padding: 0;
-    }
-
-    #listaDocentes li {
-    background: #fff;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    font-size: 15px;
-    }
-
-    /* ======== Modal de mensaje ======== */
-    .modal-mensaje {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease;
-    }
-
-    .modal-contenido {
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    animation: scaleIn 0.3s ease;
-    }
-
-    .modal-contenido h3 {
-    margin-bottom: 10px;
-    color: #16a34a;
-    }
-
-    .modal-contenido button {
-    margin-top: 15px;
-    padding: 8px 16px;
-    background-color: #2563eb;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    }
-
-    .modal-contenido button:hover {
-    background-color: #1d4ed8;
-    }
-
-    /* Animaciones suaves */
-    @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-    }
-
-    @keyframes scaleIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-    }
-
-
-    /* estilos de la barra de progreso */
-    .avance-container {
-    padding: 10px;
+.admin-header {
+  background: var(--accent);
+  color: #fff;
+  text-align: center;
+  padding: 24px;
 }
 
-.avance-container h3 {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #333;
+.admin-container {
+  max-width: var(--ancho-max);
+  margin: 40px auto;
+  padding: 0 22px;
 }
 
+/* Acordeón: encabezado sobrio, no una barra azul chillante */
+.accordion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 15px 18px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+.accordion:hover { background: var(--surface-2); }
+.accordion.active { border-color: var(--accent); color: var(--accent-600); }
+
+/* Contenido del acordeón (colisiona con .panel de stylePrin: se define aquí) */
+.admin-container .panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
+  box-shadow: none;
+  max-width: none;
+  margin: 0 0 14px;
+  padding: 20px;
+  display: none;
+}
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+th, td { border-bottom: 1px solid var(--border); padding: 11px 10px; text-align: left; }
+th { background: var(--accent-050); color: var(--accent-600); font-weight: 600; }
+
+/* Formularios */
+form { display: flex; flex-direction: column; gap: 10px; }
+input, textarea, select {
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
+  font-family: inherit;
+  font-size: .95rem;
+  background: var(--surface);
+  color: var(--text);
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-050);
+}
+
+button[type="submit"],
+.btn-toggle,
+#formPlan button,
+#formDocente button,
+.modal-content button,
+.modal-contenido button {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: var(--radio-pill);
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .2s var(--ease);
+}
+button[type="submit"]:hover,
+.btn-toggle:hover,
+#formPlan button:hover,
+#formDocente button:hover,
+.modal-content button:hover,
+.modal-contenido button:hover { background: var(--accent-600); }
+
+.btn-toggle { padding: 7px 14px; font-size: .85rem; }
+
+/* Modal de confirmación (propio del panel) */
+.modal-content { max-width: 340px; }
+.modal-content h3,
+.modal-contenido h3 { color: var(--ok); }
+
+.modal-mensaje {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, .4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn .3s var(--ease);
+}
+.modal-contenido {
+  background: var(--surface);
+  color: var(--text);
+  padding: 26px 30px;
+  border-radius: var(--radio);
+  text-align: center;
+  box-shadow: var(--sombra-hover);
+  animation: scaleIn .3s var(--ease);
+}
+
+#formPlan, #formDocente { max-width: 420px; }
+
+/* Toast */
+.toast {
+  visibility: hidden;
+  min-width: 280px;
+  background: var(--text);
+  color: #fff;
+  text-align: center;
+  border-radius: var(--radio-sm);
+  padding: 13px;
+  position: fixed;
+  z-index: 100;
+  right: 22px;
+  bottom: 22px;
+  font-size: .9rem;
+  opacity: 0;
+  transition: opacity .4s, bottom .4s;
+}
+.toast.show { visibility: visible; opacity: 1; bottom: 32px; }
+
+/* Secciones: contenedor simple; el peso visual lo llevan .accordion y .panel */
+.admin-section {
+  margin: 0 0 10px;
+  max-width: none;
+}
+.admin-section h3 { margin-top: 18px; font-weight: 600; color: var(--text); }
+
+#listaDocentes { list-style: none; padding: 0; }
+#listaDocentes li {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  margin: 6px 0;
+  padding: 11px 13px;
+  border-radius: var(--radio-sm);
+  font-size: .92rem;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(.94); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Barras de progreso */
 .progreso-container {
-    width: 100%;
-    height: 10px;
-    background-color: #eee;
-    border-radius: 6px;
-    margin-top: 6px;
-    overflow: hidden;
+  width: 100%;
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: var(--radio-pill);
+  margin-top: 8px;
+  overflow: hidden;
 }
-
 .progreso-barra {
-    height: 100%;
-    background-color: #2196F3; /* azul para diferenciar del verde de cursos */
-    border-radius: 6px 0 0 6px;
-    transition: width 0.5s ease;
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radio-pill);
+  transition: width .5s var(--ease);
 }
+.porcentaje { font-size: .85rem; color: var(--text-soft); text-align: right; margin-top: 4px; }
 
-.porcentaje {
-    font-size: 14px;
-    color: #555;
-    text-align: right;
-    margin-top: 4px;
-}
-
-/* estilos de las estadisticas*/ 
+/* Estadísticas */
 .estadisticas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
 }
-
 .stat-card {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
+  padding: 18px;
+  text-align: center;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
 }
-
-.stat-card:hover {
-    transform: scale(1.03);
-}
-
-.stat-card h4 {
-    margin-bottom: 8px;
-    font-size: 16px;
-    color: #333;
-}
-
-.stat-card p {
-    font-size: 20px;
-    font-weight: bold;
-    color: #2196F3;
-}
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--sombra); }
+.stat-card h4 { margin-bottom: 8px; font-size: .95rem; color: var(--text-soft); font-weight: 500; }
+.stat-card p { font-size: 1.5rem; font-weight: 700; color: var(--accent-600); }
 
 .grafico-container {
-    margin-top: 30px;
-    padding: 10px;
-    background-color: #fafafa;
-    border-radius: 12px;
+  margin-top: 28px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
 }
 
+/* ============================================================
+   ProyectoE1: accesos a módulos, solicitudes y cuentas internas
+   ============================================================ */
+
+/* El panel tiene tablas de 7 a 10 columnas: se amplía el contenedor para que
+   los botones de Aprobar / Rechazar / Editar no queden fuera de la vista. */
+.admin-container { max-width: 1280px; }
+.admin-container ~ .platform-page-tools,
+body:has(.admin-container) .platform-page-tools { max-width: 1280px; }
+
+/* Encabezado del panel dentro del navbar */
+.navbar .navbar-sub {
+  color: #eaf0ff;
+  opacity: .8;
+  font-size: .82rem;
+}
+
+/* Tarjeta destacada con accesos a CRM / SCM / ERP */
+.admin-priority { margin-bottom: 18px; }
+
+.admin-modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.admin-quick-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.admin-quick-grid:hover { transform: translateY(-3px); box-shadow: var(--sombra-hover); }
+.admin-quick-grid h2 { font-size: 1.1rem; margin-bottom: 6px; }
+.admin-quick-grid p { font-size: .9rem; }
+
+.admin-crm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #fff !important;
+  padding: 10px 18px;
+  border-radius: var(--radio-pill);
+  font-size: .9rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition: background .2s var(--ease);
+}
+.admin-crm-link:hover { background: var(--accent-600); }
+
+/* Tablas de aprobación / cuentas */
+.admin-table-wrap {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radio-sm);
+  margin-top: 12px;
+}
+.approval-table { width: 100%; border-collapse: collapse; min-width: 850px; margin: 0; }
+.approval-table th,
+.approval-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); text-align: left; font-size: .9rem; }
+.approval-table tr:last-child td { border-bottom: 0; }
+
+.approval-btn {
+  border: 1px solid transparent;
+  border-radius: var(--radio-pill);
+  padding: 7px 13px;
+  margin: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: .82rem;
+  font-weight: 500;
+  background: var(--surface-2);
+  color: var(--text);
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.approval-btn:hover { border-color: var(--border); }
+.approve-btn { background: var(--accent-050); color: var(--accent-600); }
+.approve-btn:hover { background: var(--accent); color: #fff; }
+.reject-btn { background: #fdecea; color: var(--danger); }
+.reject-btn:hover { background: var(--danger); color: #fff; }
+
+/* Formularios de alta de cuentas */
+.admin-create-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.admin-create-form button[type="submit"] { grid-column: 1 / -1; }
+@media (max-width: 700px) {
+  .admin-create-form { grid-template-columns: 1fr; }
+}
+
+/* Modales de edición / confirmación */
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, .4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 20px;
+  z-index: 9999;
+}
+.admin-modal.open { display: flex; }
+
+.admin-modal-content {
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radio);
+  padding: 26px;
+  box-shadow: var(--sombra-hover);
+  animation: fadeIn .3s var(--ease);
+}
+.admin-modal-content h2 { font-size: 1.3rem; margin-bottom: 12px; }
+.admin-modal-content form { display: grid; gap: 8px; }
+.admin-modal-content label { font-weight: 500; font-size: .9rem; margin-top: 6px; }
+
+.admin-modal-actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+.admin-modal-actions .approval-btn { padding: 10px 18px; font-size: .9rem; }
+
+/* Avisos */
+.admin-notice {
+  display: none;
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: var(--radio-sm);
+  background: var(--accent-050);
+  color: var(--accent-600);
+  border: 1px solid #c9d8f8;
+  font-size: .9rem;
+}
+.admin-notice:not(:empty) { display: block; }
+.admin-notice.error { background: #fdecea; color: #8a1c1c; border-color: #f5c2bd; }
+.admin-notice.success { background: #e8f6ec; color: #17683a; border-color: #bde5ca; }
+
+/* Usuarios de logística / ventas */
+.admin-divider { border: 0; border-top: 1px solid var(--border); margin: 24px 0 16px; }
+.logistica-create-toggle {
+  background: var(--surface-2);
+  color: var(--accent-600);
+  border: 1px solid var(--border);
+  border-radius: var(--radio-pill);
+  padding: 9px 16px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+.logistica-create-toggle:hover { background: var(--accent-050); border-color: var(--accent); }
+.admin-help { color: var(--text-soft); font-size: .85rem; margin: 4px 0 12px; }
+#formLogistica[hidden],
+#formVentas[hidden] { display: none !important; }
+#formLogistica,
+#formVentas { margin-bottom: 14px; }
+
+/* Botones de acción dentro de las tablas de inventario / cursos */
+.admin-container td button:not(.approval-btn) {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--radio-pill);
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: .82rem;
+  cursor: pointer;
+}
+.admin-container td button:not(.approval-btn):hover { border-color: var(--accent); color: var(--accent-600); }

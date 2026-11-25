@@ -1,0 +1,4 @@
+<?php
+require_once __DIR__ . '/scm_helpers.php';
+$user=require_scm_admin();$pdo=db();if($_SERVER['REQUEST_METHOD']!=='PUT')json_response(['error'=>'Método no permitido.'],405);$d=body_json();$id=(int)($d['id']??0);$est=clean_string($d['estrategia_logistica']??'');if(!$id||!in_array($est,['PUSH','PULL'],true))json_response(['error'=>'Producto o estrategia inválidos.'],422);
+try{$pdo->beginTransaction();$pdo->prepare("UPDATE productos SET estrategia_logistica=?,actualizado_en=NOW() WHERE id=? AND estado='activo'")->execute([$est,$id]);$pedido=$est==='PUSH'?scm_maybe_generate_push_order($pdo,$id,(int)$user['id']):null;$pdo->commit();json_response(['ok'=>true,'pedido_push_generado'=>$pedido,'mensaje'=>'Estrategia actualizada correctamente.']);}catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();json_response(['error'=>$e->getMessage()],422);}

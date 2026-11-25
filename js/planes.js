@@ -56,7 +56,7 @@ async function generarPlanes() {
 
   try {
     // 📥 Carga del archivo JSON (ajusta la ruta si es necesario)
-    const response = await fetch("../data/productos.json");
+    const response = await fetch("../database/productos.json");
     if (!response.ok) throw new Error("No se pudo cargar el archivo de cursos");
     const cursos = await response.json();
 

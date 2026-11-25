@@ -3,15 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Upskill Academy</title>
+  <title>Registro — Upskill Academy</title>
+  <link rel="stylesheet" href="../css/stylePrin.css">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
   <!-- NAVBAR -->
-  <header class="navbar">
+<header class="navbar">
+  <div class="navbar-brand">
     <h1>Upskill Academy</h1>
-    <a href="../views/logalumno.html" class="login-btn">Login</a>
-  </header>
+  </div>
+  <nav class="nav-links">
+    <a href="pagPrin.html" class="menu-link">Inicio</a>
+    <a href="cursos.html" class="menu-link">Cursos</a>
+    <a href="planes.html" class="menu-link">Planes de carrera</a>
+    <div class="menu-container">
+      <button class="menu-btn">Iniciar sesión <span class="icon">▼</span></button>
+      <div class="menu-content">
+        <a href="logalumno.html">Alumno</a>
+        <a href="CMR/logdocentes.html">Docentes</a>
+        <a href="CMR/Administradores/loggin.html">Administración</a>
+      </div>
+    </div>
+  </nav>
+</header>
 
   <section class="hero">
   <img src="../src/pixlr-image-generator-68b90e3f8f4a34ea71d1be75.jpg" alt="Primer curso">
@@ -27,12 +42,14 @@
   <!-- FORMULARIO DE REGISTRO -->
   <section class="form-section">
     <h2>Regístrate en Upskill Academy</h2>
-    <form class="register-form">
-      <input type="text" placeholder="Nombre completo" required>
-      <input type="email" placeholder="Correo electrónico" required>
-      <input type="password" not required placeholder="Contraseña"  required>
-      <input type="password" placeholder="Confirmar contraseña" required>
-      <button type="submit" class="form-btn" formnovalidate>Suscribirme</button>
+    <form class="register-form" data-registration-role="alumno" data-registration-api="../api">
+      <input type="text" name="nombre" placeholder="Nombre completo" autocomplete="name" required>
+      <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="email" required>
+      <input type="tel" name="telefono" placeholder="Teléfono (4492255316 o 449 225 5316)" autocomplete="tel" inputmode="numeric" required>
+      <input type="text" name="empresa" placeholder="Empresa o institución (opcional)" autocomplete="organization">
+      <input type="password" name="password" placeholder="Contraseña" autocomplete="new-password" required>
+      <input type="password" name="confirmPassword" placeholder="Confirmar contraseña" autocomplete="new-password" required>
+      <button type="submit" class="form-btn">Suscribirme</button>
 
 
     </form>
@@ -42,10 +59,9 @@
   <div id="successModal" class="modal">
     <div class="modal-content">
       <h2>🎉 ¡FELICIDADES!</h2>
-      <p>Te has registrado exitosamente en <strong>Upskill Academy</strong>.</p>
-      <p>Usa el siguiente código para obtener <strong>25% de descuento</strong> en tu primer curso:</p>
-      <div class="promo-code">UPSKILL25</div>
-      <a href="../views/loggin.html" id="closeModalBtn" class="form-btn">Cerrar</a>
+      <p><span class="registration-status">Tu solicitud fue registrada y está pendiente de aprobación por un administrador.</span></p>
+      <p>Revisa tu correo: te enviamos la confirmación de tu solicitud. Cuando un administrador apruebe tu cuenta recibirás otro correo con tu <strong>código de descuento de un solo uso</strong> para tu primera compra.</p>
+      <a href="../views/logalumno.html" id="closeModalBtn" class="form-btn">Cerrar</a>
 
 
     </div>
@@ -167,8 +183,6 @@
     </div>
   </div>
 
-    <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-  </footer>
 
   <!-- Tu JS al final -->
   <script src="../js/script.js"></script>

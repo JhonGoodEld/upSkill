@@ -1,0 +1,17 @@
+Options -MultiViews
+RewriteEngine On
+RewriteBase /upSkillNue/api/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^clientes/([0-9]+)/?$ cliente.php?id=$1 [QSA,L]
+RewriteRule ^clientes/([0-9]+)/interacciones/?$ interacciones.php?cliente_id=$1 [QSA,L]
+RewriteRule ^clientes/([0-9]+)/etapa/?$ etapa.php [QSA,L]
+
+<FilesMatch "^(config\.php|.*\.local\.php)$">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "^(helpers|scm_helpers|erp_helpers|tienda_helpers|email_service)\.php$">
+  Require all denied
+</FilesMatch>

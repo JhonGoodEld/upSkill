@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="../css/alumno.css" >
     <link rel="stylesheet" href="../css/flotante.css">
 
-    </head>
-    <body>
+      <link rel="stylesheet" href="../css/tienda.css">
+</head>
+    <body data-required-role="alumno" data-api-base="../api" data-login-url="logalumno.html">
     <!--barra de la navegacion pa-->
     <header class="navbar">
     <h1>Upskill Academy</h1>
@@ -20,7 +21,8 @@
         <!-- Enlaces directos -->
         <a href="../views/cursos.html" class="menu-link">Cursos</a>
         <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
-        <a href="#" class="menu-link">Certificate</a>
+        <a href="mi-cuenta.html" class="menu-link">Mi cuenta</a>
+        <a href="../views/upSkill.html" class="menu-link">Certificate</a>
 
         <!-- Carrito -->
         <a href="../views/carrito.html" class="menu-link">Carrito</a>
@@ -34,7 +36,7 @@
         </div>
         </div>
 
-        <a href="../views/pagPrin.html" class="menu-link">Loggout</a>
+        <a href="../views/pagPrin.html" class="menu-link" data-logout="../api">Cerrar sesión</a>
     </nav>
     </header>
 
@@ -178,8 +180,6 @@
     </div>
   </div>
 
-        <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-    </footer>
     <script>
 document.getElementById("donacionSticker").addEventListener("click", () => {
     window.location.href = "micropagos.html";
@@ -187,5 +187,6 @@ document.getElementById("donacionSticker").addEventListener("click", () => {
 </script>
     <script src="../js/script.js"></script>
     <script src="../js/alumno.js"></script>
-    </body>
+    <script src="../js/role-guard.js"></script>
+</body>
     </html>

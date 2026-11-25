@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catalogo de cursos</title>
+  <title>Catálogo de Cursos — Upskill Academy</title>
   <link rel="stylesheet" href="../css/stylePrin.css">
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/stylecurso.css">
   <link rel="stylesheet" href="../css/flotante.css">
+  <link rel="stylesheet" href="../css/tienda.css">
 </head>
 <body>
 <!--barra de la navegacion pa-->
@@ -21,7 +22,7 @@
 
     <!-- Enlaces directos -->
     <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
-    <a href="#" class="menu-link">Certificate</a>
+    <a href="../views/upSkill.html" class="menu-link">Certificate</a>
 
         <!-- Carrito -->
     <a href="../views/carrito.html" class="menu-link">Carrito</a>
@@ -34,26 +35,26 @@
         <a href="#" onclick="toggleLanguage()">Idioma</a>
       </div>
     </div>
-
-
-        <!-- Usuarios -->
-    <div class="menu-container">
-      <button class="menu-btn">Loggin <span class="icon">▼</span></button>
-      <div class="menu-content">
-        <a href="../views/logalumno.html">Alumno</a>
-        <a href="../views/logdocentes.html">Docentes</a>
-        <a href="../views/loggin.html">Administrador</a>
-        
-      </div>
-    </div>
+    <!-- Usuarios: mismo comportamiento que pagPrin.html -->
+    <a href="logalumno.html" class="menu-link">Iniciar sesión</a>
 
   </nav>
 </header>
 
 <h1>Catálogo de Cursos</h1>
-
+  <div id="promotionsBanner" class="promotions-banner" aria-live="polite"></div>
+  <div class="catalog-controls">
+    <input type="search" id="courseSearch" placeholder="Buscar curso por nombre o descripción..." aria-label="Buscar cursos">
+    <select id="courseCategory"><option value="">Todas las categorías</option></select>
+    <select id="courseSort" aria-label="Ordenar cursos"><option value="recent">Más recientes</option><option value="name">Nombre A-Z</option><option value="priceAsc">Precio: menor a mayor</option><option value="priceDesc">Precio: mayor a menor</option></select>
+  </div>
+  <div id="catalogStatus" class="catalog-status" aria-live="polite">Cargando cursos...</div>
   <div class="cards-container" id="cardsContainer">
     <!-- Aquí se insertarán las tarjetas dinámicamente -->
+  </div>
+
+  <div id="courseDetailModal" class="course-detail-modal" aria-hidden="true">
+    <div class="course-detail-card"><button type="button" id="closeCourseDetail" class="course-detail-close">×</button><div id="courseDetailContent"></div></div>
   </div>
     <!-- Sticker flotante de donaciones -->
 <div id="donacionSticker" class="sticker-donacion">
@@ -178,14 +179,13 @@
     </div>
   </div>
 
-    <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-  </footer>
   <script>
 document.getElementById("donacionSticker").addEventListener("click", () => {
     window.location.href = "micropagos.html";
 });
 </script>
   <script src="../js/script.js"></script>
+  <script src="../js/tienda-api.js"></script>
   <script src="../js/cursos.js"></script>
   
 </body>

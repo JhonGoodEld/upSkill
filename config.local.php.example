@@ -1,0 +1,16 @@
+<?php
+// Copia este archivo como config.local.php en la raíz del proyecto.
+// Completa los datos de tu proveedor SMTP. No subas config.local.php a Git.
+return [
+  // URL con la que se abre el proyecto; se usa en los enlaces de los correos.
+  'app_url' => 'http://localhost/upSkillNue',
+  'smtp' => [
+    'host' => 'smtp.gmail.com',
+    'port' => 587,
+    'secure' => 'tls', // tls para 587; ssl para 465
+    'username' => 'tu-correo-remitente@gmail.com',
+    'password' => 'TU_CONTRASENA_DE_APLICACION',
+    'from_email' => 'tu-correo-remitente@gmail.com',
+    'from_name' => 'Upskill Academy'
+  ]
+];

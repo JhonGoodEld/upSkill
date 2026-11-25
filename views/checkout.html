@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Upskill Academy</title>
+<link rel="stylesheet" href="../css/stylePrin.css"><link rel="stylesheet" href="../css/tienda.css">
+</head>
+<body data-required-role="alumno" data-api-base="../api" data-login-url="logalumno.html">
+<header class="navbar"><h1>Finalizar compra</h1><nav class="nav-links"><a href="carrito.html">Volver al carrito</a><a href="mi-cuenta.html">Mi cuenta</a></nav></header>
+<main class="store-page">
+  <h1>Checkout</h1><p class="store-muted">Tu nombre se obtiene de tu cuenta y no se puede modificar durante el pago. La dirección se utiliza como contacto/facturación para productos digitales.</p>
+  <div id="checkoutNotice" class="store-notice" role="alert"></div>
+  <div class="store-grid">
+    <section class="store-panel">
+      <h2>1. Datos del cliente</h2>
+      <div class="store-grid-2"><div class="store-field"><label>Nombre completo</label><input id="checkoutNombre" readonly></div><div class="store-field"><label>Correo del recibo</label><input id="checkoutCorreo" readonly></div></div>
+      <h2>2. Dirección de contacto / facturación</h2>
+      <div class="store-field"><label>Direcciones guardadas</label><select id="checkoutDireccion"><option value="">Selecciona una dirección</option></select></div>
+      <button type="button" class="store-btn secondary" id="toggleNewAddress">+ Agregar nueva dirección</button>
+      <div id="checkoutNewAddress" class="store-hidden">
+        <div class="store-grid-2">
+          <div class="store-field"><label>Etiqueta</label><input id="dirEtiqueta" value="Facturación"></div>
+          <div class="store-field"><label>Calle</label><input id="dirCalle" required></div>
+          <div class="store-field"><label>Número exterior</label><input id="dirExterior" required></div>
+          <div class="store-field"><label>Número interior</label><input id="dirInterior"></div>
+          <div class="store-field"><label>Colonia</label><input id="dirColonia" required></div>
+          <div class="store-field"><label>Municipio</label><input id="dirMunicipio" required></div>
+          <div class="store-field"><label>Estado</label><input id="dirEstado" required></div>
+          <div class="store-field"><label>Código postal</label><input id="dirCP" required maxlength="12"></div>
+          <div class="store-field"><label>País</label><input id="dirPais" value="México"></div>
+          <div class="store-field"><label>Referencias</label><input id="dirReferencias"></div>
+        </div>
+      </div>
+      <h2>3. Método de pago</h2>
+      <label class="store-payment-option"><input type="radio" name="metodoPago" value="monedero"> Monedero electrónico <span id="checkoutWalletLabel"></span></label>
+      <label class="store-payment-option"><input type="radio" name="metodoPago" value="tarjeta"> Tarjeta de crédito / débito (simulada)</label>
+      <label class="store-payment-option"><input type="radio" name="metodoPago" value="paypal"> PayPal (simulado)</label>
+      <label class="store-payment-option"><input type="radio" name="metodoPago" value="transferencia"> Transferencia bancaria (simulada)</label>
+      <div id="paymentDetails" class="store-card store-hidden"></div>
+      <div class="store-field"><label for="checkoutPromo">Código promocional (opcional)</label><div class="store-actions"><input id="checkoutPromo" placeholder="Ej. UPSKILL10"><button type="button" class="store-btn secondary" id="applyPromo">Aplicar</button></div><small id="promoNotice"></small></div>
+      <div class="store-actions"><button id="confirmarCompra" class="store-btn" type="button">Confirmar pago y compra</button><a href="mi-cuenta.html" class="store-btn secondary">Mi monedero</a></div>
+    </section>
+    <aside class="store-panel">
+      <h2>Resumen de compra</h2><div id="checkoutItems"></div>
+      <div class="store-summary-row"><span>Subtotal</span><strong id="checkoutSubtotal">$0.00</strong></div>
+      <div class="store-summary-row"><span>Descuento</span><strong id="checkoutDiscount">$0.00</strong></div><div class="store-summary-row"><span>IVA (<span id="checkoutIvaRate">16</span> %)</span><strong id="checkoutIVA">$0.00</strong></div>
+      <div class="store-summary-row total"><span>Total estimado</span><strong id="checkoutTotal">$0.00</strong></div>
+      <p class="store-small">El total definitivo se calcula y valida nuevamente en el servidor antes de registrar el pago.</p>
+      <div id="checkoutWalletAlert"></div>
+    </aside>
+  </div>
+</main>
+<script src="../js/tienda-api.js"></script><script src="../js/checkout.js"></script><script src="../js/role-guard.js"></script>
+</body></html>

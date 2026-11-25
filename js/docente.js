@@ -3,27 +3,33 @@
     // 🎓 Panel Docente - Lógica principal
     // ===============================
 
-    fetch("../data/productos.json")
+    // Las rutas del JSON son relativas a /views/; esta vista vive en /views/CMR/Docentes/.
+    const rutaImagen = (ruta = "") => ruta.startsWith("../src/") ? "../../../src/" + ruta.slice("../src/".length) : ruta;
+
+    fetch("../../../database/productos.json")
         .then((res) => res.json())
         .then((data) => {
         // === CURSOS ADMINISTRADOS ===
         const cursosContainer = document.getElementById("cursosDocente");
         const cursosAleatorios = obtenerCursosAleatorios(data, 2);
+        if (cursosAleatorios.length < 2) throw new Error("No hay suficientes cursos disponibles para el panel docente");
 
         cursosAleatorios.forEach((curso) => {
             const card = document.createElement("div");
             card.className = "card-docente";
+            // Un solo valor para que la barra y el texto coincidan.
+            const avance = Math.floor(Math.random() * 100);
             card.innerHTML = `
-            <img src="${curso.imagen}" alt="${curso.nombre}">
+            <img src="${rutaImagen(curso.imagen)}" alt="${curso.nombre}">
             <div class="card-info">
                 <h3>${curso.nombre}</h3>
                 <p><strong>Categoría:</strong> ${curso.categoria}</p>
                 <p><strong>Nivel:</strong> ${curso.nivel}</p>
             </div>
             <div class="progreso-container">
-                <div class="progreso-barra" style="width: ${Math.floor(Math.random() * 100)}%;"></div>
+                <div class="progreso-barra" style="width: ${avance}%;"></div>
             </div>
-            <p class="porcentaje">${Math.floor(Math.random() * 100)}% completado</p>
+            <p class="porcentaje">${avance}% completado</p>
             `;
             cursosContainer?.appendChild(card);
         });
@@ -85,11 +91,18 @@
             mensajesContainer?.appendChild(msg);
         });
         })
-        .catch((err) => console.error("Error al cargar productos:", err));
+        .catch((err) => {
+        console.error("Error al cargar productos:", err);
+        const ids = ["cursosDocente", "tareasPorRevisar", "asignaciones", "mensajesDocente"];
+        ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = "<p>No fue posible cargar esta sección en este momento.</p>";
+        });
+    });
 
     // === Funciones auxiliares ===
     function obtenerCursosAleatorios(lista, cantidad) {
-        const copia = [...lista];
+        const copia = Array.isArray(lista) ? [...lista] : [];
         const seleccionados = [];
         for (let i = 0; i < cantidad; i++) {
         const index = Math.floor(Math.random() * copia.length);

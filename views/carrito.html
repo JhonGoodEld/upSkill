@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrito de compra</title>
+  <title>Carrito — Upskill Academy</title>
   <link rel="stylesheet" href="../css/stylePrin.css">
   <link rel="stylesheet" href="../css/carrito.css"> 
   <link rel="stylesheet" href="../css/flotante.css">
+  <link rel="stylesheet" href="../css/tienda.css">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
     <!-- Enlaces directos -->
     <a href="../views/cursos.html" class="menu-link">Cursos</a>
     <a href="../views/planes.html" class="menu-link">Planes de carrera</a>
-    <a href="#" class="menu-link">Certificate</a>
+    <a href="../views/upSkill.html" class="menu-link">Certificate</a>
 
     <!-- Configuración -->
     <div class="menu-container">
@@ -37,11 +38,11 @@
     
         <!-- Usuarios -->
     <div class="menu-container">
-      <button class="menu-btn">Loggin <span class="icon">▼</span></button>
+      <button class="menu-btn">Iniciar sesión <span class="icon">▼</span></button>
       <div class="menu-content">
         <a href="../views/logalumno.html">Alumno</a>
-        <a href="../views/logdocentes.html">Docentes</a>
-        <a href="../views/loggin.html">Administrador</a>
+        <a href="../views/CMR/logdocentes.html">Docentes</a>
+        <a href="../views/CMR/Administradores/loggin.html">Administrador</a>
       </div>
     </div>
 
@@ -51,18 +52,17 @@
 <main class="carrito-page">
     <!--  Cursos seleccionados -->
     <section id="carrito" class="carrito-lista"></section>
+    <p id="cartNotice" class="store-notice" role="alert" aria-live="polite"></p>
 
     <!--  Resumen de pago -->
     <aside class="resumen">
       <h2>Resumen de compra</h2>
       <p><strong>Subtotal:</strong> <span id="subtotal">$0.00 MXN</span></p>
-      <p><strong>IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
+      <p><strong id="ivaLabel">IVA (16%):</strong> <span id="iva">$0.00 MXN</span></p>
       <p><strong>Total:</strong> <span id="total">$0.00 MXN</span></p>
 
-      <!--<button id="btnPagar" class="btn-pagar">Realizar pago</button> -->
-      <button id="btnPagar" class="btn-pagar" onclick="window.location.href='pago.html'">
-  Realizar pago
-</button>
+      <button id="btnVaciarCarrito" class="btn-secundario" type="button">Vaciar carrito</button>
+      <button id="btnPagar" class="btn-pagar" type="button" disabled>Continuar al checkout</button>
 
     <!-- Enlace a las políticas -->
     <p class="politica-link">
@@ -239,14 +239,13 @@
     </div>
   </div>
 
-    <p>© 2025 Upskill Academy - Todos los derechos reservados</p>
-  </footer>
   <script>
 document.getElementById("donacionSticker").addEventListener("click", () => {
     window.location.href = "micropagos.html";
 });
 </script>
   <script src="../js/script.js"></script>
+  <script src="../js/tienda-api.js"></script>
   <script src="../js/carrito.js"></script>
       
 </body>

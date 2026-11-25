@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const metodoPago = document.getElementById("metodoPago");
     const formPago = document.getElementById("formPago");
 
+    // Este script también se carga en pago-metodo.html, donde no existe el formulario.
+    if (!metodoPago || !formPago) return;
+
     const tarjeta = document.getElementById("tarjetaSection");
     const paypal = document.getElementById("paypalSection");
     const tienda = document.getElementById("tiendaSection");

@@ -1,0 +1,22 @@
+{
+  "clientes": [
+    {
+      "id": 1,
+      "nombre": "Juan Perez",
+      "correo": "juan.perez@example.com",
+      "telefono": "4491234567",
+      "empresa": "Empresa ABC",
+      "fecha_registro": "2026-08-28",
+      "estado": "activo"
+    },
+    {
+      "id": 2,
+      "nombre": "Maria Gonzalez",
+      "correo": "maria.gonzalez@example.com",
+      "telefono": "4499876543",
+      "empresa": "Tecnologias XYZ",
+      "fecha_registro": "2026-08-28",
+      "estado": "activo"
+    }
+  ]
+}

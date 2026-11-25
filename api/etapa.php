@@ -1,0 +1,3 @@
+<?php
+require_once __DIR__ . '/helpers.php';
+require_role('admin'); if($_SERVER['REQUEST_METHOD']!=='PUT')json_response(['error'=>'Método no permitido.'],405);$d=body_json();$id=filter_var($d['id']??null,FILTER_VALIDATE_INT);$etapa=clean_string($d['etapa_crm']??'');if(!$id||!in_array($etapa,['Prospecto','Activo','Frecuente','Inactivo'],true))json_response(['error'=>'ID o etapa inválidos.'],422);$st=db()->prepare('UPDATE clientes SET etapa_crm=? WHERE id=?');$st->execute([$etapa,$id]);$ch=db()->prepare('SELECT id FROM clientes WHERE id=?');$ch->execute([$id]);if(!$ch->fetch())json_response(['error'=>'Cliente no encontrado.'],404);json_response(['ok'=>true]);
