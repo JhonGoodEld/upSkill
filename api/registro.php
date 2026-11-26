@@ -43,5 +43,5 @@ json_response([
     'correo_enviado' => $correoBienvenida['sent'],
     'mensaje' => $correoBienvenida['sent']
         ? 'Tu solicitud fue enviada al administrador. Te enviamos un correo de confirmación; no podrás iniciar sesión hasta que sea aprobada.'
-        : 'Tu solicitud fue enviada al administrador. No podrás iniciar sesión hasta que sea aprobada.'
+        : 'Tu solicitud fue enviada al administrador, pero no pudimos enviarte el correo de confirmación. No podrás iniciar sesión hasta que sea aprobada.'
 ], 201);

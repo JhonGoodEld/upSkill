@@ -12,7 +12,7 @@ Esta actualización se aplicó sobre `upSkillNue_Actividad_CRM_ERP_FIX_2026_11.z
 4. Inicia MySQL y Apache.
 5. En phpMyAdmin selecciona `upskill_crm` e importa `sql/migracion_etapa4_5_tienda_seguridad_2026_11.sql` al final, después de las migraciones CRM, SCM, ERP y actividad que ya utilizabas.
 6. Vuelve a iniciar sesión: la actualización renueva el nombre de la cookie de sesión y descarta sesiones antiguas.
-7. Si vas a probar correos reales, instala PHPMailer con Composer siguiendo `SMTP_CONFIGURACION.md`.
+7. Para que se envíen los correos reales por Gmail crea `config.local.php` siguiendo `SMTP_CONFIGURACION.md` (PHPMailer ya viene en `lib/PHPMailer`).
 
 La migración agrega el rol `soporte`, la relación de cuentas alumno con clientes CRM, direcciones, carritos, monederos, movimientos, pagos, tickets, promociones, impuestos, campos de tienda en las órdenes ERP y límites de intentos de inicio de sesión. El IVA se inicializa en 16 %.
 

@@ -60,6 +60,19 @@
                 </div>
             </section>
 
+            <section class="admin-section admin-priority" id="correoSection">
+                <button class="accordion active">📧 Correo (Gmail)</button>
+                <div class="panel" style="display:block">
+                    <p>La plataforma envía correos reales por Gmail: solicitud recibida, cuenta aprobada con su código de un solo uso y recibo de compra. Envía una prueba para comprobar que llegan.</p>
+                    <div id="correoEstado" class="admin-notice"></div>
+                    <div id="correoPruebaNotice"></div>
+                    <form id="correoPruebaForm" class="admin-create-form" novalidate>
+                        <input type="email" name="para" placeholder="Correo donde quieres recibir la prueba" autocomplete="email">
+                        <button type="submit">Enviar correo de prueba</button>
+                    </form>
+                </div>
+            </section>
+
             <section class="admin-section admin-priority" id="adminSuperSection" hidden>
                 <button class="accordion">🛡️ Administradores del sistema</button>
                 <div class="panel">

@@ -12,8 +12,8 @@
 - El alumno lo ve destacado en el catálogo mientras no lo use.
 - Requiere `sql/migracion_correos_codigo_bienvenida_2026_11.sql` (después de la migración de Etapas 4 y 5).
 
-## Sin SMTP
-Los correos se guardan como HTML en `logs/correos/` (excluida de Git y bloqueada por `.htaccess`) y el panel admin muestra el código al aprobar. La configuración SMTP real está en `SMTP_CONFIGURACION.md`; `app_url` en `config.local.php` define los enlaces de los correos.
+## Envío real por Gmail
+Los correos se envían de verdad por `smtp.gmail.com` con PHPMailer (incluido en `lib/PHPMailer`, sin Composer). Solo hay que crear `config.local.php` con la cuenta de Gmail y su contraseña de aplicación; los pasos están en `SMTP_CONFIGURACION.md`. No hay modo simulado: si Gmail no está configurado o rechaza el envío, la pantalla muestra el motivo, el registro, la aprobación o la compra sí se guardan, y al aprobar el panel muestra el código para entregarlo a mano. El panel de administración tiene la sección **📧 Correo (Gmail)** con el estado de la configuración y un botón para enviar un correo de prueba.
 
 ## Verificación
-Probado sin SMTP y con un PHPMailer de prueba: los 5 correos (registro de alumno y docente, aprobación de ambos, recibo) se generan; el código aplica 25 % de descuento solo para su dueño, se rechaza para otro alumno y no se puede usar dos veces.
+Probado con PHPMailer real contra un servidor SMTP con STARTTLS y usuario/contraseña (el mismo protocolo de Gmail): los correos de registro, aprobación con código y recibo llegan; el código aplica 25 % de descuento solo para su dueño, se rechaza para otro alumno y no se puede usar dos veces. Sin `config.local.php`, o con una contraseña incorrecta, la pantalla muestra el motivo del fallo.

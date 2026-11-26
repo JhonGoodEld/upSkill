@@ -1,25 +1,18 @@
 <?php
 /**
- * Servicio de correo de Upskill Academy (PHPMailer + SMTP).
+ * Servicio de correo de Upskill Academy: envío real por SMTP (Gmail) con PHPMailer.
  *
  * Correos que envía la plataforma:
  *  - Solicitud de registro recibida (espera la aprobación del administrador).
  *  - Cuenta aprobada, con el código de descuento personal de un solo uso.
  *  - Recibo de compra (ticket) de la tienda.
  *
- * Si SMTP no está configurado (config.local.php + vendor/ de Composer), ningún
- * proceso se interrumpe: el correo se guarda como archivo HTML en logs/correos/
- * para poder revisarlo en una demostración local.
+ * Configuración: config.local.php en la raíz (ver config.local.php.example y
+ * SMTP_CONFIGURACION.md). PHPMailer viene incluido en lib/PHPMailer, así que no hace
+ * falta Composer; si existe vendor/ (composer install) se usa esa copia.
+ * Si el envío falla, el registro, la aprobación o la compra NO se revierten: la función
+ * devuelve el motivo para mostrarlo en pantalla y lo anota en el log de errores de PHP.
  */
-function tienda_mail_config(): array {
-    $file = dirname(__DIR__) . '/config.local.php';
-    if (is_file($file)) {
-        $config = require $file;
-        if (is_array($config)) return $config['smtp'] ?? [];
-    }
-    return [];
-}
-
 function upskill_app_config(): array {
     $file = dirname(__DIR__) . '/config.local.php';
     if (is_file($file)) {
@@ -27,6 +20,68 @@ function upskill_app_config(): array {
         if (is_array($config)) return $config;
     }
     return [];
+}
+
+/** Datos SMTP con valores por defecto de Gmail (smtp.gmail.com, 587, STARTTLS). */
+function tienda_mail_config(): array {
+    $cfg = upskill_app_config()['smtp'] ?? [];
+    if (!is_array($cfg)) $cfg = [];
+    $host = trim((string)($cfg['host'] ?? '')) ?: 'smtp.gmail.com';
+    $usuario = trim((string)($cfg['username'] ?? ''));
+    $password = (string)($cfg['password'] ?? '');
+    // Google muestra la contraseña de aplicación en bloques ("abcd efgh ijkl mnop"); se usa sin espacios.
+    if (stripos($host, 'gmail.com') !== false) $password = str_replace(' ', '', $password);
+    $secure = strtolower(trim((string)($cfg['secure'] ?? ''))) === 'ssl' ? 'ssl' : 'tls';
+    return [
+        'host' => $host,
+        'port' => (int)($cfg['port'] ?? 0) ?: ($secure === 'ssl' ? 465 : 587),
+        'secure' => $secure,
+        'username' => $usuario,
+        'password' => $password,
+        'from_email' => trim((string)($cfg['from_email'] ?? '')) ?: $usuario,
+        'from_name' => trim((string)($cfg['from_name'] ?? '')) ?: 'Upskill Academy',
+    ];
+}
+
+/** Carga PHPMailer desde vendor/ (Composer) o desde la copia incluida en lib/PHPMailer. */
+function upskill_cargar_phpmailer(): bool {
+    if (class_exists('PHPMailer\\PHPMailer\\PHPMailer')) return true;
+    $autoload = dirname(__DIR__) . '/vendor/autoload.php';
+    if (is_file($autoload)) require_once $autoload;
+    if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
+        $lib = dirname(__DIR__) . '/lib/PHPMailer';
+        foreach (['Exception', 'PHPMailer', 'SMTP'] as $clase) {
+            if (!is_file("$lib/$clase.php")) return false;
+            require_once "$lib/$clase.php";
+        }
+    }
+    return class_exists('PHPMailer\\PHPMailer\\PHPMailer');
+}
+
+/** Revisa la configuración. Devuelve null si está lista o el motivo en español si falta algo. */
+function upskill_correo_problema(?array $cfg = null): ?string {
+    $cfg = $cfg ?? tienda_mail_config();
+    if (!is_file(dirname(__DIR__) . '/config.local.php')) return 'Falta el archivo config.local.php con los datos de Gmail (copia config.local.php.example).';
+    if ($cfg['username'] === '' || $cfg['password'] === '') return 'Faltan el correo de Gmail o la contraseña de aplicación en config.local.php.';
+    if ($cfg['username'] === 'tu-correo@gmail.com' || $cfg['password'] === 'TU_CONTRASENA_DE_APLICACION') return 'config.local.php todavía tiene los datos de ejemplo; escribe tu correo de Gmail y tu contraseña de aplicación.';
+    if (!filter_var($cfg['from_email'], FILTER_VALIDATE_EMAIL)) return 'El remitente (from_email) de config.local.php no es un correo válido.';
+    if (!extension_loaded('openssl')) return 'PHP no tiene habilitada la extensión openssl (php.ini: extension=openssl), necesaria para Gmail.';
+    if (!upskill_cargar_phpmailer()) return 'No se encontró PHPMailer (carpeta lib/PHPMailer).';
+    return null;
+}
+
+/** Traduce los errores de PHPMailer a un mensaje claro. */
+function upskill_error_correo(string $detalle): string {
+    if (stripos($detalle, 'authenticate') !== false || stripos($detalle, '535') !== false || stripos($detalle, 'Username and Password') !== false) {
+        return 'Gmail rechazó el usuario o la contraseña. Usa una contraseña de aplicación de 16 letras (no la contraseña normal) y revisa que la verificación en dos pasos esté activa.';
+    }
+    if (stripos($detalle, 'connect') !== false) {
+        return 'No se pudo conectar con el servidor de Gmail. Revisa la conexión a internet, que el antivirus o firewall no bloquee el puerto ' . tienda_mail_config()['port'] . ' y que openssl esté habilitado.';
+    }
+    if (stripos($detalle, 'recipient') !== false || stripos($detalle, 'address') !== false) {
+        return 'El correo del destinatario no es válido o Gmail lo rechazó.';
+    }
+    return 'No se pudo enviar el correo: ' . $detalle;
 }
 
 /** URL pública del proyecto (por ejemplo http://localhost/upSkillNue) para los enlaces de los correos. */
@@ -59,50 +114,59 @@ function upskill_boton_correo(string $texto, string $url): string {
     return '<p style="margin:24px 0"><a href="' . upskill_e($url) . '" style="display:inline-block;background:#1d4ed8;color:#ffffff;text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:bold">' . upskill_e($texto) . '</a></p>';
 }
 
-/** Guarda el correo como HTML en logs/correos/ cuando no hay SMTP (modo demostración). */
-function upskill_guardar_correo_demo(string $email, string $asunto, string $html): ?string {
-    $dir = dirname(__DIR__) . '/logs/correos';
-    if (!is_dir($dir) && !@mkdir($dir, 0775, true)) return null;
-    $slug = preg_replace('/[^a-z0-9]+/', '-', strtolower(iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $asunto) ?: 'correo'));
-    $file = $dir . '/' . date('Ymd-His') . '-' . trim(substr($slug, 0, 60), '-') . '-' . bin2hex(random_bytes(3)) . '.html';
-    $cabecera = '<!-- Para: ' . upskill_e($email) . ' | Asunto: ' . upskill_e($asunto) . ' -->';
-    return @file_put_contents($file, $cabecera . "\n" . $html) !== false ? $file : null;
-}
-
-/** Envía un correo. Devuelve ['sent'=>bool,'reason'=>string]. */
+/**
+ * Envía un correo real por SMTP.
+ * Devuelve ['sent'=>bool, 'reason'=>'sent'|'smtp_not_configured'|'smtp_error', 'error'=>mensaje|null].
+ */
 function upskill_enviar_correo(string $email, string $nombre, string $asunto, string $html, string $texto): array {
     $cfg = tienda_mail_config();
-    $autoload = dirname(__DIR__) . '/vendor/autoload.php';
-    if (!is_file($autoload) || empty($cfg['host']) || empty($cfg['username']) || empty($cfg['password']) || empty($cfg['from_email'])) {
-        upskill_guardar_correo_demo($email, $asunto, $html);
-        return ['sent' => false, 'reason' => 'smtp_not_configured'];
+    $problema = upskill_correo_problema($cfg);
+    if ($problema !== null) {
+        error_log('[Upskill correo] No se envió "' . $asunto . '": ' . $problema);
+        return ['sent' => false, 'reason' => 'smtp_not_configured', 'error' => $problema];
     }
-    require_once $autoload;
+    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     try {
-        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
         $mail->isSMTP();
-        $mail->Host = (string)$cfg['host'];
+        $mail->Host = $cfg['host'];
+        $mail->Port = $cfg['port'];
         $mail->SMTPAuth = true;
-        $mail->Username = (string)$cfg['username'];
-        $mail->Password = (string)$cfg['password'];
-        $mail->Port = (int)($cfg['port'] ?? 587);
-        $secure = strtolower((string)($cfg['secure'] ?? 'tls'));
-        $mail->SMTPSecure = $secure === 'ssl'
+        $mail->Username = $cfg['username'];
+        $mail->Password = $cfg['password'];
+        $mail->SMTPSecure = $cfg['secure'] === 'ssl'
             ? PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS
             : PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        // Límite de espera (segundos) para conectar y para cada respuesta del servidor; sin esto
+        // PHPMailer puede esperar hasta 5 minutos y el registro o la compra se quedarían colgados.
+        $mail->Timeout = 20;
+        $mail->getSMTPInstance()->Timelimit = 20;
         $mail->CharSet = 'UTF-8';
-        $mail->setFrom((string)$cfg['from_email'], (string)($cfg['from_name'] ?? 'Upskill Academy'));
+        $mail->setFrom($cfg['from_email'], $cfg['from_name']);
         $mail->addAddress($email, $nombre);
         $mail->isHTML(true);
         $mail->Subject = $asunto;
         $mail->Body = $html;
         $mail->AltBody = $texto;
         $mail->send();
-        return ['sent' => true, 'reason' => 'sent'];
+        return ['sent' => true, 'reason' => 'sent', 'error' => null];
     } catch (Throwable $e) {
-        error_log('[Upskill SMTP] ' . $e->getMessage());
-        return ['sent' => false, 'reason' => 'smtp_error'];
+        $detalle = $mail->ErrorInfo ?: $e->getMessage();
+        error_log('[Upskill correo] Error SMTP al enviar "' . $asunto . '" a ' . $email . ': ' . $detalle);
+        return ['sent' => false, 'reason' => 'smtp_error', 'error' => upskill_error_correo($detalle)];
     }
+}
+
+/** Correo de prueba que el administrador manda desde su panel para comprobar Gmail. */
+function correo_prueba(string $email, string $nombre): array {
+    $cfg = tienda_mail_config();
+    $asunto = 'Correo de prueba - Upskill Academy';
+    $html = upskill_plantilla_correo($asunto,
+        '<h2 style="margin:0 0 12px;font-size:22px">¡El correo de Upskill Academy funciona!</h2>'
+        . '<p style="background:#e8f6ec;border:1px solid #bde5ca;border-radius:10px;padding:12px 14px;color:#17683a">Si estás leyendo esto, la plataforma ya envía correos reales por <strong>' . upskill_e($cfg['host']) . '</strong> desde <strong>' . upskill_e($cfg['from_email']) . '</strong>.</p>'
+        . '<p>Con esta misma configuración se envían el correo de solicitud recibida, el de cuenta aprobada con su código de un solo uso y el recibo de compra.</p>'
+        . '<p style="font-size:13px;color:#5b6472">Enviado el ' . date('d/m/Y H:i') . '.</p>');
+    $texto = 'El correo de Upskill Academy funciona. Enviado por ' . $cfg['host'] . ' desde ' . $cfg['from_email'] . '.';
+    return upskill_enviar_correo($email, $nombre, $asunto, $html, $texto);
 }
 
 /** Correo 1: la solicitud de registro se recibió y debe esperar la aprobación del administrador. */

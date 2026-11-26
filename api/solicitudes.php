@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             'usuario_id' => $usuarioId,
             'correo' => $sol['correo'],
             'correo_enviado' => $correo['sent'],
+            'correo_error' => $correo['error'] ?? null,
             'codigo' => $codigo['codigo'] ?? null
         ]);
     } catch (Throwable $e) {

@@ -23,7 +23,7 @@
     return data;
   }
 
-  function showNotice(id, message, error = false) {
+  function showNotice(id, message, error = false, ms = 5000) {
     const el = document.getElementById(id);
     if (!el) return;
     el.className = error ? 'admin-notice error' : 'admin-notice success';
@@ -32,7 +32,7 @@
     el._noticeTimer = setTimeout(() => {
       el.textContent = '';
       el.className = 'admin-notice';
-    }, 5000);
+    }, ms);
   }
 
   function confirmacionVisual(titulo, mensaje) {
@@ -113,12 +113,16 @@
       try {
         const resultado = await request('solicitudes.php', {method:'PUT', body:JSON.stringify({id, accion:action})});
         let aviso = `Solicitud ${action === 'aprobar' ? 'aprobada' : 'rechazada'} correctamente.`;
+        let fallo = false;
         if (action === 'aprobar' && resultado) {
-          // Informa si salió el correo de aprobación; sin SMTP muestra el código para entregarlo a mano.
+          // Informa si salió el correo de aprobación; si Gmail falla, muestra el motivo y el código para entregarlo a mano.
           if (resultado.correo_enviado) aviso += ` Se envió el correo de aprobación a ${resultado.correo}${resultado.codigo ? ' con su código de un solo uso' : ''}.`;
-          else aviso += ` El correo no se envió porque SMTP no está configurado (quedó en logs/correos/).${resultado.codigo ? ` Código de un solo uso del alumno: ${resultado.codigo}` : ''}`;
+          else {
+            fallo = true;
+            aviso += ` Pero el correo a ${resultado.correo} no se pudo enviar: ${resultado.correo_error || 'revisa la configuración de Gmail'}${resultado.codigo ? ` Código de un solo uso del alumno: ${resultado.codigo} (entrégaselo manualmente).` : ''}`;
+          }
         }
-        showNotice('solicitudesNotice', aviso);
+        showNotice('solicitudesNotice', aviso, fallo, fallo ? 20000 : 6000);
         await recargarSolicitudes();
       } catch (error) {
         showNotice('solicitudesNotice', error.message, true);
@@ -303,6 +307,41 @@
     await Promise.all([loadAdmins(), loadLogistics(), loadVentas()]);
   }
 
-  function start(){initSolicitudes();initSuperAdmin();}
+  // Estado de Gmail y correo de prueba real.
+  async function initCorreo() {
+    const estado = document.getElementById('correoEstado');
+    const form = document.getElementById('correoPruebaForm');
+    if (!estado || !form) return;
+    try {
+      const d = await request('correo_prueba.php');
+      estado.className = 'admin-notice ' + (d.configurado ? 'success' : 'error');
+      estado.textContent = d.configurado
+        ? `${/gmail/i.test(d.servidor) ? 'Gmail' : 'Correo'} configurado: los correos salen desde ${d.remitente} por ${d.servidor}. Envía una prueba para confirmar que se aceptan los datos.`
+        : `Gmail sin configurar: ${d.problema} Consulta SMTP_CONFIGURACION.md.`;
+    } catch (error) {
+      estado.className = 'admin-notice error';
+      estado.textContent = error.message;
+    }
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const para = form.elements.para.value.trim();
+      if (!para) return showNotice('correoPruebaNotice', 'Escribe el correo donde quieres recibir la prueba.', true);
+      const btn = form.querySelector('button[type="submit"]');
+      const texto = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      try {
+        const d = await request('correo_prueba.php', {method:'POST', body:JSON.stringify({para})});
+        showNotice('correoPruebaNotice', d.mensaje, false, 15000);
+      } catch (error) {
+        showNotice('correoPruebaNotice', error.message, true, 20000);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = texto;
+      }
+    });
+  }
+
+  function start(){initSolicitudes();initSuperAdmin();initCorreo();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();

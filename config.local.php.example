@@ -1,16 +1,20 @@
 <?php
-// Copia este archivo como config.local.php en la raíz del proyecto.
-// Completa los datos de tu proveedor SMTP. No subas config.local.php a Git.
+// Copia este archivo como config.local.php (en esta misma carpeta, junto a api/) y escribe tus datos de Gmail.
+// config.local.php NO se sube a GitHub (está en .gitignore) porque guarda la contraseña de aplicación.
+// Pasos completos en SMTP_CONFIGURACION.md.
 return [
-  // URL con la que se abre el proyecto; se usa en los enlaces de los correos.
-  'app_url' => 'http://localhost/upSkillNue',
   'smtp' => [
-    'host' => 'smtp.gmail.com',
-    'port' => 587,
-    'secure' => 'tls', // tls para 587; ssl para 465
-    'username' => 'tu-correo-remitente@gmail.com',
-    'password' => 'TU_CONTRASENA_DE_APLICACION',
-    'from_email' => 'tu-correo-remitente@gmail.com',
-    'from_name' => 'Upskill Academy'
-  ]
+    'username' => 'tu-correo@gmail.com',          // cuenta de Gmail que enviará los correos
+    'password' => 'TU_CONTRASENA_DE_APLICACION',  // contraseña de aplicación de 16 letras (NO tu contraseña normal)
+    'from_name' => 'Upskill Academy',             // nombre que verá quien recibe el correo
+
+    // Opcionales: si no se escriben se usan los valores de Gmail.
+    // 'host' => 'smtp.gmail.com',
+    // 'port' => 587,
+    // 'secure' => 'tls',            // tls para el puerto 587; ssl para el 465
+    // 'from_email' => 'tu-correo@gmail.com',
+  ],
+
+  // Opcional: dirección del proyecto para los enlaces de los correos. Si no se escribe, se calcula sola.
+  // 'app_url' => 'http://localhost/upSkillNue',
 ];

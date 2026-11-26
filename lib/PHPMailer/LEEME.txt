@@ -1,0 +1,1 @@
+PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer), licencia LGPL-2.1 (ver LICENSE). Copia de src/ para que el envío de correo funcione sin Composer.
